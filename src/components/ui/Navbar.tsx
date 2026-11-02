@@ -66,7 +66,7 @@ export function Navbar({ activeSection }: NavbarProps) {
     const dropletColors = ["#FFFFFF", "#D6E8FF", "#A0C4FF", "#B8B5FF"];
     for (let i = 0; i < 7; i++) {
       const angle = (i / 7) * Math.PI * 2 + (Math.random() - 0.5) * 0.4;
-      const distance = Math.random() * 22 + 16;
+      const distance = Math.random() * 24 + 18;
       newDroplets.push({
         id: currentId * 100 + i,
         navId: id,
@@ -101,24 +101,24 @@ export function Navbar({ activeSection }: NavbarProps) {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-6 sm:px-12 py-4 transition-all duration-300">
+    <header className="fixed top-0 left-0 right-0 z-50 px-6 sm:px-12 py-5 sm:py-6 transition-all duration-300">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        {/* Clean Brand Marker */}
+        {/* Brand Marker */}
         <button
           onClick={() => scrollToSection("hero")}
           className="group text-left focus:outline-none focus-visible:ring-1 focus-visible:ring-cyan-300 transition-opacity"
         >
-          <div className="flex items-center space-x-2.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-300 shadow-[0_0_8px_rgba(100,200,255,0.7)]" />
-            <span className="font-mono text-xs tracking-mono-label font-medium text-white uppercase">
+          <div className="flex items-center space-x-3">
+            <span className="w-2 h-2 rounded-full bg-cyan-300 shadow-[0_0_10px_rgba(100,200,255,0.85)]" />
+            <span className="font-mono text-xs sm:text-sm tracking-mono-label font-medium text-white uppercase">
               {PERSONAL_INFO.name}
             </span>
           </div>
         </button>
 
-        {/* Minimal Transparent Glass Navigation */}
+        {/* Increased Size Halfcircle (Pill) Navigation Bar under Gently Glassy */}
         <nav
-          className="hidden md:flex items-center space-x-1 obsidian-nav px-2.5 py-1.5 relative"
+          className="hidden md:flex items-center space-x-1.5 obsidian-nav px-4 sm:px-5 py-2.5 relative rounded-full"
           role="navigation"
           aria-label="Main Navigation"
         >
@@ -133,23 +133,23 @@ export function Navbar({ activeSection }: NavbarProps) {
                 key={item.id}
                 onClick={(e) => handleNavClick(e, item.id)}
                 aria-current={isActive ? "page" : undefined}
-                className={`relative px-3.5 py-1.5 rounded-md text-xs font-mono tracking-mono-label font-medium transition-all duration-200 cursor-pointer overflow-hidden ${
+                className={`relative px-4 py-2 rounded-full text-xs sm:text-sm font-mono tracking-mono-label font-medium transition-all duration-200 cursor-pointer overflow-hidden ${
                   isDistorted ? "animate-water-meniscus" : ""
                 } ${
                   isActive
-                    ? "text-black shadow-[0_0_16px_rgba(110,180,255,0.4)]"
-                    : "text-[#A6A6AE] hover:text-white hover:bg-white/[0.05]"
+                    ? "text-black shadow-[0_0_18px_rgba(110,180,255,0.45)]"
+                    : "text-[#A6A6AE] hover:text-white hover:bg-white/[0.06]"
                 }`}
                 style={{
                   background: isActive
-                    ? "linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(225, 240, 255, 0.90) 100%)"
+                    ? "linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(225, 240, 255, 0.90) 100%)"
                     : undefined,
                 }}
               >
                 {/* Active Indicator Shimmer */}
                 {isActive && (
                   <span
-                    className="absolute inset-0 pointer-events-none animate-water-surface opacity-25"
+                    className="absolute inset-0 pointer-events-none animate-water-surface opacity-30 rounded-full"
                     style={{
                       background:
                         "linear-gradient(90deg, transparent 0%, rgba(100, 180, 255, 0.6) 50%, transparent 100%)",
@@ -197,20 +197,20 @@ export function Navbar({ activeSection }: NavbarProps) {
           })}
         </nav>
 
-        {/* Right CTA */}
+        {/* Right CTA: Halfcircle (Pill) Curvature */}
         <div className="hidden lg:flex items-center space-x-4">
           <a
             href={PERSONAL_INFO.links.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs font-mono tracking-mono-label text-[#A6A6AE] hover:text-white transition-colors flex items-center space-x-1"
+            className="text-xs sm:text-sm font-mono tracking-mono-label text-[#A6A6AE] hover:text-white transition-colors flex items-center space-x-1.5"
           >
             <span>GitHub</span>
             <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
           </a>
           <button
             onClick={() => scrollToSection("contact")}
-            className="btn-secondary px-3.5 py-1.5 text-xs font-mono tracking-mono-label uppercase cursor-pointer"
+            className="btn-secondary px-6 py-2.5 text-xs sm:text-sm font-mono tracking-mono-label uppercase cursor-pointer rounded-full"
           >
             Connect
           </button>
@@ -219,23 +219,23 @@ export function Navbar({ activeSection }: NavbarProps) {
         {/* Mobile menu button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 rounded-md text-white/70 hover:text-white hover:bg-white/[0.06] focus:outline-none"
+          className="md:hidden p-2.5 rounded-full text-white/70 hover:text-white hover:bg-white/[0.08] focus:outline-none obsidian-nav"
           aria-label="Toggle navigation menu"
         >
           {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5 text-white/80" />}
         </button>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Drawer: Gently Glassy rounded */}
       {mobileMenuOpen && (
-        <div className="md:hidden mt-2 mx-1 p-4 obsidian-nav space-y-2">
+        <div className="md:hidden mt-3 mx-1 p-4 obsidian-nav space-y-2 rounded-2xl">
           {NAV_ITEMS.map((item) => {
             const isActive = activeSection === item.id;
             return (
               <button
                 key={item.id}
                 onClick={(e) => handleNavClick(e, item.id)}
-                className={`w-full flex items-center justify-between px-3.5 py-2 rounded-md text-xs font-mono tracking-mono-label uppercase transition-all ${
+                className={`w-full flex items-center justify-between px-4 py-2.5 rounded-full text-xs sm:text-sm font-mono tracking-mono-label uppercase transition-all ${
                   isActive
                     ? "bg-white text-black font-semibold shadow-[0_0_12px_rgba(100,180,255,0.3)]"
                     : "text-[#A6A6AE] hover:text-white hover:bg-white/[0.05]"

@@ -36,12 +36,12 @@ export function Skills() {
                 </p>
               </div>
 
-              {/* Minimal Monochrome Tags: IBM Plex Mono */}
-              <div className="flex flex-wrap gap-1.5 pt-1">
+              {/* Minimal Monochrome Tags: Halfcircle (Pill) under Gently Glassy */}
+              <div className="flex flex-wrap gap-2 pt-1">
                 {group.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="font-mono text-xs tracking-mono-label px-2.5 py-1 rounded bg-white/[0.025] border border-white/[0.08] text-[#A6A6AE] hover:text-white hover:border-white/[0.22] transition-colors"
+                    className="font-mono text-xs tracking-mono-label px-3.5 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] text-[#A6A6AE] hover:text-white hover:border-white/[0.24] transition-colors"
                   >
                     {skill}
                   </span>

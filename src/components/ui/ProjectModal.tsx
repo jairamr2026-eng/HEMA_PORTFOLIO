@@ -58,9 +58,9 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             {project.description}
           </p>
 
-          {/* Architecture Tag */}
+          {/* Architecture Tag: Halfcircle Pill under Gently Glassy */}
           {project.architecture && (
-            <div className="p-3 rounded-lg border border-white/[0.08] bg-white/[0.02] flex items-center space-x-3 text-xs font-mono tracking-mono-label">
+            <div className="p-2.5 px-4 rounded-full border border-white/[0.10] bg-white/[0.03] backdrop-blur-md flex items-center space-x-3 text-xs font-mono tracking-mono-label">
               <span className="text-white/40 uppercase">Architecture:</span>
               <span className="text-white font-medium">{project.architecture}</span>
             </div>
@@ -71,7 +71,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             <span className="font-mono text-xs uppercase tracking-mono-label text-white/50 block font-medium">
               System Details
             </span>
-            <div className="space-y-2 bg-black/40 p-4 rounded-lg border border-white/[0.06]">
+            <div className="space-y-2.5 bg-black/40 p-4 rounded-2xl border border-white/[0.06]">
               {project.details.map((detail, idx) => (
                 <div key={idx} className="flex items-start space-x-2.5 font-sans text-xs sm:text-sm text-[#A6A6AE] font-normal">
                   <Check className="w-3.5 h-3.5 text-cyan-300 shrink-0 mt-0.5" />
@@ -81,7 +81,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             </div>
           </div>
 
-          {/* Technology Stack */}
+          {/* Technology Stack: Halfcircle Pills under Gently Glassy */}
           <div className="space-y-2">
             <span className="font-mono text-xs uppercase tracking-mono-label text-white/40 block font-medium">
               Technologies
@@ -90,7 +90,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               {project.technologies.map((tech) => (
                 <span
                   key={tech}
-                  className="font-mono text-xs tracking-mono-label px-2.5 py-1 rounded bg-white/[0.03] border border-white/[0.08] text-white/80"
+                  className="font-mono text-xs tracking-mono-label px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] text-white/80"
                 >
                   {tech}
                 </span>
@@ -99,7 +99,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           </div>
         </div>
 
-        {/* Footer Actions */}
+        {/* Footer Actions: Halfcircle Pills under Gently Glassy */}
         <div className="pt-4 border-t border-white/[0.08] flex items-center justify-between">
           <div className="flex items-center space-x-3">
             {project.github && (
@@ -107,7 +107,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-secondary px-4 py-2 text-xs font-mono tracking-mono-label flex items-center space-x-2"
+                className="btn-secondary px-5 py-2 text-xs font-mono tracking-mono-label flex items-center space-x-2 rounded-full"
               >
                 <GithubIcon className="w-3.5 h-3.5" />
                 <span>Repository</span>
@@ -118,7 +118,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 href={project.demo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary px-4 py-2 text-xs font-mono tracking-mono-label flex items-center space-x-1.5"
+                className="btn-primary px-5 py-2 text-xs font-mono tracking-mono-label flex items-center space-x-1.5 rounded-full"
               >
                 <span>Live Demo</span>
                 <ExternalLink className="w-3 h-3" />
@@ -127,7 +127,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           </div>
           <button
             onClick={onClose}
-            className="text-xs font-mono tracking-mono-label text-white/40 hover:text-white px-3 py-2 transition-colors cursor-pointer"
+            className="text-xs font-mono tracking-mono-label text-white/40 hover:text-white px-4 py-2 rounded-full transition-colors cursor-pointer"
           >
             Close
           </button>

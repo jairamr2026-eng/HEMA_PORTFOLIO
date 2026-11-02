@@ -41,16 +41,16 @@ export function Projects({ onSelectProject, activeProjectId }: ProjectsProps) {
             </p>
           </div>
 
-          {/* Minimal Filter Tabs: IBM Plex Mono */}
-          <div className="flex items-center gap-1.5 p-1 rounded-lg border border-white/[0.10] bg-white/[0.02]">
+          {/* Minimal Filter Tabs: Halfcircle Pill under Gently Glassy */}
+          <div className="flex items-center gap-1.5 p-1.5 rounded-full border border-white/[0.12] bg-white/[0.03] backdrop-blur-md">
             {filterOptions.map((opt) => (
               <button
                 key={opt}
                 onClick={() => setActiveFilter(opt)}
-                className={`px-3 py-1.5 rounded text-xs font-mono tracking-mono-label font-medium transition-all cursor-pointer ${
+                className={`px-4 py-1.5 rounded-full text-xs font-mono tracking-mono-label font-medium transition-all cursor-pointer ${
                   activeFilter === opt
-                    ? "bg-white text-black"
-                    : "text-[#A6A6AE] hover:text-white hover:bg-white/[0.04]"
+                    ? "bg-white text-black shadow-[0_0_12px_rgba(255,255,255,0.4)]"
+                    : "text-[#A6A6AE] hover:text-white hover:bg-white/[0.05]"
                 }`}
               >
                 {opt}
@@ -88,21 +88,21 @@ export function Projects({ onSelectProject, activeProjectId }: ProjectsProps) {
                     </p>
                   </div>
 
-                  {/* Architecture: IBM Plex Mono */}
+                  {/* Architecture: Halfcircle (Pill) under Gently Glassy */}
                   {project.architecture && (
                     <div className="pt-1">
-                      <span className="inline-block font-mono text-[11px] tracking-mono-label px-2.5 py-1 rounded bg-white/[0.025] border border-white/[0.08] text-white/80">
+                      <span className="inline-block font-mono text-[11px] tracking-mono-label px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.10] text-white/80">
                         {project.architecture}
                       </span>
                     </div>
                   )}
 
-                  {/* Technologies: IBM Plex Mono */}
+                  {/* Technologies: Halfcircle (Pill) under Gently Glassy */}
                   <div className="flex flex-wrap gap-1.5 pt-1">
                     {project.technologies.slice(0, 4).map((tech) => (
                       <span
                         key={tech}
-                        className="font-mono text-[11px] tracking-mono-label px-2 py-0.5 rounded bg-white/[0.02] text-[#A6A6AE] border border-white/[0.06]"
+                        className="font-mono text-[11px] tracking-mono-label px-3 py-1 rounded-full bg-white/[0.03] text-[#A6A6AE] border border-white/[0.08]"
                       >
                         {tech}
                       </span>

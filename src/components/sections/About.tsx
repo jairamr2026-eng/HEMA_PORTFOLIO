@@ -32,13 +32,13 @@ export function About() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-1">
             <div className="space-y-2">
               <span className="font-mono text-xs uppercase tracking-mono-label text-white/50 block font-medium">
-                Education
+                Institution
               </span>
               <h3 className="font-heading text-base sm:text-lg font-medium text-white">
-                {PERSONAL_INFO.degree}
+                Vellore Institute of Technology
               </h3>
               <p className="font-sans text-xs sm:text-sm text-[#A6A6AE] leading-relaxed font-normal">
-                Vellore Institute of Technology (VIT), Vellore
+                School of Computer Science &amp; Engineering
               </p>
             </div>
 

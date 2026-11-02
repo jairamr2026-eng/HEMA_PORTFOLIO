@@ -69,25 +69,25 @@
   }
 }
 
-/* Premium Obsidian Glass Design System with Oceanic Edge Reflections */
+/* Gently Glassy Design System with Halfcircle (Pill) Curvature */
 
-/* Navigation & Floating Overlays */
+/* Navigation & Floating Overlays: Halfcircle pill with ethereal glassmorphism */
 .obsidian-nav {
-  background: rgba(6, 10, 22, 0.74);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(160, 205, 255, 0.14);
-  border-radius: 12px;
-  box-shadow: 0 4px 28px -1px rgba(0, 0, 0, 0.65), 0 0 16px -2px rgba(80, 140, 255, 0.08);
+  background: rgba(6, 12, 26, 0.68);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(180, 220, 255, 0.16);
+  border-radius: 9999px;
+  box-shadow: 0 8px 36px -2px rgba(0, 0, 0, 0.65), 0 0 24px -2px rgba(90, 160, 255, 0.12);
 }
 
-/* Project Cards: Deep ocean translucent with subtle marine rim lighting & 4px lift */
+/* Project Cards: Gently Glassy deep ocean translucent with soft 24px curvature & subtle hover lift */
 .obsidian-card {
-  background: rgba(10, 16, 28, 0.52);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(160, 200, 255, 0.10);
-  border-radius: 14px;
+  background: rgba(8, 14, 28, 0.45);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(180, 215, 255, 0.12);
+  border-radius: 24px;
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               background 0.35s cubic-bezier(0.16, 1, 0.3, 1),
@@ -96,28 +96,28 @@
 
 .obsidian-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(180, 220, 255, 0.28);
-  background: rgba(16, 24, 42, 0.68);
-  box-shadow: 0 12px 36px -4px rgba(0, 0, 0, 0.8),
-              0 0 24px -2px rgba(100, 165, 255, 0.14),
-              0 0 0 1px rgba(180, 220, 255, 0.16);
+  border-color: rgba(190, 230, 255, 0.3);
+  background: rgba(14, 22, 40, 0.62);
+  box-shadow: 0 16px 40px -4px rgba(0, 0, 0, 0.8),
+              0 0 28px -2px rgba(100, 175, 255, 0.16),
+              0 0 0 1px rgba(190, 230, 255, 0.18);
 }
 
-/* Restrained Minimal Glass Panels for key information */
+/* Gently Glassy Panels */
 .obsidian-panel {
-  background: rgba(8, 14, 26, 0.48);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(160, 200, 255, 0.10);
-  border-radius: 12px;
+  background: rgba(8, 14, 28, 0.45);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(180, 215, 255, 0.12);
+  border-radius: 9999px;
 }
 
-/* Buttons: Premium Editorial Ocean-Luminous Styling */
+/* Buttons: Halfcircle (Pill) Curvature with Gently Glassy Editorial Styling */
 .btn-primary {
   background-color: #FFFFFF;
   color: #01040A;
   font-weight: 500;
-  border-radius: 8px;
+  border-radius: 9999px;
   border: 1px solid #FFFFFF;
   transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 }
@@ -125,23 +125,25 @@
 .btn-primary:hover {
   background-color: #E8F2FF;
   transform: translateY(-1px);
-  box-shadow: 0 4px 20px rgba(130, 195, 255, 0.35);
+  box-shadow: 0 4px 24px rgba(130, 195, 255, 0.45), 0 0 16px rgba(130, 195, 255, 0.25);
 }
 
 .btn-secondary {
-  background-color: rgba(10, 18, 32, 0.4);
+  background-color: rgba(10, 18, 34, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   color: #FFFFFF;
   font-weight: 400;
-  border-radius: 8px;
-  border: 1px solid rgba(160, 205, 255, 0.16);
+  border-radius: 9999px;
+  border: 1px solid rgba(180, 220, 255, 0.18);
   transition: all 0.25s ease;
 }
 
 .btn-secondary:hover {
-  background-color: rgba(255, 255, 255, 0.08);
-  border-color: rgba(180, 225, 255, 0.36);
+  background-color: rgba(255, 255, 255, 0.09);
+  border-color: rgba(200, 235, 255, 0.4);
   transform: translateY(-1px);
-  box-shadow: 0 0 14px rgba(100, 160, 255, 0.15);
+  box-shadow: 0 0 18px rgba(110, 175, 255, 0.2);
 }
 
 /* Editorial Monochromatic Silver-Ocean & Hero Typography */

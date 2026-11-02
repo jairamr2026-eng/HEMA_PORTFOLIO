@@ -51,8 +51,8 @@ export function Contact() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start pointer-events-auto">
           {/* Left Column: Direct Links & Info */}
           <div className="lg:col-span-5 space-y-4">
-            {/* Email One-Click Copy */}
-            <div className="p-4 rounded-lg bg-white/[0.025] border border-white/[0.10] flex items-center justify-between">
+            {/* Email One-Click Copy: Halfcircle (Pill) under Gently Glassy */}
+            <div className="p-3.5 px-5 rounded-full bg-white/[0.03] border border-white/[0.12] backdrop-blur-md flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <Mail className="w-4 h-4 text-[#A6A6AE]" />
                 <span className="font-mono text-xs tracking-mono-label text-white select-all">
@@ -61,7 +61,7 @@ export function Contact() {
               </div>
               <button
                 onClick={handleCopyEmail}
-                className="p-1.5 rounded hover:bg-white/[0.08] text-white/50 hover:text-white transition-colors cursor-pointer"
+                className="p-1.5 rounded-full hover:bg-white/[0.08] text-white/50 hover:text-white transition-colors cursor-pointer"
                 title="Copy email to clipboard"
                 aria-label="Copy email address"
               >
@@ -73,13 +73,13 @@ export function Contact() {
               </button>
             </div>
 
-            {/* Profiles: IBM Plex Mono */}
+            {/* Profiles: Halfcircle (Pill) under Gently Glassy */}
             <div className="grid grid-cols-2 gap-3">
               <a
                 href={PERSONAL_INFO.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3.5 rounded-lg bg-white/[0.02] border border-white/[0.08] hover:border-white/[0.22] transition-colors flex items-center justify-between group"
+                className="p-3 px-5 rounded-full bg-white/[0.025] border border-white/[0.10] hover:border-white/[0.25] backdrop-blur-md transition-colors flex items-center justify-between group"
               >
                 <div className="flex items-center space-x-2.5">
                   <GithubIcon className="w-4 h-4 text-[#A6A6AE] group-hover:text-white transition-colors" />
@@ -92,7 +92,7 @@ export function Contact() {
                 href={PERSONAL_INFO.links.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3.5 rounded-lg bg-white/[0.02] border border-white/[0.08] hover:border-white/[0.22] transition-colors flex items-center justify-between group"
+                className="p-3 px-5 rounded-full bg-white/[0.025] border border-white/[0.10] hover:border-white/[0.25] backdrop-blur-md transition-colors flex items-center justify-between group"
               >
                 <div className="flex items-center space-x-2.5">
                   <LinkedinIcon className="w-4 h-4 text-[#A6A6AE] group-hover:text-white transition-colors" />
@@ -110,7 +110,7 @@ export function Contact() {
 
           {/* Right Column: Clean Minimal Form */}
           <div className="lg:col-span-7">
-            <div className="p-6 sm:p-7 rounded-xl bg-white/[0.02] border border-white/[0.10]">
+            <div className="p-6 sm:p-7 rounded-3xl bg-white/[0.02] border border-white/[0.10] backdrop-blur-md">
               {formSubmitted ? (
                 <div className="py-8 text-center space-y-2.5">
                   <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center mx-auto text-cyan-300">
@@ -143,7 +143,7 @@ export function Contact() {
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         placeholder="Your Name"
-                        className="w-full font-sans px-3.5 py-2.5 rounded-md bg-black/60 border border-white/[0.12] focus:border-white/40 text-sm text-white placeholder-white/20 focus:outline-none transition-colors"
+                        className="w-full font-sans px-4 py-2.5 rounded-full bg-black/60 border border-white/[0.12] focus:border-white/40 text-sm text-white placeholder-white/20 focus:outline-none transition-colors"
                       />
                     </div>
 
@@ -157,7 +157,7 @@ export function Contact() {
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         placeholder="you@domain.com"
-                        className="w-full font-sans px-3.5 py-2.5 rounded-md bg-black/60 border border-white/[0.12] focus:border-white/40 text-sm text-white placeholder-white/20 focus:outline-none transition-colors"
+                        className="w-full font-sans px-4 py-2.5 rounded-full bg-black/60 border border-white/[0.12] focus:border-white/40 text-sm text-white placeholder-white/20 focus:outline-none transition-colors"
                       />
                     </div>
                   </div>
@@ -172,13 +172,13 @@ export function Contact() {
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       placeholder="Your message or collaboration idea..."
-                      className="w-full font-sans px-3.5 py-2.5 rounded-md bg-black/60 border border-white/[0.12] focus:border-white/40 text-sm text-white placeholder-white/20 focus:outline-none transition-colors resize-none"
+                      className="w-full font-sans px-4 py-3 rounded-2xl bg-black/60 border border-white/[0.12] focus:border-white/40 text-sm text-white placeholder-white/20 focus:outline-none transition-colors resize-none"
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full btn-primary py-2.5 text-xs font-mono tracking-mono-label uppercase cursor-pointer mt-2"
+                    className="w-full btn-primary py-3 text-xs font-mono tracking-mono-label uppercase cursor-pointer mt-2 rounded-full"
                   >
                     Send Message
                   </button>
