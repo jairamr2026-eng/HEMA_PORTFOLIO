@@ -36,12 +36,12 @@ export function Skills() {
                 </p>
               </div>
 
-              {/* Minimal Monochrome Tags: Halfcircle (Pill) under Gently Glassy */}
+              {/* Minimal Monochrome Tags: Halfcircle (Pill) with Modern Sans Typography */}
               <div className="flex flex-wrap gap-2 pt-1">
                 {group.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="font-mono text-xs tracking-mono-label px-3.5 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] text-[#A6A6AE] hover:text-white hover:border-white/[0.24] transition-colors"
+                    className="font-sans text-xs sm:text-sm font-medium px-4 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] text-[#A6A6AE] hover:text-white hover:border-white/[0.24] transition-colors"
                   >
                     {skill}
                   </span>

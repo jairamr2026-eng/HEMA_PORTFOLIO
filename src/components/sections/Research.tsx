@@ -27,9 +27,9 @@ export function Research() {
               key={item.id}
               className="py-7 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start group"
             >
-              {/* Discipline Area: IBM Plex Mono */}
+              {/* Discipline Area: Modern Sans */}
               <div className="lg:col-span-3">
-                <span className="font-mono text-xs tracking-mono-label text-[#A6A6AE] uppercase block">
+                <span className="font-sans text-xs sm:text-sm font-semibold tracking-wider text-[#A6A6AE] uppercase block">
                   {item.area}
                 </span>
               </div>
@@ -42,8 +42,8 @@ export function Research() {
                 <p className="font-sans text-xs sm:text-sm text-[#A6A6AE] font-normal leading-[1.65] max-w-3xl">
                   {item.summary}
                 </p>
-                <div className="font-mono text-xs tracking-mono-label text-white/60 pt-1">
-                  <span className="text-white/40 uppercase mr-2">Focus:</span>
+                <div className="font-sans text-xs sm:text-sm text-white/70 pt-1">
+                  <span className="text-white/40 uppercase mr-2 font-medium">Focus:</span>
                   {item.focus}
                 </div>
               </div>

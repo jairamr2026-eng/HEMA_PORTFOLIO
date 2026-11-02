@@ -54,7 +54,7 @@ export function AbyssScene({ onSelectProject, activeProjectId }: AbyssSceneProps
   if (!webglSupported) {
     return (
       <div className="fixed inset-0 bg-[#010308] -z-10 flex items-center justify-center text-white/30">
-        <p className="font-mono text-xs tracking-widest uppercase">Deep Ocean Minimal Display Active</p>
+        <p className="font-sans text-sm font-medium tracking-wide uppercase text-white/50">Deep Ocean Minimal Display Active</p>
       </div>
     );
   }

@@ -27,18 +27,18 @@ export function Hero() {
             Building intelligent systems and digital experiences at the intersection of machine learning and interaction design.
           </p>
 
-          {/* Action Buttons: Halfcircle (Pill) Curvature under Gently Glassy */}
+          {/* Action Buttons: Halfcircle (Pill) Curvature with Modern Sans Typography */}
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <button
               onClick={() => scrollTo("projects")}
-              className="btn-primary px-7 py-3.5 text-xs font-mono tracking-mono-label font-medium uppercase flex items-center space-x-2.5 cursor-pointer group rounded-full"
+              className="btn-primary px-8 py-3.5 text-sm sm:text-base font-sans font-medium flex items-center space-x-2.5 cursor-pointer group rounded-full"
             >
               <span>Explore Work</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </button>
             <button
               onClick={() => scrollTo("contact")}
-              className="btn-secondary px-7 py-3.5 text-xs font-mono tracking-mono-label font-medium uppercase cursor-pointer rounded-full"
+              className="btn-secondary px-8 py-3.5 text-sm sm:text-base font-sans font-medium cursor-pointer rounded-full"
             >
               Connect
             </button>
@@ -49,14 +49,14 @@ export function Hero() {
         <div className="hidden lg:block lg:col-span-5 h-[500px]" />
       </div>
 
-      {/* Subtle Bottom Scroll Cue: IBM Plex Mono */}
+      {/* Subtle Bottom Scroll Cue: Modern Sans */}
       <div className="absolute bottom-8 left-6 sm:left-12 lg:left-20 pointer-events-auto">
         <button
           onClick={() => scrollTo("about")}
-          className="flex items-center space-x-2 text-xs font-mono tracking-mono-label text-white/50 hover:text-white transition-colors uppercase cursor-pointer"
+          className="flex items-center space-x-2 text-sm font-sans font-medium text-white/60 hover:text-white transition-colors cursor-pointer"
         >
           <span>Descend</span>
-          <ArrowDown className="w-3 h-3 animate-bounce opacity-70" />
+          <ArrowDown className="w-3.5 h-3.5 animate-bounce opacity-70" />
         </button>
       </div>
     </section>

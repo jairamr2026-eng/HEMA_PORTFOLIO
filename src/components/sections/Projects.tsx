@@ -41,13 +41,13 @@ export function Projects({ onSelectProject, activeProjectId }: ProjectsProps) {
             </p>
           </div>
 
-          {/* Minimal Filter Tabs: Halfcircle Pill under Gently Glassy */}
+          {/* Minimal Filter Tabs: Halfcircle Pill with Modern Sans Typography */}
           <div className="flex items-center gap-1.5 p-1.5 rounded-full border border-white/[0.12] bg-white/[0.03] backdrop-blur-md">
             {filterOptions.map((opt) => (
               <button
                 key={opt}
                 onClick={() => setActiveFilter(opt)}
-                className={`px-4 py-1.5 rounded-full text-xs font-mono tracking-mono-label font-medium transition-all cursor-pointer ${
+                className={`px-5 py-2 rounded-full text-sm font-sans font-medium transition-all cursor-pointer ${
                   activeFilter === opt
                     ? "bg-white text-black shadow-[0_0_12px_rgba(255,255,255,0.4)]"
                     : "text-[#A6A6AE] hover:text-white hover:bg-white/[0.05]"
@@ -72,8 +72,8 @@ export function Projects({ onSelectProject, activeProjectId }: ProjectsProps) {
                 }`}
               >
                 <div className="space-y-4">
-                  {/* Category: IBM Plex Mono */}
-                  <div className="font-mono text-xs tracking-mono-label text-[#A6A6AE] uppercase">
+                  {/* Category: Modern Sans */}
+                  <div className="font-sans text-xs tracking-wider text-[#A6A6AE] uppercase font-semibold">
                     {project.category}
                   </div>
 
@@ -88,21 +88,21 @@ export function Projects({ onSelectProject, activeProjectId }: ProjectsProps) {
                     </p>
                   </div>
 
-                  {/* Architecture: Halfcircle (Pill) under Gently Glassy */}
+                  {/* Architecture: Halfcircle (Pill) with Modern Sans Typography */}
                   {project.architecture && (
                     <div className="pt-1">
-                      <span className="inline-block font-mono text-[11px] tracking-mono-label px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.10] text-white/80">
+                      <span className="inline-block font-sans text-xs sm:text-[13px] font-medium px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.10] text-white/90">
                         {project.architecture}
                       </span>
                     </div>
                   )}
 
-                  {/* Technologies: Halfcircle (Pill) under Gently Glassy */}
+                  {/* Technologies: Halfcircle (Pill) with Modern Sans Typography */}
                   <div className="flex flex-wrap gap-1.5 pt-1">
                     {project.technologies.slice(0, 4).map((tech) => (
                       <span
                         key={tech}
-                        className="font-mono text-[11px] tracking-mono-label px-3 py-1 rounded-full bg-white/[0.03] text-[#A6A6AE] border border-white/[0.08]"
+                        className="font-sans text-xs sm:text-[13px] font-medium px-3.5 py-1 rounded-full bg-white/[0.03] text-white/80 border border-white/[0.08]"
                       >
                         {tech}
                       </span>
@@ -111,8 +111,8 @@ export function Projects({ onSelectProject, activeProjectId }: ProjectsProps) {
                 </div>
 
                 {/* Footer with clean GitHub link */}
-                <div className="pt-5 mt-5 border-t border-white/[0.08] flex items-center justify-between font-mono text-xs tracking-mono-label">
-                  <span className="text-white/50 group-hover:text-white transition-colors">
+                <div className="pt-5 mt-5 border-t border-white/[0.08] flex items-center justify-between font-sans text-sm font-medium">
+                  <span className="text-white/60 group-hover:text-white transition-colors">
                     Inspect Architecture
                   </span>
                   {project.github && (
@@ -124,7 +124,7 @@ export function Projects({ onSelectProject, activeProjectId }: ProjectsProps) {
                       className="p-1 rounded text-white/40 hover:text-white transition-colors"
                       aria-label="View source repository"
                     >
-                      <GithubIcon className="w-3.5 h-3.5" />
+                      <GithubIcon className="w-4 h-4" />
                     </a>
                   )}
                 </div>

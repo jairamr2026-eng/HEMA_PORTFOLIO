@@ -31,7 +31,7 @@ export function About() {
           {/* Academic Background & Focus Areas */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-1">
             <div className="space-y-2">
-              <span className="font-mono text-xs uppercase tracking-mono-label text-white/50 block font-medium">
+              <span className="font-sans text-xs sm:text-sm uppercase tracking-wider text-white/60 block font-semibold">
                 Institution
               </span>
               <h3 className="font-heading text-base sm:text-lg font-medium text-white">
@@ -43,7 +43,7 @@ export function About() {
             </div>
 
             <div className="space-y-2.5">
-              <span className="font-mono text-xs uppercase tracking-mono-label text-white/50 block font-medium">
+              <span className="font-sans text-xs sm:text-sm uppercase tracking-wider text-white/60 block font-semibold">
                 Core Focus
               </span>
               <ul className="space-y-2 font-sans text-xs sm:text-sm text-[#A6A6AE] font-normal">

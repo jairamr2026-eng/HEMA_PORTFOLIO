@@ -51,11 +51,11 @@ export function Contact() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start pointer-events-auto">
           {/* Left Column: Direct Links & Info */}
           <div className="lg:col-span-5 space-y-4">
-            {/* Email One-Click Copy: Halfcircle (Pill) under Gently Glassy */}
-            <div className="p-3.5 px-5 rounded-full bg-white/[0.03] border border-white/[0.12] backdrop-blur-md flex items-center justify-between">
+            {/* Email One-Click Copy: Halfcircle (Pill) with Modern Sans Typography */}
+            <div className="p-3.5 px-6 rounded-full bg-white/[0.03] border border-white/[0.12] backdrop-blur-md flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <Mail className="w-4 h-4 text-[#A6A6AE]" />
-                <span className="font-mono text-xs tracking-mono-label text-white select-all">
+                <span className="font-sans text-sm sm:text-base font-medium text-white select-all">
                   {PERSONAL_INFO.links.email}
                 </span>
               </div>
@@ -73,17 +73,17 @@ export function Contact() {
               </button>
             </div>
 
-            {/* Profiles: Halfcircle (Pill) under Gently Glassy */}
+            {/* Profiles: Halfcircle (Pill) with Modern Sans Typography */}
             <div className="grid grid-cols-2 gap-3">
               <a
                 href={PERSONAL_INFO.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 px-5 rounded-full bg-white/[0.025] border border-white/[0.10] hover:border-white/[0.25] backdrop-blur-md transition-colors flex items-center justify-between group"
+                className="p-3.5 px-6 rounded-full bg-white/[0.025] border border-white/[0.10] hover:border-white/[0.25] backdrop-blur-md transition-colors flex items-center justify-between group"
               >
                 <div className="flex items-center space-x-2.5">
                   <GithubIcon className="w-4 h-4 text-[#A6A6AE] group-hover:text-white transition-colors" />
-                  <span className="font-mono text-xs tracking-mono-label text-white">GitHub</span>
+                  <span className="font-sans text-sm sm:text-base font-medium text-white">GitHub</span>
                 </div>
                 <ArrowUpRight className="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 transition-opacity text-white" />
               </a>
@@ -92,18 +92,18 @@ export function Contact() {
                 href={PERSONAL_INFO.links.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 px-5 rounded-full bg-white/[0.025] border border-white/[0.10] hover:border-white/[0.25] backdrop-blur-md transition-colors flex items-center justify-between group"
+                className="p-3.5 px-6 rounded-full bg-white/[0.025] border border-white/[0.10] hover:border-white/[0.25] backdrop-blur-md transition-colors flex items-center justify-between group"
               >
                 <div className="flex items-center space-x-2.5">
                   <LinkedinIcon className="w-4 h-4 text-[#A6A6AE] group-hover:text-white transition-colors" />
-                  <span className="font-mono text-xs tracking-mono-label text-white">LinkedIn</span>
+                  <span className="font-sans text-sm sm:text-base font-medium text-white">LinkedIn</span>
                 </div>
                 <ArrowUpRight className="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 transition-opacity text-white" />
               </a>
             </div>
 
             {/* Location Tag */}
-            <div className="pt-1 font-mono text-xs tracking-mono-label text-white/40">
+            <div className="pt-1 font-sans text-sm text-white/50">
               Vellore, Tamil Nadu, India
             </div>
           </div>
@@ -125,7 +125,7 @@ export function Contact() {
                       setFormSubmitted(false);
                       setFormData({ name: "", email: "", message: "" });
                     }}
-                    className="font-mono text-xs tracking-mono-label text-white/50 hover:text-white underline pt-1 cursor-pointer"
+                    className="font-sans text-sm font-medium text-white/60 hover:text-white underline pt-1 cursor-pointer"
                   >
                     Send another message
                   </button>
@@ -134,7 +134,7 @@ export function Contact() {
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <label className="font-mono text-xs tracking-mono-label text-[#A6A6AE] uppercase block">
+                      <label className="font-sans text-xs sm:text-sm tracking-wider font-semibold text-[#A6A6AE] uppercase block">
                         Name
                       </label>
                       <input
@@ -148,7 +148,7 @@ export function Contact() {
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="font-mono text-xs tracking-mono-label text-[#A6A6AE] uppercase block">
+                      <label className="font-sans text-xs sm:text-sm tracking-wider font-semibold text-[#A6A6AE] uppercase block">
                         Email
                       </label>
                       <input
@@ -163,7 +163,7 @@ export function Contact() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="font-mono text-xs tracking-mono-label text-[#A6A6AE] uppercase block">
+                    <label className="font-sans text-xs sm:text-sm tracking-wider font-semibold text-[#A6A6AE] uppercase block">
                       Message
                     </label>
                     <textarea
@@ -178,7 +178,7 @@ export function Contact() {
 
                   <button
                     type="submit"
-                    className="w-full btn-primary py-3 text-xs font-mono tracking-mono-label uppercase cursor-pointer mt-2 rounded-full"
+                    className="w-full btn-primary py-3.5 text-sm sm:text-base font-sans font-medium cursor-pointer mt-2 rounded-full"
                   >
                     Send Message
                   </button>
@@ -189,8 +189,8 @@ export function Contact() {
         </div>
       </div>
 
-      {/* Clean Minimal Footer: IBM Plex Mono */}
-      <footer className="mt-14 pt-6 border-t border-white/[0.08] max-w-7xl mx-auto w-full flex items-center justify-between text-xs font-mono tracking-mono-label text-[#A6A6AE] pointer-events-auto">
+      {/* Clean Minimal Footer: Modern Sans */}
+      <footer className="mt-14 pt-6 border-t border-white/[0.08] max-w-7xl mx-auto w-full flex items-center justify-between text-sm font-sans font-medium text-[#A6A6AE] pointer-events-auto">
         <div className="flex items-center space-x-2">
           <span className="text-white font-medium">{PERSONAL_INFO.name}</span>
           <span className="text-white/20">·</span>
