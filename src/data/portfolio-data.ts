@@ -2,7 +2,6 @@ export interface Project {
   id: string;
   title: string;
   category: string;
-  period: string;
   description: string;
   details: string[];
   technologies: string[];
@@ -24,19 +23,17 @@ export interface ResearchItem {
   area: string;
   summary: string;
   focus: string;
-  tags: string[];
 }
 
 export const PERSONAL_INFO = {
   name: "Hemanathan R",
   role: "Creative Developer & Systems Engineer",
-  institution: "VIT Vellore · SCOPE",
+  institution: "VIT Vellore",
   degree: "Integrated M.Tech CSE",
-  timeline: "2024–2029",
   location: "Vellore, Tamil Nadu, India",
   headline: "Exploring the Unknown.",
-  subheadline: "Building intelligent systems and creating meaningful digital experiences at the intersection of technology and imagination.",
-  bio: "Integrated M.Tech Computer Science student at Vellore Institute of Technology. Exploring the boundaries of deep neural networks, computer vision, and distributed cryptographic protocols through rigorous engineering and high-fidelity interaction design.",
+  subheadline: "Building intelligent systems and digital experiences at the intersection of machine learning and interaction design.",
+  bio: "Integrated M.Tech Computer Science student at VIT Vellore. Exploring deep neural networks, computer vision architectures, and distributed systems through rigorous engineering and interaction design.",
   quote: "Every great idea begins somewhere in the unknown.",
   links: {
     github: "https://github.com/hemanathan-r",
@@ -50,10 +47,9 @@ export const PROJECTS: Project[] = [
     id: "handloom-fabric",
     title: "Indian Handloom Fabric Classification",
     category: "AI & Computer Vision",
-    period: "2025",
     description: "Hybrid deep learning architecture combining convolutional neural networks with vision transformers for fine-grained classification of traditional Indian handloom textile weaves.",
     details: [
-      "Dual-stream feature extractor capturing both micro-texture thread geometry and macro-level artisan motif patterns.",
+      "Dual-stream feature extractor capturing micro-texture thread geometry and macro-level artisan motif patterns.",
       "Trained on high-resolution microscopic and macroscopic datasets across diverse regional weaving traditions.",
       "Fine-grained multi-class evaluation under varying illumination and wear states.",
       "Grad-CAM saliency mapping to inspect feature activation across warp and weft yarn intersections."
@@ -64,9 +60,8 @@ export const PROJECTS: Project[] = [
   },
   {
     id: "veridegree",
-    title: "VeriDegree — Blockchain Degree Verification",
+    title: "VeriDegree — Blockchain Verification",
     category: "Blockchain & Web3",
-    period: "2025",
     description: "Decentralized tamper-proof academic credential issuance and verification protocol built on Ethereum smart contracts and IPFS decentralized storage.",
     details: [
       "Solidity smart contracts supporting cryptographic signature verification and tamper-evident credential records.",
@@ -82,7 +77,6 @@ export const PROJECTS: Project[] = [
     id: "wildlife-monitoring",
     title: "Cloud-Based Wildlife Monitoring",
     category: "Computer Vision & Cloud",
-    period: "2024–2025",
     description: "Automated sensor-camera telemetry platform for remote wildlife habitats, utilizing edge motion filtering and cloud deep learning inference to identify species.",
     details: [
       "IoT camera node telemetry integrating lightweight motion triggering to conserve remote battery life.",
@@ -98,7 +92,6 @@ export const PROJECTS: Project[] = [
     id: "video-summarization",
     title: "Automated Video Summarization",
     category: "Computer Vision & NLP",
-    period: "2024",
     description: "Intelligent video processing engine that compresses long-form lecture and surveillance footage into high-entropy keyframe storyboards and concise digests.",
     details: [
       "Spatio-temporal convolutional embeddings paired with clustering algorithms to identify non-redundant scene boundaries.",
@@ -114,8 +107,7 @@ export const PROJECTS: Project[] = [
     id: "silkweave",
     title: "Silkweave",
     category: "Full-Stack Development",
-    period: "2024",
-    description: "Digital ecosystem linking traditional textile weavers with global buyers, featuring real-time interactive previews and provenance tracking.",
+    description: "Digital ecosystem linking traditional textile weavers with global buyers, featuring real-time interactive 3D previews and provenance tracking.",
     details: [
       "Minimalist, accessible interface with high-performance product rendering and fluid transitions.",
       "Transparent supply-chain provenance logging highlighting individual weaver artisan profiles.",
@@ -130,7 +122,6 @@ export const PROJECTS: Project[] = [
     id: "lifeos",
     title: "LifeOS",
     category: "Full-Stack Development",
-    period: "2024",
     description: "Unified cognitive operating system and knowledge graph designed to organize academic coursework, algorithmic problem-solving, and research notes.",
     details: [
       "Bidirectional note linking with interactive graph visualization of connected engineering concepts.",
@@ -144,7 +135,6 @@ export const PROJECTS: Project[] = [
   }
 ];
 
-// Grouped strictly into AI/ML, Computer Vision, Full-Stack Development, and Blockchain
 export const SKILL_GROUPS: SkillCategory[] = [
   {
     id: "ai-ml",
@@ -153,13 +143,12 @@ export const SKILL_GROUPS: SkillCategory[] = [
     skills: [
       "PyTorch",
       "TensorFlow",
-      "Vision Transformers (ViT)",
-      "Convolutional Networks (CNN)",
+      "Vision Transformers",
+      "CNNs",
       "Deep Learning",
       "Scikit-Learn",
       "Model Optimization",
-      "Transfer Learning",
-      "Feature Engineering"
+      "Transfer Learning"
     ]
   },
   {
@@ -172,10 +161,7 @@ export const SKILL_GROUPS: SkillCategory[] = [
       "Fine-Grained Classification",
       "Keyframe Extraction",
       "Image Segmentation",
-      "Spatio-Temporal Clustering",
-      "FFmpeg Pipelines",
-      "Grad-CAM Saliency",
-      "Textile Pattern Forensics"
+      "Grad-CAM Saliency"
     ]
   },
   {
@@ -186,29 +172,25 @@ export const SKILL_GROUPS: SkillCategory[] = [
       "TypeScript",
       "Python",
       "C++",
-      "Next.js (App Router)",
+      "Next.js",
       "React",
-      "Three.js / React Three Fiber",
+      "Three.js / WebGL",
       "Node.js",
-      "Tailwind CSS",
-      "PostgreSQL",
-      "REST & GraphQL APIs"
+      "PostgreSQL"
     ]
   },
   {
     id: "blockchain",
-    title: "Blockchain & Distributed Systems",
+    title: "Blockchain & Systems",
     description: "Decentralized consensus, verifiable credential protocols, and cloud infrastructure.",
     skills: [
       "Solidity",
       "Ethereum Smart Contracts",
-      "IPFS Decentralized Storage",
-      "Cryptographic Merkle Trees",
-      "Docker & Containerization",
-      "Linux Systems",
-      "AWS / Cloud Ingestion",
-      "Git & CI/CD",
-      "Verifiable Credentials"
+      "IPFS",
+      "Merkle Trees",
+      "Docker",
+      "Linux",
+      "AWS Pipelines"
     ]
   }
 ];
@@ -217,33 +199,29 @@ export const RESEARCH_INTERESTS: ResearchItem[] = [
   {
     id: "hybrid-vision",
     title: "Hybrid Feature Fusion in Micro-Texture Analysis",
-    area: "Deep Learning & Computer Vision",
-    summary: "Investigating the integration of local inductive spatial priors (convolutional layers) with global self-attention mechanisms (transformers) for fine-grained classification of organic and woven microstructures under non-uniform illumination.",
-    focus: "Dual-branch attention architectures and entropy-weighted loss functions for microscopic textile forensics.",
-    tags: ["Cross-Attention", "Micro-Textures", "ViT Hybrid", "Pattern Recognition"]
+    area: "Deep Learning & Vision",
+    summary: "Integrating local inductive spatial priors (convolutional layers) with global self-attention mechanisms (transformers) for fine-grained classification of organic and woven microstructures.",
+    focus: "Dual-branch attention architectures and entropy-weighted loss functions for microscopic textile forensics."
   },
   {
     id: "verifiable-credentials",
-    title: "Decentralized Cryptographic Proofs for Academic Verification",
-    area: "Blockchain & Cryptographic Systems",
-    summary: "Designing verifiable, privacy-preserving credential issuance schemas that allow third parties to independently authenticate academic records on-chain without exposing personally identifiable student information.",
-    focus: "Sparse Merkle tree proofs, smart contract registries, and decentralized IPFS pinning schemas.",
-    tags: ["Smart Contracts", "Sparse Merkle Trees", "Zero-PII Verification", "IPFS"]
+    title: "Decentralized Cryptographic Proofs for Verification",
+    area: "Blockchain & Cryptography",
+    summary: "Designing verifiable, privacy-preserving credential issuance schemas that allow third parties to independently authenticate academic records on-chain without exposing personally identifiable information.",
+    focus: "Sparse Merkle tree proofs, smart contract registries, and decentralized IPFS pinning schemas."
   },
   {
     id: "video-entropy",
-    title: "Spatio-Temporal Redundancy Minimization in Video Streams",
-    area: "Multimedia Computing & Video Analytics",
-    summary: "Exploring content-adaptive segmentation algorithms that compute visual entropy and acoustic semantic shifts to condense lengthy surveillance and educational recordings into non-redundant digests.",
-    focus: "Contrastive temporal embeddings combined with agglomerative clustering across video frame spaces.",
-    tags: ["Keyframe Clustering", "Frame Entropy", "Contrastive Learning", "Multimedia"]
+    title: "Spatio-Temporal Redundancy in Video Streams",
+    area: "Video Analytics",
+    summary: "Content-adaptive segmentation algorithms that compute visual entropy and acoustic semantic shifts to condense lengthy surveillance and educational recordings into concise digests.",
+    focus: "Contrastive temporal embeddings combined with agglomerative clustering across video frame spaces."
   },
   {
     id: "edge-inference",
     title: "Low-Power Edge Ingestion for Habitat Telemetry",
-    area: "Edge Computing & IoT Systems",
-    summary: "Studying post-training quantization and lightweight event filtering for resource-constrained edge camera nodes in remote environmental and wildlife monitoring scenarios.",
-    focus: "8-bit quantization and duty-cycle management on microcontroller architectures to extend solar-battery lifespans.",
-    tags: ["Model Quantization", "Edge AI", "IoT Telemetry", "Embedded Systems"]
+    area: "Edge Computing & IoT",
+    summary: "Post-training quantization and lightweight event filtering for resource-constrained edge camera nodes in remote environmental and wildlife monitoring scenarios.",
+    focus: "8-bit quantization and duty-cycle management on microcontroller architectures to extend solar-battery lifespans."
   }
 ];

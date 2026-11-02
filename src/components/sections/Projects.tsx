@@ -31,22 +31,13 @@ export function Projects({ onSelectProject, activeProjectId }: ProjectsProps) {
       <div className="max-w-7xl mx-auto w-full space-y-12">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pointer-events-auto">
-          <div className="max-w-2xl space-y-4">
-            <div className="flex items-center space-x-3">
-              <span className="font-mono text-xs text-[#A6A6AE] tracking-[0.2em] uppercase">
-                03 // PROJECTS
-              </span>
-              <div className="w-12 h-[1px] bg-white/20" />
-              <span className="font-mono text-xs text-white/40">DISCOVER THE DEPTHS</span>
-            </div>
-
+          <div className="max-w-xl space-y-3">
             <h2 className="text-4xl sm:text-6xl font-light tracking-tight text-white leading-tight">
-              Selected Systems <br />
-              <span className="text-editorial-silver">&amp; Architectures.</span>
+              Selected <br />
+              <span className="text-editorial-silver font-normal">Systems.</span>
             </h2>
-
-            <p className="text-base text-[#A6A6AE] font-light leading-relaxed">
-              Implemented solutions spanning fine-grained neural classification, verifiable credentials, and sensory telemetry.
+            <p className="text-sm sm:text-base text-[#A6A6AE] font-light leading-relaxed">
+              Engineering solutions in neural classification, verifiable credentials, telemetry, and interactive platforms.
             </p>
           </div>
 
@@ -68,9 +59,9 @@ export function Projects({ onSelectProject, activeProjectId }: ProjectsProps) {
           </div>
         </div>
 
-        {/* Polished Project Gallery: Consistent proportions and Obsidian Card styling */}
+        {/* Project Gallery Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pointer-events-auto">
-          {filteredProjects.map((project, idx) => {
+          {filteredProjects.map((project) => {
             const isSelected = activeProjectId === project.id;
             return (
               <div
@@ -81,13 +72,12 @@ export function Projects({ onSelectProject, activeProjectId }: ProjectsProps) {
                 }`}
               >
                 <div className="space-y-4">
-                  {/* Category & Period */}
-                  <div className="flex items-center justify-between text-xs font-mono text-[#A6A6AE]">
-                    <span className="uppercase tracking-wider">{project.category}</span>
-                    <span className="text-white/40">{project.period}</span>
+                  {/* Category */}
+                  <div className="text-xs font-mono text-[#A6A6AE] uppercase tracking-wider">
+                    {project.category}
                   </div>
 
-                  {/* Title & Arrow */}
+                  {/* Title & Description */}
                   <div className="space-y-2">
                     <h3 className="text-xl font-normal text-white group-hover:text-white transition-colors flex items-start justify-between">
                       <span className="leading-snug">{project.title}</span>
@@ -98,7 +88,7 @@ export function Projects({ onSelectProject, activeProjectId }: ProjectsProps) {
                     </p>
                   </div>
 
-                  {/* Architecture Tag */}
+                  {/* Architecture */}
                   {project.architecture && (
                     <div className="pt-1">
                       <span className="inline-block text-[11px] font-mono px-2.5 py-1 rounded bg-white/[0.025] border border-white/[0.08] text-white/80">
@@ -107,8 +97,8 @@ export function Projects({ onSelectProject, activeProjectId }: ProjectsProps) {
                     </div>
                   )}
 
-                  {/* Technology Badges */}
-                  <div className="flex flex-wrap gap-1.5 pt-2">
+                  {/* Technologies */}
+                  <div className="flex flex-wrap gap-1.5 pt-1">
                     {project.technologies.slice(0, 4).map((tech) => (
                       <span
                         key={tech}
@@ -117,18 +107,13 @@ export function Projects({ onSelectProject, activeProjectId }: ProjectsProps) {
                         {tech}
                       </span>
                     ))}
-                    {project.technologies.length > 4 && (
-                      <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-white/[0.02] text-white/40">
-                        +{project.technologies.length - 4}
-                      </span>
-                    )}
                   </div>
                 </div>
 
-                {/* Footer Link / Info */}
+                {/* Footer with clean GitHub link */}
                 <div className="pt-5 mt-5 border-t border-white/[0.08] flex items-center justify-between text-xs font-mono">
-                  <span className="text-[#A6A6AE] group-hover:text-white transition-colors">
-                    View System Specs
+                  <span className="text-white/50 group-hover:text-white transition-colors">
+                    Inspect Architecture
                   </span>
                   {project.github && (
                     <a

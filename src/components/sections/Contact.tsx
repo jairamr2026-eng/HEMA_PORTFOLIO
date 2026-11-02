@@ -35,115 +35,99 @@ export function Contact() {
       id="contact"
       className="relative min-h-screen flex flex-col justify-between px-6 sm:px-12 lg:px-20 pt-28 pb-12 z-10 pointer-events-none"
     >
-      <div className="max-w-7xl mx-auto w-full space-y-16 flex-1 flex flex-col justify-center">
+      <div className="max-w-7xl mx-auto w-full space-y-12 flex-1 flex flex-col justify-center">
         {/* Section Header */}
-        <div className="max-w-3xl space-y-5 pointer-events-auto">
-          <div className="flex items-center space-x-3">
-            <span className="font-mono text-xs text-[#A6A6AE] tracking-[0.2em] uppercase">
-              05 // CONTACT
-            </span>
-            <div className="w-12 h-[1px] bg-white/20" />
-            <span className="font-mono text-xs text-white/40">RETURN TO THE SURFACE</span>
-          </div>
-
+        <div className="max-w-xl space-y-3 pointer-events-auto">
           <h2 className="text-4xl sm:text-6xl font-light tracking-tight text-white leading-tight">
-            Initiate Contact.
+            Get in <br />
+            <span className="text-editorial-silver font-normal">Touch.</span>
           </h2>
-
-          {/* Required Tagline */}
-          <blockquote className="border-l-2 border-white/25 pl-4 py-1 italic text-lg sm:text-xl text-[#A6A6AE] font-light">
-            &ldquo;{PERSONAL_INFO.quote}&rdquo;
-          </blockquote>
+          <p className="text-sm sm:text-base text-[#A6A6AE] font-light leading-relaxed">
+            Open for technical inquiries, research collaboration in machine learning and computer vision, and engineering opportunities.
+          </p>
         </div>
 
         {/* Contact Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start pointer-events-auto">
-          {/* Left Column: Direct Inquiries and Profiles */}
-          <div className="lg:col-span-5 space-y-6">
-            <p className="text-sm text-[#A6A6AE] leading-relaxed font-light">
-              Available for technical inquiries, research collaboration in deep learning and computer vision, and engineering opportunities.
-            </p>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start pointer-events-auto">
+          {/* Left Column: Direct Links & Info */}
+          <div className="lg:col-span-5 space-y-4">
+            {/* Email One-Click Copy */}
+            <div className="p-4 rounded-lg bg-white/[0.025] border border-white/[0.10] flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <Mail className="w-4 h-4 text-[#A6A6AE]" />
+                <span className="font-mono text-xs text-white select-all">
+                  {PERSONAL_INFO.links.email}
+                </span>
+              </div>
+              <button
+                onClick={handleCopyEmail}
+                className="p-1.5 rounded hover:bg-white/[0.08] text-white/50 hover:text-white transition-colors cursor-pointer"
+                title="Copy email to clipboard"
+                aria-label="Copy email address"
+              >
+                {copied ? (
+                  <Check className="w-4 h-4 text-cyan-300" />
+                ) : (
+                  <Copy className="w-4 h-4" />
+                )}
+              </button>
+            </div>
 
-            <div className="space-y-3">
-              {/* Email One-Click Copy */}
-              <div className="p-4 rounded-lg bg-white/[0.025] border border-white/[0.10] flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <Mail className="w-4 h-4 text-[#A6A6AE]" />
-                  <span className="font-mono text-xs text-white select-all">
-                    {PERSONAL_INFO.links.email}
-                  </span>
+            {/* Profiles */}
+            <div className="grid grid-cols-2 gap-3">
+              <a
+                href={PERSONAL_INFO.links.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3.5 rounded-lg bg-white/[0.02] border border-white/[0.08] hover:border-white/[0.22] transition-colors flex items-center justify-between group"
+              >
+                <div className="flex items-center space-x-2.5">
+                  <GithubIcon className="w-4 h-4 text-[#A6A6AE] group-hover:text-white transition-colors" />
+                  <span className="font-mono text-xs text-white">GitHub</span>
                 </div>
-                <button
-                  onClick={handleCopyEmail}
-                  className="p-1.5 rounded hover:bg-white/[0.08] text-white/50 hover:text-white transition-colors cursor-pointer"
-                  title="Copy email to clipboard"
-                  aria-label="Copy email address"
-                >
-                  {copied ? (
-                    <Check className="w-4 h-4 text-white" />
-                  ) : (
-                    <Copy className="w-4 h-4" />
-                  )}
-                </button>
-              </div>
+                <ArrowUpRight className="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 transition-opacity text-white" />
+              </a>
 
-              {/* Profiles */}
-              <div className="grid grid-cols-2 gap-3">
-                <a
-                  href={PERSONAL_INFO.links.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3.5 rounded-lg bg-white/[0.02] border border-white/[0.08] hover:border-white/[0.22] transition-colors flex items-center justify-between group"
-                >
-                  <div className="flex items-center space-x-2.5">
-                    <GithubIcon className="w-4 h-4 text-[#A6A6AE] group-hover:text-white transition-colors" />
-                    <span className="font-mono text-xs text-white">GitHub</span>
-                  </div>
-                  <ArrowUpRight className="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 transition-opacity text-white" />
-                </a>
+              <a
+                href={PERSONAL_INFO.links.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3.5 rounded-lg bg-white/[0.02] border border-white/[0.08] hover:border-white/[0.22] transition-colors flex items-center justify-between group"
+              >
+                <div className="flex items-center space-x-2.5">
+                  <LinkedinIcon className="w-4 h-4 text-[#A6A6AE] group-hover:text-white transition-colors" />
+                  <span className="font-mono text-xs text-white">LinkedIn</span>
+                </div>
+                <ArrowUpRight className="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 transition-opacity text-white" />
+              </a>
+            </div>
 
-                <a
-                  href={PERSONAL_INFO.links.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3.5 rounded-lg bg-white/[0.02] border border-white/[0.08] hover:border-white/[0.22] transition-colors flex items-center justify-between group"
-                >
-                  <div className="flex items-center space-x-2.5">
-                    <LinkedinIcon className="w-4 h-4 text-[#A6A6AE] group-hover:text-white transition-colors" />
-                    <span className="font-mono text-xs text-white">LinkedIn</span>
-                  </div>
-                  <ArrowUpRight className="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 transition-opacity text-white" />
-                </a>
-              </div>
-
-              {/* Academic Location */}
-              <div className="pt-2 text-xs font-mono text-white/40 space-y-1">
-                <div>VIT Vellore · SCOPE</div>
-                <div>Vellore, Tamil Nadu, India</div>
-              </div>
+            {/* Location Tag */}
+            <div className="pt-1 text-xs font-mono text-white/40">
+              Vellore, Tamil Nadu, India
             </div>
           </div>
 
-          {/* Right Column: Restrained Minimal Form */}
+          {/* Right Column: Clean Minimal Form */}
           <div className="lg:col-span-7">
-            <div className="p-6 sm:p-8 rounded-xl bg-white/[0.02] border border-white/[0.10]">
+            <div className="p-6 sm:p-7 rounded-xl bg-white/[0.02] border border-white/[0.10]">
               {formSubmitted ? (
-                <div className="py-10 text-center space-y-3">
-                  <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center mx-auto text-white">
+                <div className="py-8 text-center space-y-2.5">
+                  <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center mx-auto text-cyan-300">
                     <Check className="w-5 h-5" />
                   </div>
-                  <h4 className="text-lg text-white font-normal">Transmission Received</h4>
+                  <h4 className="text-base text-white font-normal">Message Sent</h4>
                   <p className="text-xs text-[#A6A6AE] max-w-sm mx-auto font-light leading-relaxed">
-                    Thank you. Your dispatch has been logged and I will respond to your transmission promptly.
+                    Thank you. I have received your message and will reply shortly.
                   </p>
                   <button
                     onClick={() => {
                       setFormSubmitted(false);
                       setFormData({ name: "", email: "", message: "" });
                     }}
-                    className="font-mono text-xs text-white/50 hover:text-white underline pt-2 cursor-pointer"
+                    className="font-mono text-xs text-white/50 hover:text-white underline pt-1 cursor-pointer"
                   >
-                    Send another dispatch
+                    Send another message
                   </button>
                 </div>
               ) : (
@@ -165,7 +149,7 @@ export function Contact() {
 
                     <div className="space-y-1.5">
                       <label className="font-mono text-xs text-[#A6A6AE] uppercase tracking-wider block">
-                        Email Address
+                        Email
                       </label>
                       <input
                         type="email"
@@ -187,7 +171,7 @@ export function Contact() {
                       rows={4}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      placeholder="Share details of your inquiry, collaboration, or project scope..."
+                      placeholder="Your message or collaboration idea..."
                       className="w-full px-3.5 py-2.5 rounded-md bg-black/60 border border-white/[0.12] focus:border-white/40 text-sm text-white placeholder-white/20 focus:outline-none transition-colors resize-none"
                     />
                   </div>
@@ -205,21 +189,19 @@ export function Contact() {
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="mt-16 pt-8 border-t border-white/[0.08] max-w-7xl mx-auto w-full flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#A6A6AE] pointer-events-auto">
+      {/* Clean Minimal Footer */}
+      <footer className="mt-14 pt-6 border-t border-white/[0.08] max-w-7xl mx-auto w-full flex items-center justify-between text-xs font-mono text-[#A6A6AE] pointer-events-auto">
         <div className="flex items-center space-x-2">
-          <span className="text-white font-medium">{PERSONAL_INFO.name}</span>
-          <span className="text-white/20">/</span>
-          <span>{PERSONAL_INFO.degree}</span>
-          <span className="text-white/20">/</span>
+          <span className="text-white">{PERSONAL_INFO.name}</span>
+          <span className="text-white/20">·</span>
           <span>{PERSONAL_INFO.institution}</span>
         </div>
 
         <button
           onClick={scrollToTop}
-          className="flex items-center space-x-1 text-white/60 hover:text-white transition-colors cursor-pointer"
+          className="flex items-center space-x-1 text-white/50 hover:text-white transition-colors cursor-pointer"
         >
-          <span>Return to surface</span>
+          <span>Top</span>
           <ArrowUp className="w-3.5 h-3.5" />
         </button>
       </footer>
