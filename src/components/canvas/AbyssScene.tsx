@@ -4,6 +4,7 @@ import { Suspense, useState, useEffect } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Jellyfish } from "./Jellyfish";
+import { SmallJellyfishSwarm } from "./SmallJellyfishSwarm";
 import { AbyssalParticles } from "./Particles";
 import { OceanAtmosphere } from "./OceanAtmosphere";
 import { pointerState } from "@/hooks/usePointerTracking";
@@ -98,7 +99,10 @@ export function AbyssScene({ onSelectProject, activeProjectId }: AbyssSceneProps
           {/* Deep Ocean procedural caustics, god rays & atmospheric background quad */}
           <OceanAtmosphere />
 
-          {/* Interactive 3D Jellyfish */}
+          {/* Delicate Small Upward-Drifting Jellyfish Swarm */}
+          <SmallJellyfishSwarm />
+
+          {/* Primary Interactive 3D Jellyfish */}
           <Jellyfish onSelectProject={onSelectProject} activeProjectId={activeProjectId} />
 
           {/* Multi-tier Marine Dust, Micro-Bubbles & Bioluminescent Plankton */}
