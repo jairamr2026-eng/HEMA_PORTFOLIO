@@ -120,32 +120,14 @@ export function AbyssalParticles({ count = 180 }: AbyssalParticlesProps) {
         const i3 = i * 3;
         const i2 = i * 2;
 
-        // Underwater turbulence + constant current drift
+        // Underwater turbulence + constant natural oceanic current drift
         const phase = dustData.phases[i];
         const driftX = dustData.baseVelocities[i3 + 0] + Math.sin(time * 0.35 + phase) * 0.008;
         const driftY = dustData.baseVelocities[i3 + 1] + Math.cos(time * 0.45 + phase) * 0.006;
         const driftZ = dustData.baseVelocities[i3 + 2];
 
-        // Cursor water disturbance: if cursor approaches particle, push away smoothly
-        const dx = pos[i3 + 0] - cursorWorldX;
-        const dy = pos[i3 + 1] - cursorWorldY;
-        const distSq = dx * dx + dy * dy;
-        const repulsionRadiusSq = 4.8; // ~2.2 world units
-
-        if (distSq < repulsionRadiusSq && distSq > 0.01) {
-          const dist = Math.sqrt(distSq);
-          const force = (1.0 - dist / 2.2) * 0.8;
-          // Fluid push + slight tangential swirl
-          disp[i2 + 0] += (dx / dist) * force * clampedDelta * 1.8 - (dy / dist) * force * clampedDelta * 0.6;
-          disp[i2 + 1] += (dy / dist) * force * clampedDelta * 1.8 + (dx / dist) * force * clampedDelta * 0.6;
-        }
-
-        // Viscous fluid dampening of displacement
-        disp[i2 + 0] = THREE.MathUtils.lerp(disp[i2 + 0], 0, clampedDelta * 2.4);
-        disp[i2 + 1] = THREE.MathUtils.lerp(disp[i2 + 1], 0, clampedDelta * 2.4);
-
-        pos[i3 + 0] += (driftX + disp[i2 + 0]) * clampedDelta * 10;
-        pos[i3 + 1] += (driftY + disp[i2 + 1]) * clampedDelta * 10;
+        pos[i3 + 0] += driftX * clampedDelta * 10;
+        pos[i3 + 1] += driftY * clampedDelta * 10;
         pos[i3 + 2] += driftZ * clampedDelta * 10;
 
         // Seamless bounding volume wraps

@@ -2,33 +2,17 @@
 
 import { Suspense, useState, useEffect } from "react";
 import * as THREE from "three";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import { Jellyfish } from "./Jellyfish";
 import { SmallJellyfishSwarm } from "./SmallJellyfishSwarm";
+import { SmallFishSchool } from "./SmallFishSchool";
 import { AbyssalParticles } from "./Particles";
 import { OceanAtmosphere } from "./OceanAtmosphere";
-import { pointerState } from "@/hooks/usePointerTracking";
 import { Project } from "@/data/portfolio-data";
 
 interface AbyssSceneProps {
   onSelectProject?: (project: Project) => void;
   activeProjectId?: string | null;
-}
-
-// Subtle camera parallax controller with restrained motion
-function CameraParallax() {
-  useFrame((state, delta) => {
-    // Use the global pointer state so the scene responds while the cursor is
-    // over any page section, not just the canvas.
-    const targetCamX = pointerState.x * 0.34;
-    const targetCamY = pointerState.y * 0.24;
-
-    state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, targetCamX, Math.min(delta * 2.4, 1));
-    state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, targetCamY, Math.min(delta * 2.4, 1));
-    state.camera.lookAt(0, 0, 0);
-  });
-
-  return null;
 }
 
 export function AbyssScene({ onSelectProject, activeProjectId }: AbyssSceneProps) {
@@ -93,16 +77,17 @@ export function AbyssScene({ onSelectProject, activeProjectId }: AbyssSceneProps
         {/* Underside abyssal fill suggests reflected light from deep ocean floor */}
         <pointLight position={[0, -4.0, 1.8]} intensity={0.85} distance={10} decay={2} color="#1E325A" />
 
-        <CameraParallax />
-
         <Suspense fallback={null}>
           {/* Deep Ocean procedural caustics, god rays & atmospheric background quad */}
           <OceanAtmosphere />
 
-          {/* Delicate Small Upward-Drifting Jellyfish Swarm */}
+          {/* Delicate Small Upward-Drifting Jellyfish Swarm (autonomous upward propulsion) */}
           <SmallJellyfishSwarm />
 
-          {/* Primary Interactive 3D Jellyfish */}
+          {/* Small Deep-Sea Fish School (cruises naturally, ignores cursor) */}
+          <SmallFishSchool />
+
+          {/* Primary Interactive 3D Jellyfish (the only entity that responds to cursor movement) */}
           <Jellyfish onSelectProject={onSelectProject} activeProjectId={activeProjectId} />
 
           {/* Multi-tier Marine Dust, Micro-Bubbles & Bioluminescent Plankton */}
