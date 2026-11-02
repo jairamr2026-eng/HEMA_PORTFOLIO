@@ -16,6 +16,8 @@ interface JellyfishProps {
 export function Jellyfish({ onSelectProject, activeProjectId }: JellyfishProps) {
   const groupRef = useRef<THREE.Group>(null);
   const creatureInnerRef = useRef<THREE.Group>(null);
+  const internalLightRef = useRef<THREE.PointLight>(null);
+  const auraLightRef = useRef<THREE.PointLight>(null);
   const { size } = useThree();
 
   // Load the GLB asset
@@ -45,17 +47,19 @@ export function Jellyfish({ onSelectProject, activeProjectId }: JellyfishProps) 
     if (swimActionName && actions[swimActionName]) {
       const action = actions[swimActionName];
       action.reset().fadeIn(1.2).play();
-      action.timeScale = 0.92; // Natural, steady rhythmic pulse
+      action.setEffectiveTimeScale(0.88); // Natural, graceful deep-ocean cadence
     }
   }, [actions, names]);
 
-  // Refine materials for pure translucent silver-grey & white specular reflections
-  useMemo(() => {
+  // Give each anatomical layer a realistic deep-ocean translucent response:
+  // soft subsurface scattering, subtle internal glow, and crisp rim highlights
+  useEffect(() => {
     gltf.scene.traverse((child) => {
       if ((child as THREE.Mesh).isMesh) {
         const mesh = child as THREE.Mesh;
         mesh.castShadow = false;
         mesh.receiveShadow = false;
+        mesh.renderOrder = 2;
 
         const rawMat = Array.isArray(mesh.material)
           ? mesh.material[0]
@@ -64,35 +68,55 @@ export function Jellyfish({ onSelectProject, activeProjectId }: JellyfishProps) 
         if (rawMat) {
           const originalMat = rawMat as THREE.MeshStandardMaterial;
           originalMat.transparent = true;
-          originalMat.depthWrite = true;
+          originalMat.depthWrite = false;
           originalMat.side = THREE.DoubleSide;
 
           const name = mesh.name.toLowerCase();
 
-          if (name.includes("edge") || name.includes("highlight") || name.includes("ridge")) {
-            // Bright white highlights
-            if ("color" in originalMat) originalMat.color = new THREE.Color("#FFFFFF");
-            originalMat.opacity = 0.88;
+          if (name.includes("edge") || name.includes("highlight") || name.includes("ridge") || name.includes("fringes")) {
+            // The outer rim ridges and fringes catch the strongest surface caustic & rim light
+            if ("color" in originalMat) originalMat.color = new THREE.Color("#F0F6FF");
+            originalMat.opacity = 0.92;
+            originalMat.emissive = new THREE.Color("#8FAEDB");
+            originalMat.emissiveIntensity = 0.24;
+            originalMat.roughness = 0.12;
           } else if (name.includes("canal") || name.includes("gonad")) {
-            // Inner canal organs in silver-lavender
-            if ("color" in originalMat) originalMat.color = new THREE.Color("#B5B5C8");
-            originalMat.opacity = 0.62;
+            // The radial canals and gonads retain a delicate bioluminescent internal pulse
+            if ("color" in originalMat) originalMat.color = new THREE.Color("#B4C4E8");
+            originalMat.opacity = 0.78;
+            originalMat.emissive = new THREE.Color("#586FB5");
+            originalMat.emissiveIntensity = 0.28;
+            originalMat.roughness = 0.25;
           } else if (name.includes("tentacle") || name.includes("arm")) {
-            // Flowing tentacles in translucent silver
-            if ("color" in originalMat) originalMat.color = new THREE.Color("#A8A8C0");
-            originalMat.opacity = 0.54;
+            // Tentacles and frilled oral arms: soft translucent silver-lavender ribbons
+            if ("color" in originalMat) originalMat.color = new THREE.Color("#A8B8D4");
+            originalMat.opacity = 0.65;
+            originalMat.emissive = new THREE.Color("#35476D");
+            originalMat.emissiveIntensity = 0.14;
+            originalMat.roughness = 0.3;
           } else {
-            // Outer bell membrane
-            if ("color" in originalMat) originalMat.color = new THREE.Color("#9E9EB6");
-            originalMat.opacity = 0.48;
+            // The main bell is thin living gelatinous tissue: soft icy-silver tone,
+            // translucent enough to reveal the internal canals and glowing organs
+            if ("color" in originalMat) originalMat.color = new THREE.Color("#B8CAE4");
+            originalMat.opacity = 0.44;
+            originalMat.emissive = new THREE.Color("#2E3D5E");
+            originalMat.emissiveIntensity = 0.1;
+            originalMat.roughness = 0.15;
           }
 
           if ("roughness" in originalMat) {
-            originalMat.roughness = 0.24;
+            originalMat.roughness = Math.min(originalMat.roughness, 0.28);
           }
           if ("metalness" in originalMat) {
-            originalMat.metalness = 0.06;
+            originalMat.metalness = 0.04;
           }
+          if (originalMat instanceof THREE.MeshPhysicalMaterial) {
+            originalMat.clearcoat = 0.45;
+            originalMat.clearcoatRoughness = 0.15;
+            originalMat.transmission = 0.6;
+            originalMat.ior = 1.34;
+          }
+          originalMat.needsUpdate = true;
         }
       }
     });
@@ -121,7 +145,7 @@ export function Jellyfish({ onSelectProject, activeProjectId }: JellyfishProps) 
     const time = state.clock.elapsedTime;
     const clampedDelta = Math.min(delta, 0.1);
 
-    // 1. Initial emergence from deep darkness
+    // 1. Initial emergence from deep oceanic darkness
     if (emergenceRef.current < 1) {
       emergenceRef.current = THREE.MathUtils.lerp(emergenceRef.current, 1, clampedDelta * 1.5);
     }
@@ -131,10 +155,10 @@ export function Jellyfish({ onSelectProject, activeProjectId }: JellyfishProps) 
 
     let targetX = targetConfig.x;
     let targetY = targetConfig.y;
-    let targetZ = targetConfig.z;
-    let targetRotX = targetConfig.rotX;
-    let targetRotY = targetConfig.rotY;
-    let targetRotZ = targetConfig.rotZ;
+    const targetZ = targetConfig.z;
+    const targetRotX = targetConfig.rotX;
+    const targetRotY = targetConfig.rotY;
+    const targetRotZ = targetConfig.rotZ;
     let targetBaseScale = targetConfig.scale;
 
     // Responsive scaling and positioning on mobile viewports
@@ -144,43 +168,44 @@ export function Jellyfish({ onSelectProject, activeProjectId }: JellyfishProps) 
       targetBaseScale = targetBaseScale * 0.65;
     }
 
-    // 3. Pointer tracking with organic lag (clamped to never obscure text)
-    const maxOffsetX = isMobile ? 0.22 : 0.48;
-    const maxOffsetY = 0.30;
+    // 3. Global pointer tracking with aquatic hydrodynamics
+    const maxOffsetX = isMobile ? 0.38 : 0.82;
+    const maxOffsetY = isMobile ? 0.34 : 0.58;
     const targetOffsetX = THREE.MathUtils.clamp(pointerState.x * maxOffsetX, -maxOffsetX, maxOffsetX);
     const targetOffsetY = THREE.MathUtils.clamp(pointerState.y * maxOffsetY, -maxOffsetY, maxOffsetY);
 
-    const lagFactor = clampedDelta * 2.5;
+    const lagFactor = Math.min(clampedDelta * 3.8, 1);
     cursorOffset.current.x = THREE.MathUtils.lerp(cursorOffset.current.x, targetOffsetX, lagFactor);
     cursorOffset.current.y = THREE.MathUtils.lerp(cursorOffset.current.y, targetOffsetY, lagFactor);
 
-    // Velocity estimation for gentle banking
-    creatureVelocity.current.x = (targetOffsetX - cursorOffset.current.x) * 1.2;
-    creatureVelocity.current.y = (targetOffsetY - cursorOffset.current.y) * 1.2;
+    // Velocity estimation for gentle banking into turns
+    creatureVelocity.current.x = (targetOffsetX - cursorOffset.current.x) * 1.4;
+    creatureVelocity.current.y = (targetOffsetY - cursorOffset.current.y) * 1.4;
 
-    // 4. Slow, restrained idle floating
-    const idleY = Math.sin(time * 0.7) * 0.07;
-    const idleRotX = Math.cos(time * 0.5) * 0.02;
-    const idleRotZ = Math.sin(time * 0.6) * 0.025;
+    // 4. Multi-frequency deep ocean currents & organic swimming drift
+    const currentDriftY = Math.sin(time * 0.65) * 0.08 + Math.cos(time * 1.3) * 0.02;
+    const currentDriftX = Math.sin(time * 0.42) * 0.04;
+    const idleRotX = Math.cos(time * 0.5) * 0.025;
+    const idleRotZ = Math.sin(time * 0.58) * 0.03;
 
     // 5. Compute blended final coordinates
-    const finalTargetX = targetX + cursorOffset.current.x;
-    const finalTargetY = targetY + cursorOffset.current.y + idleY;
+    const finalTargetX = targetX + cursorOffset.current.x + currentDriftX;
+    const finalTargetY = targetY + cursorOffset.current.y + currentDriftY;
     const finalTargetZ = targetZ - (1 - emergenceRef.current) * 2.8;
 
-    // Creature leans gently into motion & faces pointer
-    const finalRotX = targetRotX - cursorOffset.current.y * 0.2 + idleRotX;
-    const finalRotY = targetRotY + cursorOffset.current.x * 0.38;
-    const finalRotZ = targetRotZ - creatureVelocity.current.x * 0.45 + idleRotZ;
+    // Creature leans gently into motion & tilts bell toward pointer
+    const finalRotX = targetRotX - cursorOffset.current.y * 0.22 + idleRotX;
+    const finalRotY = targetRotY + cursorOffset.current.x * 0.42;
+    const finalRotZ = targetRotZ - creatureVelocity.current.x * 0.5 + idleRotZ;
 
     // Smooth position and rotation interpolation
-    currentPos.current.x = THREE.MathUtils.lerp(currentPos.current.x, finalTargetX, clampedDelta * 3.0);
-    currentPos.current.y = THREE.MathUtils.lerp(currentPos.current.y, finalTargetY, clampedDelta * 3.0);
-    currentPos.current.z = THREE.MathUtils.lerp(currentPos.current.z, finalTargetZ, clampedDelta * 3.0);
+    currentPos.current.x = THREE.MathUtils.lerp(currentPos.current.x, finalTargetX, clampedDelta * 2.8);
+    currentPos.current.y = THREE.MathUtils.lerp(currentPos.current.y, finalTargetY, clampedDelta * 2.8);
+    currentPos.current.z = THREE.MathUtils.lerp(currentPos.current.z, finalTargetZ, clampedDelta * 2.8);
 
-    currentRot.current.x = THREE.MathUtils.lerp(currentRot.current.x, finalRotX, clampedDelta * 2.8);
-    currentRot.current.y = THREE.MathUtils.lerp(currentRot.current.y, finalRotY, clampedDelta * 2.8);
-    currentRot.current.z = THREE.MathUtils.lerp(currentRot.current.z, finalRotZ, clampedDelta * 2.8);
+    currentRot.current.x = THREE.MathUtils.lerp(currentRot.current.x, finalRotX, clampedDelta * 2.6);
+    currentRot.current.y = THREE.MathUtils.lerp(currentRot.current.y, finalRotY, clampedDelta * 2.6);
+    currentRot.current.z = THREE.MathUtils.lerp(currentRot.current.z, finalRotZ, clampedDelta * 2.6);
 
     const finalScale = targetBaseScale * emergenceRef.current;
     currentScale.current = THREE.MathUtils.lerp(currentScale.current, finalScale, clampedDelta * 2.8);
@@ -188,6 +213,18 @@ export function Jellyfish({ onSelectProject, activeProjectId }: JellyfishProps) 
     groupRef.current.position.set(currentPos.current.x, currentPos.current.y, currentPos.current.z);
     groupRef.current.rotation.set(currentRot.current.x, currentRot.current.y, currentRot.current.z);
     groupRef.current.scale.setScalar(currentScale.current);
+
+    // 6. Subtle procedural breathing rhythm synced with the swim pulse
+    const pulseFactor = Math.sin(time * 1.6) * 0.025;
+    creatureInnerRef.current.scale.set(1 + pulseFactor, 1 + pulseFactor * 1.5, 1 + pulseFactor);
+
+    // 7. Modulate bioluminescent internal heart light & ambient water aura
+    if (internalLightRef.current) {
+      internalLightRef.current.intensity = 0.35 + Math.sin(time * 1.6) * 0.18;
+    }
+    if (auraLightRef.current) {
+      auraLightRef.current.intensity = 0.25 + Math.sin(time * 1.6 + 0.5) * 0.12;
+    }
   });
 
   const isProjectsSection = scrollProgressRef.activeSection === "projects";
@@ -195,6 +232,26 @@ export function Jellyfish({ onSelectProject, activeProjectId }: JellyfishProps) 
   return (
     <group ref={groupRef} dispose={null}>
       <group ref={creatureInnerRef}>
+        {/* Core bioluminescent internal organ glow: soft lavender-blue */}
+        <pointLight
+          ref={internalLightRef}
+          color="#8BAEFF"
+          intensity={0.42}
+          distance={3.2}
+          decay={2}
+          position={[0, 0.18, 0.2]}
+        />
+
+        {/* Ambient oceanic water illumination aura cast onto surrounding particles */}
+        <pointLight
+          ref={auraLightRef}
+          color="#5278C6"
+          intensity={0.28}
+          distance={5.5}
+          decay={2}
+          position={[0, -0.4, 0.5]}
+        />
+
         <primitive object={gltf.scene} />
       </group>
 

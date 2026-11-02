@@ -3,6 +3,8 @@
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import { Navbar } from "@/components/ui/Navbar";
+import { WaterDisturbance } from "@/components/ui/WaterDisturbance";
+import { WaterWashOverlay } from "@/components/ui/WaterWashOverlay";
 import { Hero } from "@/components/sections/Hero";
 import { About } from "@/components/sections/About";
 import { Skills } from "@/components/sections/Skills";
@@ -19,7 +21,7 @@ const AbyssScene = dynamic(
   () => import("@/components/canvas/AbyssScene").then((mod) => mod.AbyssScene),
   {
     ssr: false,
-    loading: () => <div className="fixed inset-0 bg-black -z-10" />,
+    loading: () => <div className="fixed inset-0 bg-[#010308] -z-10" />,
   }
 );
 
@@ -34,14 +36,20 @@ export default function Home() {
   };
 
   return (
-    <main className="relative bg-black text-white min-h-screen selection:bg-white/20 selection:text-white">
-      {/* 3D Abyss Canvas (Full screen fixed background with responsive jellyfish) */}
+    <main className="relative bg-[#010309] text-white min-h-screen selection:bg-cyan-300/20 selection:text-white">
+      {/* 3D Deep Ocean Canvas (Full screen fixed background with responsive jellyfish, caustics, and god rays) */}
       <AbyssScene
         onSelectProject={handleSelectProject}
         activeProjectId={selectedProject?.id || null}
       />
 
-      {/* Persistent Navigation */}
+      {/* Subtle atmospheric water-wash overlay with slow-moving blue-violet waves */}
+      <WaterWashOverlay />
+
+      {/* Interactive water disturbance physics: empty-space ripples and cursor wake */}
+      <WaterDisturbance />
+
+      {/* Persistent Water-Drop Navigation Bar */}
       <Navbar activeSection={activeSection} />
 
       {/* Content Stream across 6 continuous sections */}

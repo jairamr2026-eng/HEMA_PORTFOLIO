@@ -2,16 +2,16 @@
 
 @layer base {
   :root {
-    --bg: #000000;
+    --bg: #010309;
     --text-primary: #FFFFFF;
     --text-secondary: #A6A6AE;
     --text-muted: #71717A;
     --border-subtle: rgba(255, 255, 255, 0.08);
-    --border-glass: rgba(255, 255, 255, 0.12);
-    --border-glass-hover: rgba(255, 255, 255, 0.24);
-    --surface-obsidian: rgba(10, 10, 12, 0.6);
-    --surface-card: rgba(255, 255, 255, 0.03);
-    --surface-card-hover: rgba(255, 255, 255, 0.055);
+    --border-glass: rgba(180, 210, 255, 0.12);
+    --border-glass-hover: rgba(180, 220, 255, 0.28);
+    --surface-obsidian: rgba(6, 10, 20, 0.7);
+    --surface-card: rgba(12, 18, 30, 0.52);
+    --surface-card-hover: rgba(18, 26, 44, 0.68);
   }
 
   * {
@@ -21,14 +21,18 @@
 
   html {
     scroll-behavior: smooth;
-    background-color: #000000;
+    background-color: #010309;
     color: #FFFFFF;
     color-scheme: dark;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
   body {
-    background-color: #000000;
+    background-color: #010309;
+    background-image: 
+      radial-gradient(120% 80% at 50% -20%, rgba(20, 48, 96, 0.35) 0%, rgba(8, 20, 48, 0.18) 50%, rgba(1, 3, 9, 0.98) 100%),
+      radial-gradient(80% 60% at 85% 60%, rgba(18, 32, 70, 0.15) 0%, transparent 70%);
+    background-attachment: fixed;
     color: #FFFFFF;
     overflow-x: hidden;
     margin: 0;
@@ -39,44 +43,44 @@
   }
 
   ::selection {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(120, 180, 255, 0.28);
     color: #FFFFFF;
   }
 
-  /* Architectural minimalist scrollbar */
+  /* Architectural minimalist oceanic scrollbar */
   ::-webkit-scrollbar {
     width: 4px;
   }
   ::-webkit-scrollbar-track {
-    background: #000000;
+    background: #010309;
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.16);
+    background: rgba(160, 200, 255, 0.18);
     border-radius: 2px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.32);
+    background: rgba(180, 220, 255, 0.38);
   }
 }
 
-/* Premium Obsidian Glass Design System */
+/* Premium Obsidian Glass Design System with Oceanic Edge Reflections */
 
 /* Navigation & Floating Overlays */
 .obsidian-nav {
-  background: rgba(6, 6, 8, 0.72);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(6, 10, 22, 0.74);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(160, 205, 255, 0.14);
   border-radius: 12px;
-  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 4px 28px -1px rgba(0, 0, 0, 0.65), 0 0 16px -2px rgba(80, 140, 255, 0.08);
 }
 
-/* Project Cards: Near-black translucent with fine grey outlines & smooth 4px lift */
+/* Project Cards: Deep ocean translucent with subtle marine rim lighting & 4px lift */
 .obsidian-card {
-  background: rgba(12, 12, 16, 0.5);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(10, 16, 28, 0.52);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(160, 200, 255, 0.10);
   border-radius: 14px;
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
@@ -86,25 +90,26 @@
 
 .obsidian-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, 0.24);
-  background: rgba(18, 18, 24, 0.65);
-  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.8),
-              0 0 0 1px rgba(255, 255, 255, 0.12);
+  border-color: rgba(180, 220, 255, 0.28);
+  background: rgba(16, 24, 42, 0.68);
+  box-shadow: 0 12px 36px -4px rgba(0, 0, 0, 0.8),
+              0 0 24px -2px rgba(100, 165, 255, 0.14),
+              0 0 0 1px rgba(180, 220, 255, 0.16);
 }
 
 /* Restrained Minimal Glass Panels for key information */
 .obsidian-panel {
-  background: rgba(10, 10, 14, 0.45);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: rgba(8, 14, 26, 0.48);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(160, 200, 255, 0.10);
   border-radius: 12px;
 }
 
-/* Buttons: Premium Editorial Styling */
+/* Buttons: Premium Editorial Ocean-Luminous Styling */
 .btn-primary {
   background-color: #FFFFFF;
-  color: #000000;
+  color: #01040A;
   font-weight: 500;
   border-radius: 8px;
   border: 1px solid #FFFFFF;
@@ -112,37 +117,233 @@
 }
 
 .btn-primary:hover {
-  background-color: #E5E5E8;
+  background-color: #E8F2FF;
   transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 20px rgba(130, 195, 255, 0.35);
 }
 
 .btn-secondary {
-  background-color: transparent;
+  background-color: rgba(10, 18, 32, 0.4);
   color: #FFFFFF;
   font-weight: 400;
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(160, 205, 255, 0.16);
   transition: all 0.25s ease;
 }
 
 .btn-secondary:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(180, 225, 255, 0.36);
   transform: translateY(-1px);
+  box-shadow: 0 0 14px rgba(100, 160, 255, 0.15);
 }
 
-/* Editorial Monochromatic Typography */
+/* Editorial Monochromatic Silver-Ocean Typography */
 .text-editorial-silver {
-  background: linear-gradient(180deg, #FFFFFF 0%, #D4D4DC 65%, #A6A6AE 100%);
+  background: linear-gradient(180deg, #FFFFFF 0%, #D8E5F8 60%, #9EB0CC 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 /* Accessible focus ring */
 button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.6);
+  outline: 2px solid rgba(140, 200, 255, 0.7);
   outline-offset: 2px;
+}
+
+/* ========================================================== */
+/* WATER DROP & OCEAN ANIMATIONS                              */
+/* ========================================================== */
+
+/* 1. Navbar Water Drop Ripples */
+@keyframes navWaterRipple {
+  0% {
+    width: 0px;
+    height: 0px;
+    opacity: 0.9;
+    border-width: 2px;
+  }
+  60% {
+    opacity: 0.45;
+  }
+  100% {
+    width: 110px;
+    height: 110px;
+    opacity: 0;
+    border-width: 0.8px;
+  }
+}
+
+.animate-nav-water-ripple {
+  animation: navWaterRipple 0.65s cubic-bezier(0.1, 0.8, 0.2, 1) forwards;
+}
+
+/* 2. Tiny Splashing Water Droplets */
+@keyframes navDroplet {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  75% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(var(--target-x), var(--target-y)) scale(0.25);
+    opacity: 0;
+  }
+}
+
+.animate-nav-droplet {
+  animation: navDroplet 0.52s cubic-bezier(0.15, 0.85, 0.35, 1.2) forwards;
+}
+
+/* 3. Liquid Meniscus / Surface Tension Distortion */
+@keyframes waterMeniscus {
+  0% {
+    transform: scale(1, 1);
+  }
+  30% {
+    transform: scale(0.95, 1.05);
+  }
+  65% {
+    transform: scale(1.04, 0.96);
+  }
+  85% {
+    transform: scale(0.99, 1.01);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+.animate-water-meniscus {
+  animation: waterMeniscus 0.42s ease-out;
+}
+
+/* 4. Active Nav Indicator: Flowing Liquid Water Surface Shimmer */
+@keyframes waterSurfaceFlow {
+  0% {
+    background-position: -150% 0;
+  }
+  100% {
+    background-position: 150% 0;
+  }
+}
+
+.animate-water-surface {
+  animation: waterSurfaceFlow 3.5s linear infinite;
+}
+
+/* 5. Viewport Empty-Space Water Disturbance Ripples */
+@keyframes waterRing1 {
+  0% {
+    width: 0px;
+    height: 0px;
+    opacity: 0.85;
+    border-width: 1.8px;
+  }
+  50% {
+    opacity: 0.45;
+  }
+  100% {
+    width: 240px;
+    height: 240px;
+    opacity: 0;
+    border-width: 0.5px;
+  }
+}
+
+@keyframes waterRing2 {
+  0% {
+    width: 0px;
+    height: 0px;
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.65;
+    border-width: 1.4px;
+  }
+  60% {
+    opacity: 0.35;
+  }
+  100% {
+    width: 180px;
+    height: 180px;
+    opacity: 0;
+    border-width: 0.5px;
+  }
+}
+
+@keyframes waterCorePulse {
+  0% {
+    width: 4px;
+    height: 4px;
+    opacity: 0.9;
+  }
+  100% {
+    width: 38px;
+    height: 38px;
+    opacity: 0;
+  }
+}
+
+.animate-water-ring-1 {
+  animation: waterRing1 0.85s cubic-bezier(0.12, 0.75, 0.25, 1) forwards;
+}
+
+.animate-water-ring-2 {
+  animation: waterRing2 0.85s cubic-bezier(0.12, 0.75, 0.25, 1) forwards;
+  animation-delay: 0.12s;
+}
+
+.animate-water-core {
+  animation: waterCorePulse 0.45s ease-out forwards;
+}
+
+/* 6. Viewport Ambient Ocean Washes */
+@keyframes oceanWash1 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-3%, -2%) scale(1.05);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes oceanWash2 {
+  0% {
+    transform: translate(0, 0) scale(1.05);
+  }
+  50% {
+    transform: translate(2%, 3%) scale(1);
+  }
+  100% {
+    transform: translate(0, 0) scale(1.05);
+  }
+}
+
+@keyframes oceanShimmer {
+  0%, 100% {
+    opacity: 0.12;
+  }
+  50% {
+    opacity: 0.22;
+  }
+}
+
+.animate-ocean-wash-1 {
+  animation: oceanWash1 18s ease-in-out infinite;
+}
+
+.animate-ocean-wash-2 {
+  animation: oceanWash2 22s ease-in-out infinite;
+}
+
+.animate-ocean-shimmer {
+  animation: oceanShimmer 8s ease-in-out infinite;
 }
 
 /* Prefers-reduced-motion support */
