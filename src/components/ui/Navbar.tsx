@@ -9,13 +9,13 @@ interface NavbarProps {
   activeSection: SectionId;
 }
 
-const NAV_ITEMS: { id: SectionId; label: string; number: string }[] = [
-  { id: "hero", label: "Contact Zero", number: "00" },
-  { id: "about", label: "Surface", number: "01" },
-  { id: "skills", label: "Ecosystem", number: "02" },
-  { id: "projects", label: "Depths", number: "03" },
-  { id: "research", label: "Unknown", number: "04" },
-  { id: "contact", label: "Return", number: "05" },
+const NAV_ITEMS: { id: SectionId; label: string; index: string }[] = [
+  { id: "hero", label: "Overview", index: "00" },
+  { id: "about", label: "About", index: "01" },
+  { id: "skills", label: "Skills", index: "02" },
+  { id: "projects", label: "Projects", index: "03" },
+  { id: "research", label: "Research", index: "04" },
+  { id: "contact", label: "Contact", index: "05" },
 ];
 
 export function Navbar({ activeSection }: NavbarProps) {
@@ -30,33 +30,37 @@ export function Navbar({ activeSection }: NavbarProps) {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-6 sm:px-10 py-5 transition-all duration-300">
+    <header className="fixed top-0 left-0 right-0 z-50 px-5 sm:px-8 lg:px-12 py-4 transition-all duration-300">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Brand */}
         <button
           onClick={() => scrollToSection("hero")}
-          className="group text-left focus:outline-none focus-visible:ring-1 focus-visible:ring-white"
+          className="group text-left focus:outline-none focus-visible:ring-1 focus-visible:ring-white transition-opacity"
         >
-          <span className="font-mono text-xs text-[#9595B0] tracking-widest block uppercase">
-            ABYSS // PORTFOLIO
-          </span>
-          <span className="text-sm font-semibold tracking-wider text-white group-hover:text-white/80 transition-colors uppercase">
-            {PERSONAL_INFO.name}.
-          </span>
+          <div className="flex items-center space-x-2.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-white opacity-80 group-hover:opacity-100 transition-opacity" />
+            <span className="text-xs sm:text-sm font-medium tracking-wider text-white uppercase">
+              {PERSONAL_INFO.name}
+            </span>
+            <span className="text-xs text-white/30 hidden sm:inline">/</span>
+            <span className="text-xs text-[#A6A6AE] hidden sm:inline font-mono">
+              VIT Vellore
+            </span>
+          </div>
         </button>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-1 glass-panel px-4 py-2 rounded-full">
+        {/* Desktop Navigation: Refined Obsidian Glass with small corner radius */}
+        <nav className="hidden md:flex items-center space-x-1 obsidian-nav px-3 py-1.5">
           {NAV_ITEMS.map((item) => {
             const isActive = activeSection === item.id;
             return (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`relative px-3.5 py-1.5 rounded-full text-xs font-mono tracking-wider uppercase transition-all duration-300 ${
+                className={`px-3 py-1.5 rounded-md text-xs font-mono tracking-wider transition-all duration-200 cursor-pointer ${
                   isActive
-                    ? "text-black bg-white font-medium shadow-[0_0_15px_rgba(255,255,255,0.3)]"
-                    : "text-[#9595B0] hover:text-white hover:bg-white/5"
+                    ? "text-black bg-white font-medium"
+                    : "text-[#A6A6AE] hover:text-white hover:bg-white/[0.05]"
                 }`}
               >
                 <span>{item.label}</span>
@@ -65,61 +69,60 @@ export function Navbar({ activeSection }: NavbarProps) {
           })}
         </nav>
 
-        {/* Quick Connect action on desktop */}
+        {/* Right CTA */}
         <div className="hidden lg:flex items-center space-x-4">
           <a
             href={PERSONAL_INFO.links.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs font-mono text-[#9595B0] hover:text-white transition-colors flex items-center space-x-1"
+            className="text-xs font-mono text-[#A6A6AE] hover:text-white transition-colors flex items-center space-x-1"
           >
-            <span>GH</span>
-            <ArrowUpRight className="w-3 h-3" />
+            <span>GitHub</span>
+            <ArrowUpRight className="w-3.5 h-3.5 opacity-70" />
           </a>
-          <div className="w-[1px] h-3 bg-white/10" />
           <button
             onClick={() => scrollToSection("contact")}
-            className="text-xs font-mono uppercase tracking-wider px-3.5 py-1.5 rounded-full border border-white/20 text-white hover:bg-white hover:text-black transition-all duration-300"
+            className="btn-secondary px-3.5 py-1.5 text-xs font-mono tracking-wider uppercase cursor-pointer"
           >
             Connect
           </button>
         </div>
 
-        {/* Mobile Menu Button */}
+        {/* Mobile menu button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 rounded-lg text-white/70 hover:text-white hover:bg-white/5 focus:outline-none"
+          className="md:hidden p-2 rounded-md text-white/70 hover:text-white hover:bg-white/[0.06] focus:outline-none"
           aria-label="Toggle navigation menu"
         >
-          {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5 text-white/80" />}
         </button>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden mt-3 mx-2 p-6 glass-panel rounded-2xl border border-white/10 space-y-4 animate-in fade-in slide-in-from-top-4 duration-200">
-          <div className="space-y-2">
+        <div className="md:hidden mt-2 mx-1 p-5 obsidian-nav space-y-3">
+          <div className="space-y-1">
             {NAV_ITEMS.map((item) => {
               const isActive = activeSection === item.id;
               return (
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className={`w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-mono tracking-wider uppercase transition-colors ${
+                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-md text-xs font-mono tracking-wider uppercase transition-colors ${
                     isActive
-                      ? "bg-white text-black font-semibold"
-                      : "text-[#9595B0] hover:text-white hover:bg-white/5"
+                      ? "bg-white text-black font-medium"
+                      : "text-[#A6A6AE] hover:text-white hover:bg-white/[0.05]"
                   }`}
                 >
                   <span>{item.label}</span>
-                  <span className="text-xs opacity-60">{item.number}</span>
+                  <span className="opacity-50">{item.index}</span>
                 </button>
               );
             })}
           </div>
 
-          <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-[#9595B0]">
-            <span>VIT Vellore · 2024–2029</span>
+          <div className="pt-3 border-t border-white/[0.08] flex items-center justify-between text-xs font-mono text-[#A6A6AE]">
+            <span>{PERSONAL_INFO.degree}</span>
             <a
               href={`mailto:${PERSONAL_INFO.links.email}`}
               className="text-white hover:underline"

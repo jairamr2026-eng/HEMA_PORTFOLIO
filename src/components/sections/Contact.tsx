@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { PERSONAL_INFO } from "@/data/portfolio-data";
-import { Mail, Send, ArrowUp, CheckCircle, Copy } from "lucide-react";
+import { Mail, ArrowUpRight, ArrowUp, Check, Copy } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/Icons";
 
 export function Contact() {
@@ -11,7 +11,6 @@ export function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    subject: "",
     message: ""
   });
 
@@ -34,116 +33,115 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative min-h-screen flex flex-col justify-between px-6 sm:px-12 lg:px-20 pt-24 pb-12 z-10 pointer-events-none"
+      className="relative min-h-screen flex flex-col justify-between px-6 sm:px-12 lg:px-20 pt-28 pb-12 z-10 pointer-events-none"
     >
       <div className="max-w-7xl mx-auto w-full space-y-16 flex-1 flex flex-col justify-center">
         {/* Section Header */}
-        <div className="max-w-2xl space-y-4 pointer-events-auto">
+        <div className="max-w-3xl space-y-5 pointer-events-auto">
           <div className="flex items-center space-x-3">
-            <span className="font-mono text-xs text-[#9595B0] uppercase tracking-widest">
-              05 // RETURN TO THE SURFACE
+            <span className="font-mono text-xs text-[#A6A6AE] tracking-[0.2em] uppercase">
+              05 // CONTACT
             </span>
             <div className="w-12 h-[1px] bg-white/20" />
+            <span className="font-mono text-xs text-white/40">RETURN TO THE SURFACE</span>
           </div>
 
-          <h2 className="text-4xl sm:text-6xl font-light tracking-tighter text-white">
-            Initiate <br />
-            <span className="text-gradient-silver">First Contact.</span>
+          <h2 className="text-4xl sm:text-6xl font-light tracking-tight text-white leading-tight">
+            Initiate Contact.
           </h2>
 
-          {/* Central Philosophy Quote as specified */}
-          <blockquote className="border-l-2 border-white/30 pl-4 py-1 italic text-lg sm:text-xl text-white/90 font-light">
+          {/* Required Tagline */}
+          <blockquote className="border-l-2 border-white/25 pl-4 py-1 italic text-lg sm:text-xl text-[#A6A6AE] font-light">
             &ldquo;{PERSONAL_INFO.quote}&rdquo;
           </blockquote>
         </div>
 
-        {/* Contact Layout: Info & Form */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start pointer-events-auto">
-          {/* Left Column: Direct Links & Info */}
+        {/* Contact Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start pointer-events-auto">
+          {/* Left Column: Direct Inquiries and Profiles */}
           <div className="lg:col-span-5 space-y-6">
-            <p className="text-sm text-[#9595B0] leading-relaxed font-light">
-              Open to collaborative research in deep learning, algorithmic development, high-performance visual systems, and innovative engineering challenges.
+            <p className="text-sm text-[#A6A6AE] leading-relaxed font-light">
+              Available for technical inquiries, research collaboration in deep learning and computer vision, and engineering opportunities.
             </p>
 
             <div className="space-y-3">
-              {/* Email direct copy box */}
-              <div className="glass-panel p-4 rounded-xl border border-white/10 flex items-center justify-between">
+              {/* Email One-Click Copy */}
+              <div className="p-4 rounded-lg bg-white/[0.025] border border-white/[0.10] flex items-center justify-between">
                 <div className="flex items-center space-x-3">
-                  <Mail className="w-4 h-4 text-[#B5B5C8]" />
+                  <Mail className="w-4 h-4 text-[#A6A6AE]" />
                   <span className="font-mono text-xs text-white select-all">
                     {PERSONAL_INFO.links.email}
                   </span>
                 </div>
                 <button
                   onClick={handleCopyEmail}
-                  className="p-1.5 rounded hover:bg-white/10 text-white/60 hover:text-white transition-colors"
+                  className="p-1.5 rounded hover:bg-white/[0.08] text-white/50 hover:text-white transition-colors cursor-pointer"
                   title="Copy email to clipboard"
                   aria-label="Copy email address"
                 >
                   {copied ? (
-                    <CheckCircle className="w-4 h-4 text-white" />
+                    <Check className="w-4 h-4 text-white" />
                   ) : (
                     <Copy className="w-4 h-4" />
                   )}
                 </button>
               </div>
 
-              {/* Verified Profiles */}
+              {/* Profiles */}
               <div className="grid grid-cols-2 gap-3">
                 <a
                   href={PERSONAL_INFO.links.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="glass-panel p-4 rounded-xl border border-white/10 hover:border-white/30 transition-all flex items-center space-x-3 group"
+                  className="p-3.5 rounded-lg bg-white/[0.02] border border-white/[0.08] hover:border-white/[0.22] transition-colors flex items-center justify-between group"
                 >
-                  <GithubIcon className="w-4 h-4 text-[#B5B5C8] group-hover:text-white transition-colors" />
-                  <div className="text-left">
-                    <span className="font-mono text-xs text-white block">GitHub</span>
-                    <span className="text-[10px] text-[#9595B0]">@hemanathan-r</span>
+                  <div className="flex items-center space-x-2.5">
+                    <GithubIcon className="w-4 h-4 text-[#A6A6AE] group-hover:text-white transition-colors" />
+                    <span className="font-mono text-xs text-white">GitHub</span>
                   </div>
+                  <ArrowUpRight className="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 transition-opacity text-white" />
                 </a>
 
                 <a
                   href={PERSONAL_INFO.links.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="glass-panel p-4 rounded-xl border border-white/10 hover:border-white/30 transition-all flex items-center space-x-3 group"
+                  className="p-3.5 rounded-lg bg-white/[0.02] border border-white/[0.08] hover:border-white/[0.22] transition-colors flex items-center justify-between group"
                 >
-                  <LinkedinIcon className="w-4 h-4 text-[#B5B5C8] group-hover:text-white transition-colors" />
-                  <div className="text-left">
-                    <span className="font-mono text-xs text-white block">LinkedIn</span>
-                    <span className="text-[10px] text-[#9595B0]">/in/hemanathan-r</span>
+                  <div className="flex items-center space-x-2.5">
+                    <LinkedinIcon className="w-4 h-4 text-[#A6A6AE] group-hover:text-white transition-colors" />
+                    <span className="font-mono text-xs text-white">LinkedIn</span>
                   </div>
+                  <ArrowUpRight className="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 transition-opacity text-white" />
                 </a>
               </div>
 
-              {/* Institution badge */}
-              <div className="p-4 rounded-xl border border-white/5 bg-white/[0.015] text-xs font-mono text-[#9595B0] space-y-1">
-                <div className="text-white font-medium">Vellore Institute of Technology</div>
-                <div>School of Computer Science &amp; Engineering</div>
-                <div className="text-white/40">Vellore, Tamil Nadu, India</div>
+              {/* Academic Location */}
+              <div className="pt-2 text-xs font-mono text-white/40 space-y-1">
+                <div>VIT Vellore · SCOPE</div>
+                <div>Vellore, Tamil Nadu, India</div>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Monochromatic Contact Form */}
+          {/* Right Column: Restrained Minimal Form */}
           <div className="lg:col-span-7">
-            <div className="glass-panel p-6 sm:p-8 rounded-2xl border border-white/10">
+            <div className="p-6 sm:p-8 rounded-xl bg-white/[0.02] border border-white/[0.10]">
               {formSubmitted ? (
-                <div className="py-12 text-center space-y-4 animate-in fade-in duration-300">
-                  <div className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center mx-auto text-white">
-                    <CheckCircle className="w-6 h-6" />
+                <div className="py-10 text-center space-y-3">
+                  <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center mx-auto text-white">
+                    <Check className="w-5 h-5" />
                   </div>
-                  <h4 className="text-xl text-white font-light">Transmission Received</h4>
-                  <p className="text-xs text-[#9595B0] max-w-sm mx-auto font-light leading-relaxed">
-                    Thank you for reaching out. Your dispatch has been logged and I will respond to your transmission promptly.
+                  <h4 className="text-lg text-white font-normal">Transmission Received</h4>
+                  <p className="text-xs text-[#A6A6AE] max-w-sm mx-auto font-light leading-relaxed">
+                    Thank you. Your dispatch has been logged and I will respond to your transmission promptly.
                   </p>
                   <button
                     onClick={() => {
                       setFormSubmitted(false);
-                      setFormData({ name: "", email: "", subject: "", message: "" });
+                      setFormData({ name: "", email: "", message: "" });
                     }}
-                    className="font-mono text-xs uppercase tracking-wider text-white/60 hover:text-white underline pt-2"
+                    className="font-mono text-xs text-white/50 hover:text-white underline pt-2 cursor-pointer"
                   >
                     Send another dispatch
                   </button>
@@ -152,7 +150,7 @@ export function Contact() {
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <label className="font-mono text-xs text-[#9595B0] uppercase tracking-wider block">
+                      <label className="font-mono text-xs text-[#A6A6AE] uppercase tracking-wider block">
                         Name
                       </label>
                       <input
@@ -160,13 +158,13 @@ export function Contact() {
                         required
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        placeholder="Ada Lovelace"
-                        className="w-full px-4 py-2.5 rounded-xl bg-black/50 border border-white/10 focus:border-white/40 text-sm text-white placeholder-white/20 focus:outline-none transition-colors"
+                        placeholder="Your Name"
+                        className="w-full px-3.5 py-2.5 rounded-md bg-black/60 border border-white/[0.12] focus:border-white/40 text-sm text-white placeholder-white/20 focus:outline-none transition-colors"
                       />
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="font-mono text-xs text-[#9595B0] uppercase tracking-wider block">
+                      <label className="font-mono text-xs text-[#A6A6AE] uppercase tracking-wider block">
                         Email Address
                       </label>
                       <input
@@ -174,28 +172,14 @@ export function Contact() {
                         required
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        placeholder="ada@domain.edu"
-                        className="w-full px-4 py-2.5 rounded-xl bg-black/50 border border-white/10 focus:border-white/40 text-sm text-white placeholder-white/20 focus:outline-none transition-colors"
+                        placeholder="you@domain.com"
+                        className="w-full px-3.5 py-2.5 rounded-md bg-black/60 border border-white/[0.12] focus:border-white/40 text-sm text-white placeholder-white/20 focus:outline-none transition-colors"
                       />
                     </div>
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="font-mono text-xs text-[#9595B0] uppercase tracking-wider block">
-                      Subject / Research Inquiry
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.subject}
-                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      placeholder="Collaborative exploration on hybrid visual models"
-                      className="w-full px-4 py-2.5 rounded-xl bg-black/50 border border-white/10 focus:border-white/40 text-sm text-white placeholder-white/20 focus:outline-none transition-colors"
-                    />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="font-mono text-xs text-[#9595B0] uppercase tracking-wider block">
+                    <label className="font-mono text-xs text-[#A6A6AE] uppercase tracking-wider block">
                       Message
                     </label>
                     <textarea
@@ -203,17 +187,16 @@ export function Contact() {
                       rows={4}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      placeholder="Share details of your inquiry, prospective collaboration, or technical problem space..."
-                      className="w-full px-4 py-2.5 rounded-xl bg-black/50 border border-white/10 focus:border-white/40 text-sm text-white placeholder-white/20 focus:outline-none transition-colors resize-none"
+                      placeholder="Share details of your inquiry, collaboration, or project scope..."
+                      className="w-full px-3.5 py-2.5 rounded-md bg-black/60 border border-white/[0.12] focus:border-white/40 text-sm text-white placeholder-white/20 focus:outline-none transition-colors resize-none"
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full glass-button-primary py-3 rounded-xl text-xs font-mono uppercase tracking-widest flex items-center justify-center space-x-2 cursor-pointer mt-2"
+                    className="w-full btn-primary py-2.5 text-xs font-mono uppercase tracking-widest cursor-pointer mt-2"
                   >
-                    <span>Transmit Dispatch</span>
-                    <Send className="w-3.5 h-3.5" />
+                    Send Message
                   </button>
                 </form>
               )}
@@ -222,24 +205,23 @@ export function Contact() {
         </div>
       </div>
 
-      {/* Footer Bottom Line */}
-      <footer className="mt-16 pt-8 border-t border-white/10 max-w-7xl mx-auto w-full flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#9595B0] pointer-events-auto">
+      {/* Footer */}
+      <footer className="mt-16 pt-8 border-t border-white/[0.08] max-w-7xl mx-auto w-full flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#A6A6AE] pointer-events-auto">
         <div className="flex items-center space-x-2">
           <span className="text-white font-medium">{PERSONAL_INFO.name}</span>
-          <span className="text-white/30">/</span>
-          <span>Integrated M.Tech CSE · VIT Vellore</span>
+          <span className="text-white/20">/</span>
+          <span>{PERSONAL_INFO.degree}</span>
+          <span className="text-white/20">/</span>
+          <span>{PERSONAL_INFO.institution}</span>
         </div>
 
-        <div className="flex items-center space-x-6">
-          <span>Obsidian Monochrome Aesthetic</span>
-          <button
-            onClick={scrollToTop}
-            className="flex items-center space-x-1 text-white hover:text-white/70 transition-colors"
-          >
-            <span>Surface</span>
-            <ArrowUp className="w-3.5 h-3.5" />
-          </button>
-        </div>
+        <button
+          onClick={scrollToTop}
+          className="flex items-center space-x-1 text-white/60 hover:text-white transition-colors cursor-pointer"
+        >
+          <span>Return to surface</span>
+          <ArrowUp className="w-3.5 h-3.5" />
+        </button>
       </footer>
     </section>
   );

@@ -1,91 +1,84 @@
 "use client";
 
 import { PERSONAL_INFO } from "@/data/portfolio-data";
-import { GraduationCap, MapPin, Sparkles, Binary } from "lucide-react";
+import { ArrowDownRight } from "lucide-react";
 
 export function About() {
   return (
     <section
       id="about"
-      className="relative min-h-screen flex flex-col justify-center px-6 sm:px-12 lg:px-20 py-24 z-10 pointer-events-none"
+      className="relative min-h-screen flex flex-col justify-center px-6 sm:px-12 lg:px-20 py-28 z-10 pointer-events-none"
     >
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        {/* Empty space for jellyfish on left-center on desktop */}
+        {/* Negative space reserved for 3D creature drifting on left-center */}
         <div className="hidden lg:block lg:col-span-5 h-[450px]" />
 
-        {/* Right side content */}
-        <div className="lg:col-span-7 space-y-8 pointer-events-auto">
+        {/* Right side: Elegant text-led editorial layout */}
+        <div className="lg:col-span-7 space-y-10 pointer-events-auto">
           {/* Section Marker */}
           <div className="flex items-center space-x-3">
-            <span className="font-mono text-xs text-[#9595B0] uppercase tracking-widest">
-              01 // BENEATH THE SURFACE
+            <span className="font-mono text-xs text-[#A6A6AE] tracking-[0.2em] uppercase">
+              01 // ABOUT
             </span>
             <div className="w-12 h-[1px] bg-white/20" />
+            <span className="font-mono text-xs text-white/40">BENEATH THE SURFACE</span>
           </div>
 
           {/* Heading */}
-          <div className="space-y-3">
-            <h2 className="text-4xl sm:text-6xl font-light tracking-tighter text-white leading-tight">
-              Decoding Complexity. <br />
-              <span className="text-gradient-silver">Engineering Clarity.</span>
+          <div className="space-y-4">
+            <h2 className="text-4xl sm:text-6xl font-light tracking-tight text-white leading-[1.08]">
+              Architecting Intelligence. <br />
+              <span className="text-editorial-silver">Engineering Clarity.</span>
             </h2>
-            <p className="text-base sm:text-lg text-[#9595B0] leading-relaxed max-w-2xl font-light">
-              I am an Integrated M.Tech student at Vellore Institute of Technology, operating at the intersection of deep neural networks, computer vision, and distributed cryptographic protocols.
+            <p className="text-base sm:text-lg text-[#A6A6AE] leading-relaxed max-w-2xl font-light">
+              {PERSONAL_INFO.bio}
             </p>
           </div>
 
-          {/* Academic Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="p-5 glass-panel rounded-2xl border border-white/10 space-y-2">
-              <div className="flex items-center space-x-2 text-white">
-                <GraduationCap className="w-4 h-4 text-[#B5B5C8]" />
-                <span className="font-mono text-xs uppercase tracking-widest text-[#B5B5C8]">Education</span>
-              </div>
-              <h4 className="text-base text-white font-medium">Integrated M.Tech CSE</h4>
-              <p className="text-xs text-[#9595B0] leading-relaxed">
-                VIT Vellore · School of Computer Science & Engineering (SCOPE)
+          {/* Hairline Divider */}
+          <div className="w-full h-[1px] bg-white/[0.08]" />
+
+          {/* Academic Pedigree & Focus Areas: Clean typographic layout without heavy boxes */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-2">
+            <div className="space-y-2">
+              <span className="font-mono text-xs uppercase tracking-widest text-white/50 block">
+                Academic Background
+              </span>
+              <h3 className="text-base font-normal text-white">
+                {PERSONAL_INFO.degree}
+              </h3>
+              <p className="text-xs text-[#A6A6AE] leading-relaxed">
+                Vellore Institute of Technology (VIT), Vellore
+                <br />
+                School of Computer Science and Engineering (SCOPE)
               </p>
-              <div className="text-[11px] font-mono text-white/50 pt-1">2024 — 2029</div>
+              <div className="font-mono text-[11px] text-white/40 pt-1">
+                2024 — 2029 · Tamil Nadu, India
+              </div>
             </div>
 
-            <div className="p-5 glass-panel rounded-2xl border border-white/10 space-y-2">
-              <div className="flex items-center space-x-2 text-white">
-                <MapPin className="w-4 h-4 text-[#B5B5C8]" />
-                <span className="font-mono text-xs uppercase tracking-widest text-[#B5B5C8]">Location & Base</span>
-              </div>
-              <h4 className="text-base text-white font-medium">Vellore, Tamil Nadu</h4>
-              <p className="text-xs text-[#9595B0] leading-relaxed">
-                Active in open-source research labs and high-performance computing centers.
-              </p>
-              <div className="text-[11px] font-mono text-white/50 pt-1">India · UTC+5:30</div>
-            </div>
-          </div>
-
-          {/* Core Philosophy & Technical Pillars */}
-          <div className="space-y-3 pt-2">
-            <span className="font-mono text-xs uppercase tracking-widest text-white/40 block">
-              Exploration Principles
-            </span>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-[#9595B0]">
-              <div className="p-4 rounded-xl border border-white/5 bg-white/[0.015] hover:border-white/15 transition-colors space-y-1">
-                <div className="font-mono text-xs text-white flex items-center space-x-2">
-                  <Binary className="w-3.5 h-3.5 text-[#B5B5C8]" />
-                  <span>01. Hybrid Architectures</span>
-                </div>
-                <p className="text-xs text-[#9595B0]/80">
-                  Fusing inductive spatial priors of CNNs with global self-attention transformers for nuanced visual recognition.
-                </p>
-              </div>
-
-              <div className="p-4 rounded-xl border border-white/5 bg-white/[0.015] hover:border-white/15 transition-colors space-y-1">
-                <div className="font-mono text-xs text-white flex items-center space-x-2">
-                  <Sparkles className="w-3.5 h-3.5 text-[#B5B5C8]" />
-                  <span>02. Verifiable Trust</span>
-                </div>
-                <p className="text-xs text-[#9595B0]/80">
-                  Deploying immutable smart contracts and decentralized storage schemas that eliminate single points of failure.
-                </p>
-              </div>
+            <div className="space-y-2">
+              <span className="font-mono text-xs uppercase tracking-widest text-white/50 block">
+                Core Exploration Areas
+              </span>
+              <ul className="space-y-2 text-xs text-[#A6A6AE]">
+                <li className="flex items-start space-x-2">
+                  <ArrowDownRight className="w-3.5 h-3.5 text-white/60 shrink-0 mt-0.5" />
+                  <span>Hybrid Neural Networks &amp; Vision Transformers</span>
+                </li>
+                <li className="flex items-start space-x-2">
+                  <ArrowDownRight className="w-3.5 h-3.5 text-white/60 shrink-0 mt-0.5" />
+                  <span>Fine-Grained Texture &amp; Textile Pattern Forensics</span>
+                </li>
+                <li className="flex items-start space-x-2">
+                  <ArrowDownRight className="w-3.5 h-3.5 text-white/60 shrink-0 mt-0.5" />
+                  <span>Decentralized Credential Verification &amp; Web3</span>
+                </li>
+                <li className="flex items-start space-x-2">
+                  <ArrowDownRight className="w-3.5 h-3.5 text-white/60 shrink-0 mt-0.5" />
+                  <span>Quantized Edge Telemetry &amp; Habitat Sensing</span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useRef, useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Jellyfish } from "./Jellyfish";
@@ -13,31 +13,19 @@ interface AbyssSceneProps {
   activeProjectId?: string | null;
 }
 
-// Subtle camera parallax controller
+// Subtle camera parallax controller with restrained motion
 function CameraParallax() {
   useFrame((state, delta) => {
-    // Gentle camera sway based on smoothed pointer
-    const targetCamX = pointerState.x * 0.25;
-    const targetCamY = pointerState.y * 0.18;
-    
-    state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, targetCamX, delta * 1.5);
-    state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, targetCamY, delta * 1.5);
+    // Highly restrained camera sway
+    const targetCamX = pointerState.x * 0.18;
+    const targetCamY = pointerState.y * 0.12;
+
+    state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, targetCamX, delta * 1.2);
+    state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, targetCamY, delta * 1.2);
     state.camera.lookAt(0, 0, 0);
   });
 
   return null;
-}
-
-// Non-WebGL or Loading Fallback
-function WebGLFallback() {
-  return (
-    <div className="absolute inset-0 flex items-center justify-center bg-black text-white/50 pointer-events-none">
-      <div className="text-center space-y-3">
-        <div className="w-10 h-10 border border-white/20 border-t-white rounded-full animate-spin mx-auto" />
-        <p className="font-mono text-xs tracking-widest uppercase">Initializing Deep Ecosystem...</p>
-      </div>
-    </div>
-  );
 }
 
 export function AbyssScene({ onSelectProject, activeProjectId }: AbyssSceneProps) {
@@ -63,8 +51,8 @@ export function AbyssScene({ onSelectProject, activeProjectId }: AbyssSceneProps
 
   if (!webglSupported) {
     return (
-      <div className="fixed inset-0 bg-black -z-10 flex items-center justify-center text-white/40">
-        <p className="font-mono text-xs tracking-widest uppercase">3D Acceleration Unavailable · Minimal Mode Active</p>
+      <div className="fixed inset-0 bg-black -z-10 flex items-center justify-center text-white/30">
+        <p className="font-mono text-xs tracking-widest uppercase">Minimal Display Mode Active</p>
       </div>
     );
   }
@@ -74,32 +62,32 @@ export function AbyssScene({ onSelectProject, activeProjectId }: AbyssSceneProps
       <Canvas
         className="w-full h-full pointer-events-auto"
         camera={{ position: [0, 0, 6.8], fov: 45, near: 0.1, far: 50 }}
-        dpr={[1, 2]} // Performance: limit DPR to 2 max
+        dpr={[1, 1.75]} // Smooth performance across standard and high-DPI displays
         gl={{
           antialias: true,
           alpha: true,
           powerPreference: "high-performance",
           toneMapping: THREE.ACESFilmicToneMapping,
-          toneMappingExposure: 1.05
+          toneMappingExposure: 1.02
         }}
       >
         {/* Soft, restrained monochromatic lighting */}
-        <ambientLight intensity={0.9} color="#FFFFFF" />
-        
-        {/* Pure white rim light from above-back to illuminate translucent bell ridges */}
-        <directionalLight position={[0, 5, -3]} intensity={2.8} color="#FFFFFF" />
-        
-        {/* Subtle front fill light */}
-        <directionalLight position={[3, 2, 4]} intensity={1.1} color="#E0E0EC" />
-        
-        {/* Soft underside bounce light */}
-        <pointLight position={[0, -4, 2]} intensity={0.6} color="#888899" />
+        <ambientLight intensity={0.75} color="#FFFFFF" />
+
+        {/* Crisp white rim light to highlight translucent contours */}
+        <directionalLight position={[0, 5.5, -3.2]} intensity={2.6} color="#FFFFFF" />
+
+        {/* Soft front-angled key fill */}
+        <directionalLight position={[2.8, 1.8, 3.8]} intensity={0.95} color="#E8E8F2" />
+
+        {/* Restrained underside glow */}
+        <pointLight position={[0, -3.6, 2]} intensity={0.4} color="#9E9EB2" />
 
         <CameraParallax />
 
         <Suspense fallback={null}>
           <Jellyfish onSelectProject={onSelectProject} activeProjectId={activeProjectId} />
-          <AbyssalParticles count={80} />
+          <AbyssalParticles count={40} />
         </Suspense>
       </Canvas>
     </div>

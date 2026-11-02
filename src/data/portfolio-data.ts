@@ -6,16 +6,16 @@ export interface Project {
   description: string;
   details: string[];
   technologies: string[];
-  metrics?: string;
+  architecture?: string;
   github?: string;
   demo?: string;
-  hotspotCoord?: [number, number, number]; // Coordinates relative to jellyfish in 3D
 }
 
 export interface SkillCategory {
+  id: string;
   title: string;
-  subtitle: string;
-  skills: { name: string; level?: string; highlight?: boolean }[];
+  description: string;
+  skills: string[];
 }
 
 export interface ResearchItem {
@@ -23,30 +23,25 @@ export interface ResearchItem {
   title: string;
   area: string;
   summary: string;
-  methodology: string;
-  impact: string;
-  status: 'In Progress' | 'Experimental' | 'Completed';
+  focus: string;
   tags: string[];
 }
 
 export const PERSONAL_INFO = {
   name: "Hemanathan R",
-  role: "Creative Engineer & Systems Developer",
-  status: "Integrated M.Tech CSE · VIT Vellore",
-  education: {
-    degree: "Integrated M.Tech in Computer Science and Engineering",
-    institution: "Vellore Institute of Technology (VIT), Vellore",
-    school: "School of Computer Science and Engineering (SCOPE)",
-    timeline: "2024 – 2029",
-    location: "Vellore, Tamil Nadu, India"
-  },
-  bio: "Exploring the convergence of artificial intelligence, computer vision, and distributed systems. Focused on architecting resilient digital ecosystems and high-fidelity algorithmic models that bring clarity to complex data.",
+  role: "Creative Developer & Systems Engineer",
+  institution: "VIT Vellore · SCOPE",
+  degree: "Integrated M.Tech CSE",
+  timeline: "2024–2029",
+  location: "Vellore, Tamil Nadu, India",
+  headline: "Exploring the Unknown.",
+  subheadline: "Building intelligent systems and creating meaningful digital experiences at the intersection of technology and imagination.",
+  bio: "Integrated M.Tech Computer Science student at Vellore Institute of Technology. Exploring the boundaries of deep neural networks, computer vision, and distributed cryptographic protocols through rigorous engineering and high-fidelity interaction design.",
   quote: "Every great idea begins somewhere in the unknown.",
   links: {
     github: "https://github.com/hemanathan-r",
     linkedin: "https://linkedin.com/in/hemanathan-r",
-    email: "hemanathan.r@vitstudent.ac.in",
-    portfolio: "https://hemanathan.dev"
+    email: "hemanathan.r@vitstudent.ac.in"
   }
 };
 
@@ -54,219 +49,201 @@ export const PROJECTS: Project[] = [
   {
     id: "handloom-fabric",
     title: "Indian Handloom Fabric Classification",
-    category: "Deep Learning & Computer Vision",
-    period: "2025 – Present",
-    description: "A hybrid deep learning architecture combining Convolutional Neural Networks and Vision Transformers for fine-grained classification of traditional Indian handloom weaves, preserving cultural heritage through automated textile forensics.",
+    category: "AI & Computer Vision",
+    period: "2025",
+    description: "Hybrid deep learning architecture combining convolutional neural networks with vision transformers for fine-grained classification of traditional Indian handloom textile weaves.",
     details: [
-      "Engineered a multi-scale feature extractor capturing both micro-texture thread weave geometry and macro-level artisan motif patterns.",
-      "Trained on high-resolution microscopic and macroscopic handloom datasets across diverse regional styles (Kanchipuram, Banarasi, Chanderi, Ikat).",
-      "Achieved high accuracy on fine-grained weave classification under varying illumination and wear conditions.",
-      "Implemented Grad-CAM explainability maps to validate feature saliency along warp and weft yarn intersections."
+      "Dual-stream feature extractor capturing both micro-texture thread geometry and macro-level artisan motif patterns.",
+      "Trained on high-resolution microscopic and macroscopic datasets across diverse regional weaving traditions.",
+      "Fine-grained multi-class evaluation under varying illumination and wear states.",
+      "Grad-CAM saliency mapping to inspect feature activation across warp and weft yarn intersections."
     ],
-    technologies: ["PyTorch", "Vision Transformers", "ResNet/EfficientNet", "OpenCV", "FastAPI", "Python"],
-    metrics: "94.8% Top-1 Accuracy",
-    github: "https://github.com/hemanathan-r/handloom-fabric-classification",
-    hotspotCoord: [1.2, 0.4, 0.5]
+    technologies: ["PyTorch", "Vision Transformers", "ResNet", "OpenCV", "Python"],
+    architecture: "CNN + ViT Dual-Branch Backbone",
+    github: "https://github.com/hemanathan-r/handloom-fabric-classification"
   },
   {
     id: "veridegree",
-    title: "VeriDegree — Blockchain Verification",
-    category: "Web3 & Distributed Systems",
+    title: "VeriDegree — Blockchain Degree Verification",
+    category: "Blockchain & Web3",
     period: "2025",
-    description: "Decentralized tamper-proof academic credential issuance and verification protocol built on Ethereum smart contracts and IPFS decentralized storage, eliminating credential fraud.",
+    description: "Decentralized tamper-proof academic credential issuance and verification protocol built on Ethereum smart contracts and IPFS decentralized storage.",
     details: [
-      "Architected Solidity smart contracts supporting cryptographic signature verification and verifiable tamper-evident credential hashes.",
-      "Decentralized metadata storage using IPFS with cryptographic pinning for lifetime accessibility without centralized server dependencies.",
-      "Sub-second verification engine enabling employers and universities to independently validate academic records without third-party intermediaries.",
-      "Optimized gas consumption using cryptographic Merkle proofs for batch certification issuance."
+      "Solidity smart contracts supporting cryptographic signature verification and tamper-evident credential records.",
+      "Decentralized metadata persistence via IPFS with cryptographic pinning for long-term auditability.",
+      "Direct verification engine enabling third parties to independently authenticate academic records without intermediaries.",
+      "Gas-conscious transaction design using cryptographic Merkle roots for batch issuance."
     ],
-    technologies: ["Solidity", "Ethereum", "IPFS", "Ethers.js", "Next.js", "TypeScript", "Tailwind CSS"],
-    metrics: "Gas-optimized Merkle proofs",
-    github: "https://github.com/hemanathan-r/veridegree",
-    hotspotCoord: [-1.2, 0.2, 0.6]
+    technologies: ["Solidity", "Ethereum", "IPFS", "Ethers.js", "TypeScript", "Next.js"],
+    architecture: "Smart Contract Registry & IPFS Pinning",
+    github: "https://github.com/hemanathan-r/veridegree"
   },
   {
     id: "wildlife-monitoring",
     title: "Cloud-Based Wildlife Monitoring",
-    category: "IoT & Distributed Cloud AI",
-    period: "2024 – 2025",
-    description: "An automated sensor-camera telemetry platform for remote wildlife habitats, utilizing edge motion filtering and cloud deep learning inference to detect, classify, and track endangered species in near-real-time.",
+    category: "Computer Vision & Cloud",
+    period: "2024–2025",
+    description: "Automated sensor-camera telemetry platform for remote wildlife habitats, utilizing edge motion filtering and cloud deep learning inference to identify species.",
     details: [
-      "Integrated low-power IoT camera nodes with lightweight edge motion detection algorithms to conserve battery life and bandwidth.",
-      "Constructed a scalable cloud ingestion pipeline processing asynchronous telemetry events and visual triggers.",
-      "Custom YOLO-based wildlife detection pipeline trained on challenging forest night-vision and camouflage camera trap imagery.",
-      "Real-time geographic dashboard tracking migration corridors and issuing automated conservation alert dispatches."
+      "IoT camera node telemetry integrating lightweight motion triggering to conserve remote battery life.",
+      "Cloud ingestion pipeline processing asynchronous camera trap events and visual triggers.",
+      "YOLO-based detection pipeline adapted for challenging forest night-vision and camouflage imagery.",
+      "Interactive monitoring console mapping habitat events and temporal species activity."
     ],
-    technologies: ["Python", "YOLOv8", "AWS S3 / Lambda", "MQTT", "Docker", "PostgreSQL", "React"],
-    metrics: "Near real-time alert latency (<1.8s)",
-    github: "https://github.com/hemanathan-r/wildlife-monitoring-cloud",
-    hotspotCoord: [0.9, -0.6, 0.8]
+    technologies: ["Python", "YOLOv8", "AWS S3 / Lambda", "MQTT", "Docker", "PostgreSQL"],
+    architecture: "Edge Triggering & Cloud Inference Pipeline",
+    github: "https://github.com/hemanathan-r/wildlife-monitoring-cloud"
   },
   {
     id: "video-summarization",
     title: "Automated Video Summarization",
-    category: "Multimedia Computing & NLP",
+    category: "Computer Vision & NLP",
     period: "2024",
-    description: "An intelligent video summarization engine that processes long-form lecture and surveillance footage into concise, high-entropy keyframe storyboards and temporal digest reels.",
+    description: "Intelligent video processing engine that compresses long-form lecture and surveillance footage into high-entropy keyframe storyboards and concise digests.",
     details: [
-      "Employed spatio-temporal convolutional embeddings alongside clustering algorithms to identify non-redundant informative scene boundaries.",
-      "Integrated audio transcription and NLP keyword density scoring to align visual transitions with salient semantic discussion peaks.",
-      "Reduces 60+ minute recordings into dynamic 3-5 minute high-information synopses without losing critical context.",
-      "Export formats support interactive chapter markers and exportable time-coded research notes."
+      "Spatio-temporal convolutional embeddings paired with clustering algorithms to identify non-redundant scene boundaries.",
+      "Integrated audio transcription alignment to balance visual transitions with semantic topic shifts.",
+      "Reduces lengthy recordings into dynamic visual summaries without losing essential informational context.",
+      "Exportable timeline markers and keyframe indexes."
     ],
-    technologies: ["Python", "FFmpeg", "OpenCV", "Scikit-Learn", "Transformers", "Streamlit"],
-    metrics: "85% Redundancy Reduction",
-    github: "https://github.com/hemanathan-r/video-summarizer",
-    hotspotCoord: [-0.9, -0.8, 0.7]
+    technologies: ["Python", "FFmpeg", "OpenCV", "Scikit-Learn", "Transformers"],
+    architecture: "Spatio-Temporal Clustering & Keyframe Extraction",
+    github: "https://github.com/hemanathan-r/video-summarizer"
   },
   {
     id: "silkweave",
     title: "Silkweave",
-    category: "Full Stack & Artisan Commerce",
+    category: "Full-Stack Development",
     period: "2024",
-    description: "A digital ecosystem linking traditional weavers directly with global consumers, combining generative design previews, provenance tracking, and an intuitive minimal commerce interface.",
+    description: "Digital ecosystem linking traditional textile weavers with global buyers, featuring real-time interactive previews and provenance tracking.",
     details: [
-      "Built responsive, accessible frontend with high-performance product rendering and fluid micro-interactions.",
-      "Incorporated transparent supply-chain provenance logging highlighting individual weaver artisan profiles.",
-      "Designed an interactive 3D fabric drape simulator enabling buyers to visualize textile sheen and texture under lighting.",
-      "Secure payment processing and real-time inventory management backend."
+      "Minimalist, accessible interface with high-performance product rendering and fluid transitions.",
+      "Transparent supply-chain provenance logging highlighting individual weaver artisan profiles.",
+      "Interactive 3D textile preview exploring material sheen and drape under dynamic virtual lighting.",
+      "Responsive client-server architecture with secure backend data synchronization."
     ],
-    technologies: ["Next.js", "TypeScript", "Three.js", "Node.js", "Prisma", "PostgreSQL"],
-    metrics: "Direct-to-Artisan Fair Trade",
-    github: "https://github.com/hemanathan-r/silkweave",
-    hotspotCoord: [0.7, -1.5, 0.5]
+    technologies: ["Next.js", "TypeScript", "Three.js", "Node.js", "PostgreSQL"],
+    architecture: "Modular Client-Server with WebGL Previews",
+    github: "https://github.com/hemanathan-r/silkweave"
   },
   {
     id: "lifeos",
     title: "LifeOS",
-    category: "Productivity & Personal Systems",
+    category: "Full-Stack Development",
     period: "2024",
-    description: "A unified cognitive operating system and knowledge graph designed to manage academic tasks, research notes, habits, and algorithmic problem-solving progress in one cohesive workspace.",
+    description: "Unified cognitive operating system and knowledge graph designed to organize academic coursework, algorithmic problem-solving, and research notes.",
     details: [
-      "Bidirectional knowledge linking with dynamic graph visualization of research concepts and course topics.",
-      "Automated spaced-repetition scheduling algorithm tailored for complex engineering and mathematical concepts.",
-      "Minimalist dark editorial aesthetic optimized for sustained cognitive focus and distraction-free deep work.",
-      "Local-first architecture with end-to-end encrypted synchronization."
+      "Bidirectional note linking with interactive graph visualization of connected engineering concepts.",
+      "Spaced-repetition review scheduler tailored for algorithmic problem sets and systems architectures.",
+      "Local-first architecture designed for zero distraction and instantaneous query performance.",
+      "End-to-end client-side encryption with offline persistence."
     ],
-    technologies: ["React", "TypeScript", "Tailwind CSS", "IndexedDB", "Zustand", "Graphology"],
-    metrics: "Zero-latency local first",
-    github: "https://github.com/hemanathan-r/life-os",
-    hotspotCoord: [-0.7, -1.6, 0.5]
+    technologies: ["React", "TypeScript", "Tailwind CSS", "IndexedDB", "Zustand"],
+    architecture: "Local-First Graph Database & Client Storage",
+    github: "https://github.com/hemanathan-r/life-os"
   }
 ];
 
+// Grouped strictly into AI/ML, Computer Vision, Full-Stack Development, and Blockchain
 export const SKILL_GROUPS: SkillCategory[] = [
   {
-    title: "Programming & Foundations",
-    subtitle: "Core algorithmic and systems engineering languages",
-    skills: [
-      { name: "Python", highlight: true },
-      { name: "C++", highlight: true },
-      { name: "TypeScript", highlight: true },
-      { name: "JavaScript" },
-      { name: "SQL (PostgreSQL)" },
-      { name: "Solidity" },
-      { name: "Data Structures & Algorithms", highlight: true },
-      { name: "OOP & Systems Design" }
-    ]
-  },
-  {
+    id: "ai-ml",
     title: "AI & Machine Learning",
-    subtitle: "Deep neural networks, models & evaluation frameworks",
+    description: "Neural network architectures, statistical modeling, and training pipelines.",
     skills: [
-      { name: "PyTorch", highlight: true },
-      { name: "TensorFlow" },
-      { name: "Scikit-Learn" },
-      { name: "Vision Transformers (ViT)", highlight: true },
-      { name: "Convolutional Networks (CNN)", highlight: true },
-      { name: "Transfer Learning" },
-      { name: "Model Optimization" },
-      { name: "Feature Engineering" }
+      "PyTorch",
+      "TensorFlow",
+      "Vision Transformers (ViT)",
+      "Convolutional Networks (CNN)",
+      "Deep Learning",
+      "Scikit-Learn",
+      "Model Optimization",
+      "Transfer Learning",
+      "Feature Engineering"
     ]
   },
   {
-    title: "Computer Vision & Media",
-    subtitle: "Image forensics, video processing & spatio-temporal analysis",
+    id: "computer-vision",
+    title: "Computer Vision",
+    description: "Spatial-temporal pattern recognition, image processing, and forensic analysis.",
     skills: [
-      { name: "OpenCV", highlight: true },
-      { name: "YOLO Object Detection", highlight: true },
-      { name: "Fine-Grained Classification" },
-      { name: "Keyframe Extraction" },
-      { name: "Spatio-Temporal Clustering" },
-      { name: "Image Segmentation" },
-      { name: "FFmpeg Pipelines" },
-      { name: "Grad-CAM Explainability" }
+      "OpenCV",
+      "YOLO Object Detection",
+      "Fine-Grained Classification",
+      "Keyframe Extraction",
+      "Image Segmentation",
+      "Spatio-Temporal Clustering",
+      "FFmpeg Pipelines",
+      "Grad-CAM Saliency",
+      "Textile Pattern Forensics"
     ]
   },
   {
-    title: "Web & Interactive Systems",
-    subtitle: "Modern client-server architectures & 3D graphics",
+    id: "full-stack",
+    title: "Full-Stack Development",
+    description: "Modern interactive web systems, creative graphics, and performant backends.",
     skills: [
-      { name: "Next.js (App Router)", highlight: true },
-      { name: "React", highlight: true },
-      { name: "Three.js / React Three Fiber", highlight: true },
-      { name: "Tailwind CSS" },
-      { name: "Node.js" },
-      { name: "REST & GraphQL APIs" },
-      { name: "WebGL Shaders" },
-      { name: "State Management" }
+      "TypeScript",
+      "Python",
+      "C++",
+      "Next.js (App Router)",
+      "React",
+      "Three.js / React Three Fiber",
+      "Node.js",
+      "Tailwind CSS",
+      "PostgreSQL",
+      "REST & GraphQL APIs"
     ]
   },
   {
-    title: "Distributed & Web3 Systems",
-    subtitle: "Decentralized trust, cloud infrastructure & containerization",
+    id: "blockchain",
+    title: "Blockchain & Distributed Systems",
+    description: "Decentralized consensus, verifiable credential protocols, and cloud infrastructure.",
     skills: [
-      { name: "Ethereum Smart Contracts", highlight: true },
-      { name: "IPFS Decentralized Storage" },
-      { name: "Docker & Containerization", highlight: true },
-      { name: "Git & Version Control" },
-      { name: "Linux Systems Administration" },
-      { name: "Cloud Ingestion (AWS/GCP)" },
-      { name: "Cryptographic Hashing & Merkle Trees" },
-      { name: "CI/CD Workflows" }
+      "Solidity",
+      "Ethereum Smart Contracts",
+      "IPFS Decentralized Storage",
+      "Cryptographic Merkle Trees",
+      "Docker & Containerization",
+      "Linux Systems",
+      "AWS / Cloud Ingestion",
+      "Git & CI/CD",
+      "Verifiable Credentials"
     ]
   }
 ];
 
-export const RESEARCH_TOPICS: ResearchItem[] = [
+export const RESEARCH_INTERESTS: ResearchItem[] = [
   {
-    id: "res-handloom",
-    title: "Hybrid Feature Fusion for Micro-Texture Pattern Classification",
-    area: "Deep Learning & Cultural Computing",
-    summary: "Investigating the complementary representation of localized high-frequency spatial filters (CNNs) and global self-attention mechanisms (Vision Transformers) for classifying intricate organic and woven microstructures under non-uniform illumination.",
-    methodology: "Dual-branch backbone architecture with cross-attention fusion modules and entropy-weighted loss formulation.",
-    impact: "Provides automated, verifiable non-destructive authentication for artisanal textile preservation and intellectual property protection.",
-    status: "Experimental",
-    tags: ["Cross-Attention", "Micro-Texture Analysis", "ViT Hybrid", "Textile Forensics"]
+    id: "hybrid-vision",
+    title: "Hybrid Feature Fusion in Micro-Texture Analysis",
+    area: "Deep Learning & Computer Vision",
+    summary: "Investigating the integration of local inductive spatial priors (convolutional layers) with global self-attention mechanisms (transformers) for fine-grained classification of organic and woven microstructures under non-uniform illumination.",
+    focus: "Dual-branch attention architectures and entropy-weighted loss functions for microscopic textile forensics.",
+    tags: ["Cross-Attention", "Micro-Textures", "ViT Hybrid", "Pattern Recognition"]
   },
   {
-    id: "res-credential",
+    id: "verifiable-credentials",
     title: "Decentralized Cryptographic Proofs for Academic Verification",
-    area: "Distributed Ledger Technology & Cryptography",
-    summary: "Developing verifiable, zero-knowledge adjacent credential schemas that permit third parties to mathematically verify academic qualifications and degrees without exposing student personally identifiable information (PII).",
-    methodology: "Sparse Merkle trees coupled with off-chain IPFS payload hashes signed via institutional ECDSA keys on Ethereum compatible L2 networks.",
-    impact: "Mitigates credential counterfeiting on a global scale while drastically reducing operational verification latency and gas overhead.",
-    status: "In Progress",
-    tags: ["Smart Contracts", "Sparse Merkle Trees", "Zero PII Exposure", "IPFS Storage"]
+    area: "Blockchain & Cryptographic Systems",
+    summary: "Designing verifiable, privacy-preserving credential issuance schemas that allow third parties to independently authenticate academic records on-chain without exposing personally identifiable student information.",
+    focus: "Sparse Merkle tree proofs, smart contract registries, and decentralized IPFS pinning schemas.",
+    tags: ["Smart Contracts", "Sparse Merkle Trees", "Zero-PII Verification", "IPFS"]
   },
   {
-    id: "res-video",
-    title: "Spatio-Temporal Redundancy Minimization in Educational Footage",
-    area: "Multimedia Systems & Video Analytics",
-    summary: "Researching content-adaptive temporal segmentation algorithms that evaluate visual frame entropy alongside acoustic semantic shifts to synthesize minimal yet comprehensive video summaries.",
-    methodology: "Temporal contrastive learning on video clip snippets combined with unsupervised agglomerative clustering on deep feature representations.",
-    impact: "Enables accelerated student revision and accessible indexing of high-volume digital educational repositories.",
-    status: "Completed",
-    tags: ["Video Summarization", "Frame Entropy", "Contrastive Embeddings", "Keyframe Clustering"]
+    id: "video-entropy",
+    title: "Spatio-Temporal Redundancy Minimization in Video Streams",
+    area: "Multimedia Computing & Video Analytics",
+    summary: "Exploring content-adaptive segmentation algorithms that compute visual entropy and acoustic semantic shifts to condense lengthy surveillance and educational recordings into non-redundant digests.",
+    focus: "Contrastive temporal embeddings combined with agglomerative clustering across video frame spaces.",
+    tags: ["Keyframe Clustering", "Frame Entropy", "Contrastive Learning", "Multimedia"]
   },
   {
-    id: "res-edge",
-    title: "Low-Power Edge Ingestion & Event Detection in Wildlife Habitats",
-    area: "Edge AI & IoT Systems",
-    summary: "Designing quantized neural models deployable on ultra-low-power microcontrollers for real-time edge filtering of camera trap telemetry, transmitting only high-confidence wildlife interaction windows.",
-    methodology: "8-bit integer post-training quantization (INT8) of compact convolutional networks optimized for micro-power ARM Cortex architectures.",
-    impact: "Extends remote wildlife surveillance sensor lifespans by up to 400% through active solar and battery duty-cycling.",
-    status: "In Progress",
-    tags: ["Edge Computing", "Model Quantization", "IoT Telemetry", "Conservation Tech"]
+    id: "edge-inference",
+    title: "Low-Power Edge Ingestion for Habitat Telemetry",
+    area: "Edge Computing & IoT Systems",
+    summary: "Studying post-training quantization and lightweight event filtering for resource-constrained edge camera nodes in remote environmental and wildlife monitoring scenarios.",
+    focus: "8-bit quantization and duty-cycle management on microcontroller architectures to extend solar-battery lifespans.",
+    tags: ["Model Quantization", "Edge AI", "IoT Telemetry", "Embedded Systems"]
   }
 ];

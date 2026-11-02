@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const fs = require('fs');
 const path = require('path');
 
@@ -15,7 +16,6 @@ console.log(`Total Length: ${length} bytes`);
 
 // Chunk 0: JSON
 const jsonChunkLength = buffer.readUInt32LE(12);
-const jsonChunkType = buffer.readUInt32LE(16);
 console.log(`JSON Chunk Length: ${jsonChunkLength}`);
 
 const jsonStr = buffer.toString('utf8', 20, 20 + jsonChunkLength);

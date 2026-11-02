@@ -2,15 +2,16 @@
 
 @layer base {
   :root {
-    --bg-abyss: #000000;
+    --bg: #000000;
     --text-primary: #FFFFFF;
-    --text-muted: #9595B0;
-    --text-subtle: #707088;
-    --border-dim: rgba(255, 255, 255, 0.08);
-    --border-hover: rgba(255, 255, 255, 0.22);
-    --surface-glass: rgba(14, 14, 18, 0.65);
-    --surface-solid: #0A0A0E;
-    --jellyfish-glow: rgba(181, 181, 200, 0.15);
+    --text-secondary: #A6A6AE;
+    --text-muted: #71717A;
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-glass: rgba(255, 255, 255, 0.12);
+    --border-glass-hover: rgba(255, 255, 255, 0.24);
+    --surface-obsidian: rgba(10, 10, 12, 0.6);
+    --surface-card: rgba(255, 255, 255, 0.03);
+    --surface-card-hover: rgba(255, 255, 255, 0.055);
   }
 
   * {
@@ -35,100 +36,121 @@
     font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    selection-background-color: #333340;
-    selection-color: #FFFFFF;
   }
 
   ::selection {
-    background: #333345;
+    background: rgba(255, 255, 255, 0.2);
     color: #FFFFFF;
   }
 
-  /* Sleek minimalist scrollbar */
+  /* Architectural minimalist scrollbar */
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 4px;
   }
   ::-webkit-scrollbar-track {
     background: #000000;
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(149, 149, 176, 0.25);
-    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.16);
+    border-radius: 2px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(181, 181, 200, 0.5);
+    background: rgba(255, 255, 255, 0.32);
   }
 }
 
-/* Glassmorphism editorial cards */
-.glass-panel {
-  background: rgba(10, 10, 14, 0.65);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+/* Premium Obsidian Glass Design System */
+
+/* Navigation & Floating Overlays */
+.obsidian-nav {
+  background: rgba(6, 6, 8, 0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.6);
 }
 
-.glass-panel:hover {
-  border-color: rgba(255, 255, 255, 0.2);
-  background: rgba(16, 16, 22, 0.75);
+/* Project Cards: Near-black translucent with fine grey outlines & smooth 4px lift */
+.obsidian-card {
+  background: rgba(12, 12, 16, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 14px;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.glass-button {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #FFFFFF;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+.obsidian-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.24);
+  background: rgba(18, 18, 24, 0.65);
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.8),
+              0 0 0 1px rgba(255, 255, 255, 0.12);
 }
 
-.glass-button:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.4);
-  transform: translateY(-1px);
+/* Restrained Minimal Glass Panels for key information */
+.obsidian-panel {
+  background: rgba(10, 10, 14, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 12px;
 }
 
-.glass-button-primary {
-  background: #FFFFFF;
+/* Buttons: Premium Editorial Styling */
+.btn-primary {
+  background-color: #FFFFFF;
   color: #000000;
-  border: 1px solid #FFFFFF;
   font-weight: 500;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 8px;
+  border: 1px solid #FFFFFF;
+  transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.glass-button-primary:hover {
-  background: #E5E5EE;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+.btn-primary:hover {
+  background-color: #E5E5E8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.15);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: #FFFFFF;
+  font-weight: 400;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  transition: all 0.25s ease;
+}
+
+.btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.3);
   transform: translateY(-1px);
 }
 
-/* Monochromatic glow and accents */
-.text-gradient-silver {
-  background: linear-gradient(180deg, #FFFFFF 0%, #B5B5C8 60%, #9595B0 100%);
+/* Editorial Monochromatic Typography */
+.text-editorial-silver {
+  background: linear-gradient(180deg, #FFFFFF 0%, #D4D4DC 65%, #A6A6AE 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.text-gradient-subtle {
-  background: linear-gradient(180deg, #FFFFFF 0%, #88889C 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* Accessible focus ring */
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 2px;
 }
 
-/* Editorial typography utilities */
-.font-editorial-heading {
-  letter-spacing: -0.035em;
-  line-height: 0.95;
-}
-
-.font-editorial-subheading {
-  letter-spacing: -0.015em;
-}
-
-.font-label {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  font-weight: 500;
+/* Prefers-reduced-motion support */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

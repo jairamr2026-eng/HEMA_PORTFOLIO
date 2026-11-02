@@ -1,83 +1,71 @@
 "use client";
 
-import { RESEARCH_TOPICS } from "@/data/portfolio-data";
-import { Compass, BookOpen, GitBranch, ArrowRight } from "lucide-react";
+import { RESEARCH_INTERESTS } from "@/data/portfolio-data";
 
 export function Research() {
   return (
     <section
       id="research"
-      className="relative min-h-screen flex flex-col justify-center px-6 sm:px-12 lg:px-20 py-24 z-10 pointer-events-none"
+      className="relative min-h-screen flex flex-col justify-center px-6 sm:px-12 lg:px-20 py-28 z-10 pointer-events-none"
     >
-      <div className="max-w-7xl mx-auto w-full space-y-12">
+      <div className="max-w-7xl mx-auto w-full space-y-16">
         {/* Header */}
-        <div className="max-w-2xl space-y-3 pointer-events-auto">
+        <div className="max-w-2xl space-y-4 pointer-events-auto">
           <div className="flex items-center space-x-3">
-            <span className="font-mono text-xs text-[#9595B0] uppercase tracking-widest">
-              04 // THE UNKNOWN
+            <span className="font-mono text-xs text-[#A6A6AE] tracking-[0.2em] uppercase">
+              04 // RESEARCH
             </span>
             <div className="w-12 h-[1px] bg-white/20" />
+            <span className="font-mono text-xs text-white/40">THE UNKNOWN</span>
           </div>
-          <h2 className="text-4xl sm:text-6xl font-light tracking-tighter text-white">
+
+          <h2 className="text-4xl sm:text-6xl font-light tracking-tight text-white leading-tight">
             Research Directions <br />
-            <span className="text-gradient-silver">&amp; Experimentation.</span>
+            <span className="text-editorial-silver">&amp; Active Inquiries.</span>
           </h2>
-          <p className="text-base text-[#9595B0] font-light">
-            Investigating foundational questions in deep feature fusion, privacy-preserving credential schemas, and resource-constrained edge inference.
+
+          <p className="text-base text-[#A6A6AE] font-light leading-relaxed">
+            Genuine exploration areas in computer vision, deep feature extraction, and verifiable decentralized ledgers under academic study at VIT Vellore.
           </p>
         </div>
 
-        {/* Research Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pointer-events-auto">
-          {RESEARCH_TOPICS.map((topic, idx) => (
+        {/* Refined Editorial Research Layout with Hairline Dividers */}
+        <div className="divide-y divide-white/[0.10] border-y border-white/[0.10] pointer-events-auto">
+          {RESEARCH_INTERESTS.map((item, idx) => (
             <div
-              key={topic.id}
-              className="glass-panel p-6 sm:p-8 rounded-2xl border border-white/10 hover:border-white/25 transition-all duration-300 space-y-5"
+              key={item.id}
+              className="py-8 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start group"
             >
-              {/* Header badge & status */}
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-xs text-[#9595B0] uppercase tracking-wider flex items-center space-x-2">
-                  <Compass className="w-3.5 h-3.5 text-[#B5B5C8]" />
-                  <span>{topic.area}</span>
+              {/* Index & Area */}
+              <div className="lg:col-span-3 space-y-1">
+                <span className="font-mono text-xs text-white/40 block">
+                  0{idx + 1}
                 </span>
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider border border-white/20 bg-white/5 text-white">
-                  {topic.status}
+                <span className="font-mono text-xs text-[#A6A6AE] uppercase tracking-wider block">
+                  {item.area}
                 </span>
               </div>
 
               {/* Title & Summary */}
-              <div className="space-y-2">
-                <h3 className="text-xl sm:text-2xl font-light text-white leading-snug">
-                  {topic.title}
+              <div className="lg:col-span-6 space-y-3">
+                <h3 className="text-xl sm:text-2xl font-light text-white group-hover:text-white transition-colors">
+                  {item.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-[#9595B0] leading-relaxed font-light">
-                  {topic.summary}
+                <p className="text-xs sm:text-sm text-[#A6A6AE] font-light leading-relaxed">
+                  {item.summary}
                 </p>
-              </div>
-
-              {/* Methodology & Impact */}
-              <div className="space-y-3 pt-2 text-xs">
-                <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5 space-y-1">
-                  <span className="font-mono text-[11px] text-white/70 uppercase tracking-wider block">
-                    Methodology &amp; Formulation
-                  </span>
-                  <p className="text-[#9595B0]">{topic.methodology}</p>
-                </div>
-
-                <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5 space-y-1">
-                  <span className="font-mono text-[11px] text-white/70 uppercase tracking-wider block">
-                    Target Impact
-                  </span>
-                  <p className="text-[#9595B0]">{topic.impact}</p>
+                <div className="text-xs font-mono text-white/70 pt-1">
+                  <span className="text-white/40 uppercase tracking-wider mr-2">Investigation Scope:</span>
+                  {item.focus}
                 </div>
               </div>
 
               {/* Tags */}
-              <div className="flex flex-wrap gap-1.5 pt-2">
-                {topic.tags.map((tag) => (
+              <div className="lg:col-span-3 flex flex-wrap gap-1.5 pt-1 lg:justify-end">
+                {item.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="text-[11px] font-mono px-2 py-0.5 rounded bg-white/5 border border-white/10 text-white/70"
+                    className="text-[11px] font-mono px-2 py-0.5 rounded bg-white/[0.025] border border-white/[0.07] text-[#A6A6AE]"
                   >
                     #{tag}
                   </span>
@@ -88,16 +76,8 @@ export function Research() {
         </div>
 
         {/* Note on Research Integrity */}
-        <div className="p-5 rounded-2xl border border-white/10 bg-white/[0.02] max-w-3xl pointer-events-auto flex items-start space-x-4">
-          <BookOpen className="w-5 h-5 text-[#B5B5C8] shrink-0 mt-0.5" />
-          <div className="space-y-1 text-xs text-[#9595B0]">
-            <span className="font-mono uppercase tracking-wider text-white block">
-              Academic Experimentation &amp; SCOPE Laboratory Focus
-            </span>
-            <p>
-              Conducted in active collaboration with faculty mentorship and peer researchers at the School of Computer Science and Engineering (SCOPE), VIT Vellore. Ongoing preprint submissions and benchmark codebases are archived periodically.
-            </p>
-          </div>
+        <div className="pt-2 max-w-2xl text-xs font-mono text-white/40 leading-relaxed pointer-events-auto">
+          Academic investigations are conducted in coordination with the School of Computer Science and Engineering (SCOPE), VIT Vellore.
         </div>
       </div>
     </section>
