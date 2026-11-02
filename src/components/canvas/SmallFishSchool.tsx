@@ -5,113 +5,41 @@ import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import { scrollProgressRef } from "@/hooks/useScrollStory";
 
-interface AutonomousFishState {
-  id: number;
-  pos: THREE.Vector3;
-  target: THREE.Vector3;
-  currentYaw: number;
-  targetYaw: number;
-  currentPitch: number;
-  currentRoll: number;
-  speed: number;
-  targetSpeed: number;
-  baseSpeed: number;
-  tailFreq: number;
-  scale: number;
-  isUTurning: boolean;
-  uTurnTimer: number;
-  timeUntilNextUTurn: number;
-  waypointTimer: number;
-}
+const LEFT_BOUND = -4.2;
+const RIGHT_BOUND = 4.2;
+const SWIM_SPEED = 0.52; // Very slow, serene cruising speed
+const U_TURN_DURATION = 2.2; // Seconds to complete the smooth 180° banking arc
 
-// Exactly 3 deep-sea fish
-const INITIAL_FISH_CONFIGS = [
-  {
-    id: 1,
-    initialPos: new THREE.Vector3(-2.2, -1.0, -2.2),
-    baseSpeed: 0.55,
-    scale: 0.26,
-    initialYaw: 0.3,
-  },
-  {
-    id: 2,
-    initialPos: new THREE.Vector3(1.8, 0.4, -2.6),
-    baseSpeed: 0.48,
-    scale: 0.22,
-    initialYaw: -Math.PI * 0.7,
-  },
-  {
-    id: 3,
-    initialPos: new THREE.Vector3(-0.5, -2.2, -3.0),
-    baseSpeed: 0.52,
-    scale: 0.24,
-    initialYaw: Math.PI * 0.5,
-  },
-];
-
-function SingleAutonomousFish({
-  config,
-  fadeOpacityRef,
-}: {
-  config: (typeof INITIAL_FISH_CONFIGS)[0];
-  fadeOpacityRef: React.MutableRefObject<number>;
-}) {
+export function SmallFishSchool() {
   const groupRef = useRef<THREE.Group>(null);
   const tailRef = useRef<THREE.Group>(null);
   const pecLeftRef = useRef<THREE.Mesh>(null);
   const pecRightRef = useRef<THREE.Mesh>(null);
 
-  // Autonomous state tracking for random movement and U-turns
-  const state = useRef<AutonomousFishState>({
-    id: config.id,
-    pos: config.initialPos.clone(),
-    target: new THREE.Vector3(0, 0, config.initialPos.z),
-    currentYaw: config.initialYaw,
-    targetYaw: config.initialYaw,
-    currentPitch: 0,
+  // Master opacity ref: 0 on Hero section, 1 on subsequent sections
+  const fadeOpacityRef = useRef(0);
+
+  // Single fish state tracking: swimming left-to-right, U-turn, right-to-left, U-turn
+  const fishState = useRef({
+    posX: -3.0,
+    baseY: -0.8,
+    depthZ: -2.4,
+    direction: 1 as 1 | -1, // 1 = moving left-to-right, -1 = moving right-to-left
+    isTurning: false,
+    turnProgress: 0,
+    currentYaw: 0, // 0 = facing right, Math.PI = facing left
     currentRoll: 0,
-    speed: config.baseSpeed,
-    targetSpeed: config.baseSpeed,
-    baseSpeed: config.baseSpeed,
-    tailFreq: 5.5,
-    scale: config.scale,
-    isUTurning: false,
-    uTurnTimer: 0,
-    timeUntilNextUTurn: 6 + config.id * 3, // Staggered initial U-turn countdown
-    waypointTimer: 0,
+    currentPitch: 0,
+    scale: 0.26,
   });
-
-  // Pick a new random target waypoint within deep-sea volume
-  const pickNewWaypoint = (currentPos: THREE.Vector3) => {
-    // Random destination within comfortable viewport bounds
-    const tx = (Math.random() - 0.5) * 7.5;
-    const ty = (Math.random() - 0.5) * 5.5;
-    const tz = -1.8 - Math.random() * 1.6;
-
-    state.current.target.set(tx, ty, tz);
-
-    const dir = new THREE.Vector3().subVectors(state.current.target, currentPos);
-    state.current.targetYaw = Math.atan2(-dir.z, dir.x);
-    state.current.waypointTimer = 4.0 + Math.random() * 4.0;
-  };
-
-  // Initiate an organic U-turn (smooth 180° banking reverse)
-  const initiateUTurn = () => {
-    state.current.isUTurning = true;
-    state.current.uTurnTimer = 2.2; // Takes ~2.2 seconds to complete the arc
-    // Turn around by ~180° with a slight organic angle offset
-    const turnDirection = Math.random() > 0.5 ? 1 : -1;
-    const angleDelta = (Math.PI + (Math.random() - 0.5) * 0.4) * turnDirection;
-    state.current.targetYaw = state.current.currentYaw + angleDelta;
-    // Next U-turn scheduled in 7 to 13 seconds
-    state.current.timeUntilNextUTurn = 7.0 + Math.random() * 6.0;
-  };
 
   // Procedural hydrodynamic fish geometries
   const { bodyGeom, tailGeom, dorsalGeom, pecGeom, eyeGeom } = useMemo(() => {
+    // 1. Sleek, hydrodynamic fuselage
     const body = new THREE.SphereGeometry(0.5, 16, 12);
     body.scale(1.8, 0.46, 0.22);
 
+    // 2. Crescent caudal tail fin
     const tail = new THREE.BufferGeometry();
     const tailVertices = new Float32Array([
       0, 0, 0,
@@ -125,6 +53,7 @@ function SingleAutonomousFish({
     tail.setAttribute("position", new THREE.BufferAttribute(tailVertices, 3));
     tail.computeVertexNormals();
 
+    // 3. Small translucent dorsal fin
     const dorsal = new THREE.BufferGeometry();
     const dorsalVertices = new Float32Array([
       -0.1, 0.22, 0,
@@ -134,6 +63,7 @@ function SingleAutonomousFish({
     dorsal.setAttribute("position", new THREE.BufferAttribute(dorsalVertices, 3));
     dorsal.computeVertexNormals();
 
+    // 4. Delicate pectoral fin
     const pec = new THREE.BufferGeometry();
     const pecVertices = new Float32Array([
       0, 0, 0,
@@ -143,6 +73,7 @@ function SingleAutonomousFish({
     pec.setAttribute("position", new THREE.BufferAttribute(pecVertices, 3));
     pec.computeVertexNormals();
 
+    // 5. Bioluminescent photophore eye
     const eye = new THREE.SphereGeometry(0.065, 12, 12);
 
     return { bodyGeom: body, tailGeom: tail, dorsalGeom: dorsal, pecGeom: pec, eyeGeom: eye };
@@ -183,138 +114,15 @@ function SingleAutonomousFish({
     return { skinMat: skin, finMat: fin, eyeMat: eye };
   }, []);
 
-  // Main autonomous swim loop
-  useFrame((stateContext, delta) => {
+  // Render loop
+  useFrame((state, delta) => {
     if (!groupRef.current) return;
 
     const clampedDelta = Math.min(delta, 0.05);
-    const s = state.current;
-    const t = stateContext.clock.getElapsedTime();
+    const t = state.clock.getElapsedTime();
+    const s = fishState.current;
 
-    // 1. Check Hero Page Visibility: Fade out completely on Hero page
-    const currentOpacity = fadeOpacityRef.current;
-    if (currentOpacity <= 0.005) {
-      groupRef.current.visible = false;
-      return;
-    }
-    groupRef.current.visible = true;
-
-    // Apply smooth fade to materials
-    skinMat.opacity = 0.82 * currentOpacity;
-    finMat.opacity = 0.56 * currentOpacity;
-    eyeMat.opacity = 0.95 * currentOpacity;
-
-    // 2. Boundary detection for automatic U-turns
-    const BOUND_X = 4.2;
-    const BOUND_Y = 3.0;
-    const isNearBoundary =
-      Math.abs(s.pos.x) > BOUND_X || Math.abs(s.pos.y) > BOUND_Y;
-
-    // 3. U-Turn Timer & Decision Engine
-    s.timeUntilNextUTurn -= clampedDelta;
-    s.waypointTimer -= clampedDelta;
-
-    if (!s.isUTurning && (s.timeUntilNextUTurn <= 0 || isNearBoundary)) {
-      initiateUTurn();
-    }
-
-    if (s.isUTurning) {
-      s.uTurnTimer -= clampedDelta;
-      if (s.uTurnTimer <= 0) {
-        s.isUTurning = false;
-        pickNewWaypoint(s.pos);
-      }
-    } else if (s.waypointTimer <= 0) {
-      pickNewWaypoint(s.pos);
-    }
-
-    // 4. Smooth Rotation & Heading Interpolation
-    let angleDiff = s.targetYaw - s.currentYaw;
-    while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
-    while (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
-
-    const turnRate = s.isUTurning ? 2.4 : 1.2;
-    const angularSpeed = THREE.MathUtils.clamp(angleDiff * turnRate, -2.8, 2.8);
-    s.currentYaw += angularSpeed * clampedDelta;
-
-    // Bank into the turn (roll angle proportional to angular velocity)
-    const targetRoll = -angularSpeed * 0.35;
-    s.currentRoll = THREE.MathUtils.lerp(s.currentRoll, targetRoll, clampedDelta * 3.5);
-
-    // 5. Forward Movement & Cruising Velocity
-    // Slightly decelerate entering a U-turn, accelerate during stroke
-    const speedFactor = s.isUTurning ? 0.65 : 1.0;
-    const currentSpeed = s.baseSpeed * speedFactor;
-
-    const forwardX = Math.cos(s.currentYaw);
-    const forwardZ = -Math.sin(s.currentYaw);
-
-    s.pos.x += forwardX * currentSpeed * clampedDelta;
-    s.pos.z += forwardZ * (currentSpeed * 0.4) * clampedDelta;
-
-    // Subtle sinusoidal vertical glide
-    const verticalFloat = Math.sin(t * 0.8 + s.id) * 0.008;
-    s.pos.y += verticalFloat;
-
-    // Target vertical gentle steering
-    const dy = s.target.y - s.pos.y;
-    s.pos.y += THREE.MathUtils.clamp(dy * 0.25, -0.2, 0.2) * clampedDelta;
-    s.currentPitch = THREE.MathUtils.clamp(-dy * 0.12, -0.25, 0.25);
-
-    // Keep Z bounded in comfortable background range
-    s.pos.z = THREE.MathUtils.clamp(s.pos.z, -3.6, -1.8);
-
-    // 6. Dynamic Tail Undulation (beats faster during U-turns)
-    const dynamicTailFreq = s.isUTurning ? 8.5 : 4.2;
-    const tailAngle = Math.sin(t * dynamicTailFreq + s.id) * (s.isUTurning ? 0.55 : 0.35);
-    if (tailRef.current) {
-      tailRef.current.rotation.y = tailAngle;
-    }
-
-    // Pectoral fin gentle fluttering
-    if (pecLeftRef.current && pecRightRef.current) {
-      const flutter = Math.sin(t * 3.5 + s.id) * 0.16;
-      pecLeftRef.current.rotation.z = 0.18 + flutter;
-      pecRightRef.current.rotation.z = -0.18 - flutter;
-    }
-
-    // 7. Update Transform
-    groupRef.current.position.copy(s.pos);
-    groupRef.current.rotation.set(s.currentPitch, s.currentYaw, s.currentRoll);
-  });
-
-  return (
-    <group ref={groupRef} scale={config.scale}>
-      {/* Main Fish Body */}
-      <mesh geometry={bodyGeom} material={skinMat} />
-
-      {/* Bioluminescent Eyes (Left & Right) */}
-      <mesh geometry={eyeGeom} material={eyeMat} position={[0.55, 0.08, 0.12]} />
-      <mesh geometry={eyeGeom} material={eyeMat} position={[0.55, 0.08, -0.12]} />
-
-      {/* Dorsal Fin along spine */}
-      <mesh geometry={dorsalGeom} material={finMat} />
-
-      {/* Pectoral Fins (Left & Right) */}
-      <mesh ref={pecLeftRef} geometry={pecGeom} material={finMat} position={[0.2, -0.06, 0.14]} />
-      <mesh ref={pecRightRef} geometry={pecGeom} material={finMat} position={[0.2, -0.06, -0.14]} scale={[1, 1, -1]} />
-
-      {/* Articulated Caudal Tail Fin */}
-      <group ref={tailRef} position={[-0.8, 0, 0]}>
-        <mesh geometry={tailGeom} material={finMat} />
-      </group>
-    </group>
-  );
-}
-
-export function SmallFishSchool() {
-  // Master opacity ref that fades to 0 on Hero and 1 on other sections
-  const fadeOpacityRef = useRef(0);
-
-  useFrame((_, delta) => {
-    const clampedDelta = Math.min(delta, 0.05);
-
-    // Remove fish on Hero page: target 0 when in hero section, 1 when exploring other sections
+    // 1. Hero Page Isolation: Fade out completely on Hero page, fade in on deeper sections
     const isHero =
       scrollProgressRef.activeSection === "hero" ||
       scrollProgressRef.currentProgress < 0.06;
@@ -325,17 +133,121 @@ export function SmallFishSchool() {
       targetOpacity,
       clampedDelta * 3.2
     );
+
+    const currentOpacity = fadeOpacityRef.current;
+    if (currentOpacity <= 0.005) {
+      groupRef.current.visible = false;
+      return;
+    }
+    groupRef.current.visible = true;
+
+    // Apply smooth opacity fade to materials
+    skinMat.opacity = 0.82 * currentOpacity;
+    finMat.opacity = 0.56 * currentOpacity;
+    eyeMat.opacity = 0.95 * currentOpacity;
+
+    // 2. Swimming & U-Turn State Machine
+    if (!s.isTurning) {
+      // Normal cruising: move horizontally in current direction
+      s.posX += s.direction * SWIM_SPEED * clampedDelta;
+
+      // Heading is strictly aligned with travel direction
+      s.currentYaw = s.direction === 1 ? 0 : Math.PI;
+      s.currentRoll = THREE.MathUtils.lerp(s.currentRoll, 0, clampedDelta * 4.0);
+
+      // Check boundary triggers to initiate U-turn
+      if (s.direction === 1 && s.posX >= RIGHT_BOUND) {
+        s.isTurning = true;
+        s.turnProgress = 0;
+      } else if (s.direction === -1 && s.posX <= LEFT_BOUND) {
+        s.isTurning = true;
+        s.turnProgress = 0;
+      }
+    } else {
+      // Executing smooth banking 180° U-turn
+      s.turnProgress += clampedDelta / U_TURN_DURATION;
+
+      if (s.turnProgress >= 1.0) {
+        // Complete the turn
+        s.isTurning = false;
+        s.turnProgress = 0;
+        s.direction = (s.direction === 1 ? -1 : 1) as 1 | -1;
+        s.currentYaw = s.direction === 1 ? 0 : Math.PI;
+        s.currentRoll = 0;
+      } else {
+        // Smooth sine ease for U-turn arc
+        const progress = s.turnProgress;
+        const ease = Math.sin(progress * Math.PI * 0.5);
+
+        if (s.direction === 1) {
+          // Turning from facing right (0) to facing left (Math.PI)
+          s.currentYaw = ease * Math.PI;
+          // Bank inward into the turn
+          s.currentRoll = -Math.sin(progress * Math.PI) * 0.38;
+          // Decelerate and curve slightly forward during turn
+          s.posX += Math.cos(s.currentYaw) * SWIM_SPEED * 0.35 * clampedDelta;
+        } else {
+          // Turning from facing left (Math.PI) to facing right (2 * Math.PI or 0)
+          s.currentYaw = Math.PI + ease * Math.PI;
+          // Bank inward into the turn
+          s.currentRoll = Math.sin(progress * Math.PI) * 0.38;
+          // Decelerate and curve slightly forward during turn
+          s.posX += Math.cos(s.currentYaw) * SWIM_SPEED * 0.35 * clampedDelta;
+        }
+      }
+    }
+
+    // 3. Gentle Vertical Glide
+    const verticalFloat = Math.sin(t * 0.45) * 0.16;
+    const currentY = s.baseY + verticalFloat;
+    s.currentPitch = Math.cos(t * 0.45) * 0.05 * s.direction;
+
+    // Depth placement
+    const currentZ = s.depthZ + Math.sin(t * 0.25) * 0.1;
+
+    // 4. Articulated Tail Undulation
+    // Tail beats faster during U-turns to simulate turning torque
+    const dynamicTailFreq = s.isTurning ? 7.8 : 4.4;
+    const tailAmplitude = s.isTurning ? 0.52 : 0.36;
+    const tailAngle = Math.sin(t * dynamicTailFreq) * tailAmplitude;
+    if (tailRef.current) {
+      tailRef.current.rotation.y = tailAngle;
+    }
+
+    // 5. Pectoral Fin Flutter
+    if (pecLeftRef.current && pecRightRef.current) {
+      const flutter = Math.sin(t * 3.5) * 0.15;
+      pecLeftRef.current.rotation.z = 0.18 + flutter;
+      pecRightRef.current.rotation.z = -0.18 - flutter;
+    }
+
+    // 6. Update Transform
+    groupRef.current.position.set(s.posX, currentY, currentZ);
+    groupRef.current.rotation.set(s.currentPitch, s.currentYaw, s.currentRoll);
   });
 
   return (
-    <group name="autonomous-small-fish-pod">
-      {INITIAL_FISH_CONFIGS.map((cfg) => (
-        <SingleAutonomousFish
-          key={cfg.id}
-          config={cfg}
-          fadeOpacityRef={fadeOpacityRef}
-        />
-      ))}
+    <group name="single-deep-sea-fish">
+      <group ref={groupRef} scale={fishState.current.scale}>
+        {/* Main Fish Body */}
+        <mesh geometry={bodyGeom} material={skinMat} />
+
+        {/* Bioluminescent Eyes (Left & Right) */}
+        <mesh geometry={eyeGeom} material={eyeMat} position={[0.55, 0.08, 0.12]} />
+        <mesh geometry={eyeGeom} material={eyeMat} position={[0.55, 0.08, -0.12]} />
+
+        {/* Dorsal Fin along spine */}
+        <mesh geometry={dorsalGeom} material={finMat} />
+
+        {/* Pectoral Fins (Left & Right) */}
+        <mesh ref={pecLeftRef} geometry={pecGeom} material={finMat} position={[0.2, -0.06, 0.14]} />
+        <mesh ref={pecRightRef} geometry={pecGeom} material={finMat} position={[0.2, -0.06, -0.14]} scale={[1, 1, -1]} />
+
+        {/* Articulated Caudal Tail Fin */}
+        <group ref={tailRef} position={[-0.8, 0, 0]}>
+          <mesh geometry={tailGeom} material={finMat} />
+        </group>
+      </group>
     </group>
   );
 }
