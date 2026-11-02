@@ -1,17 +1,26 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Space_Grotesk, Inter, IBM_Plex_Mono } from "next/font/google";
 import { cn } from "@/lib/utils";
 
-const geistSans = Geist({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-heading",
+  weight: ["500", "600"],
   display: "swap",
 });
 
-const geistMono = Geist_Mono({
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  weight: ["400", "500"],
+  display: "swap",
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
+  weight: ["400", "500"],
   display: "swap",
 });
 
@@ -41,7 +50,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#000000",
+  themeColor: "#010309",
   colorScheme: "dark",
   width: "device-width",
   initialScale: 1
@@ -53,8 +62,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("dark font-sans", geistSans.variable, geistMono.variable)}>
-      <body className="bg-black text-white antialiased selection:bg-[#333345] selection:text-white overflow-x-hidden min-h-screen">
+    <html
+      lang="en"
+      className={cn(
+        spaceGrotesk.variable,
+        inter.variable,
+        ibmPlexMono.variable,
+        "font-sans"
+      )}
+    >
+      <body className="bg-[#010309] text-white antialiased selection:bg-cyan-300/25 selection:text-white">
         {children}
       </body>
     </html>

@@ -32,24 +32,24 @@ export function Projects({ onSelectProject, activeProjectId }: ProjectsProps) {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pointer-events-auto">
           <div className="max-w-xl space-y-3">
-            <h2 className="text-4xl sm:text-6xl font-light tracking-tight text-white leading-tight">
+            <h2 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.03em] text-white leading-[1.06]">
               Selected <br />
-              <span className="text-editorial-silver font-normal">Systems.</span>
+              <span className="text-hero-gradient font-medium">Systems.</span>
             </h2>
-            <p className="text-sm sm:text-base text-[#A6A6AE] font-light leading-relaxed">
+            <p className="font-sans text-sm sm:text-base text-[#A6A6AE] font-normal leading-[1.65]">
               Engineering solutions in neural classification, verifiable credentials, telemetry, and interactive platforms.
             </p>
           </div>
 
-          {/* Minimal Filter Tabs */}
+          {/* Minimal Filter Tabs: IBM Plex Mono */}
           <div className="flex items-center gap-1.5 p-1 rounded-lg border border-white/[0.10] bg-white/[0.02]">
             {filterOptions.map((opt) => (
               <button
                 key={opt}
                 onClick={() => setActiveFilter(opt)}
-                className={`px-3 py-1.5 rounded text-xs font-mono tracking-wider transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded text-xs font-mono tracking-mono-label font-medium transition-all cursor-pointer ${
                   activeFilter === opt
-                    ? "bg-white text-black font-medium"
+                    ? "bg-white text-black"
                     : "text-[#A6A6AE] hover:text-white hover:bg-white/[0.04]"
                 }`}
               >
@@ -72,37 +72,37 @@ export function Projects({ onSelectProject, activeProjectId }: ProjectsProps) {
                 }`}
               >
                 <div className="space-y-4">
-                  {/* Category */}
-                  <div className="text-xs font-mono text-[#A6A6AE] uppercase tracking-wider">
+                  {/* Category: IBM Plex Mono */}
+                  <div className="font-mono text-xs tracking-mono-label text-[#A6A6AE] uppercase">
                     {project.category}
                   </div>
 
-                  {/* Title & Description */}
+                  {/* Title & Description: Space Grotesk Title, Inter Body */}
                   <div className="space-y-2">
-                    <h3 className="text-xl font-normal text-white group-hover:text-white transition-colors flex items-start justify-between">
+                    <h3 className="font-heading text-lg sm:text-xl font-medium text-white group-hover:text-white transition-colors flex items-start justify-between">
                       <span className="leading-snug">{project.title}</span>
                       <ArrowUpRight className="w-4 h-4 opacity-40 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all text-white shrink-0 ml-2 mt-1" />
                     </h3>
-                    <p className="text-xs sm:text-sm text-[#A6A6AE] font-light leading-relaxed line-clamp-3">
+                    <p className="font-sans text-xs sm:text-sm text-[#A6A6AE] font-normal leading-[1.65] line-clamp-3">
                       {project.description}
                     </p>
                   </div>
 
-                  {/* Architecture */}
+                  {/* Architecture: IBM Plex Mono */}
                   {project.architecture && (
                     <div className="pt-1">
-                      <span className="inline-block text-[11px] font-mono px-2.5 py-1 rounded bg-white/[0.025] border border-white/[0.08] text-white/80">
+                      <span className="inline-block font-mono text-[11px] tracking-mono-label px-2.5 py-1 rounded bg-white/[0.025] border border-white/[0.08] text-white/80">
                         {project.architecture}
                       </span>
                     </div>
                   )}
 
-                  {/* Technologies */}
+                  {/* Technologies: IBM Plex Mono */}
                   <div className="flex flex-wrap gap-1.5 pt-1">
                     {project.technologies.slice(0, 4).map((tech) => (
                       <span
                         key={tech}
-                        className="text-[11px] font-mono px-2 py-0.5 rounded bg-white/[0.02] text-[#A6A6AE] border border-white/[0.06]"
+                        className="font-mono text-[11px] tracking-mono-label px-2 py-0.5 rounded bg-white/[0.02] text-[#A6A6AE] border border-white/[0.06]"
                       >
                         {tech}
                       </span>
@@ -111,7 +111,7 @@ export function Projects({ onSelectProject, activeProjectId }: ProjectsProps) {
                 </div>
 
                 {/* Footer with clean GitHub link */}
-                <div className="pt-5 mt-5 border-t border-white/[0.08] flex items-center justify-between text-xs font-mono">
+                <div className="pt-5 mt-5 border-t border-white/[0.08] flex items-center justify-between font-mono text-xs tracking-mono-label">
                   <span className="text-white/50 group-hover:text-white transition-colors">
                     Inspect Architecture
                   </span>

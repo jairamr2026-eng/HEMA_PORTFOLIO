@@ -11,11 +11,11 @@ export function Skills() {
       <div className="max-w-7xl mx-auto w-full space-y-14">
         {/* Header */}
         <div className="max-w-xl space-y-3 pointer-events-auto">
-          <h2 className="text-4xl sm:text-6xl font-light tracking-tight text-white leading-tight">
+          <h2 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.03em] text-white leading-[1.06]">
             Technical <br />
-            <span className="text-editorial-silver font-normal">Disciplines.</span>
+            <span className="text-hero-gradient font-medium">Disciplines.</span>
           </h2>
-          <p className="text-sm sm:text-base text-[#A6A6AE] font-light leading-relaxed">
+          <p className="font-sans text-sm sm:text-base text-[#A6A6AE] font-normal leading-[1.65]">
             Core machine learning architectures, computer vision pipelines, creative full-stack development, and decentralized ledgers.
           </p>
         </div>
@@ -27,21 +27,21 @@ export function Skills() {
               key={group.id}
               className="border-t border-white/[0.12] pt-5 space-y-4 group"
             >
-              <div className="space-y-1">
-                <h3 className="text-base font-normal text-white">
+              <div className="space-y-1.5">
+                <h3 className="font-heading text-base sm:text-lg font-medium text-white">
                   {group.title}
                 </h3>
-                <p className="text-xs text-[#A6A6AE] leading-relaxed font-light">
+                <p className="font-sans text-xs sm:text-sm text-[#A6A6AE] leading-relaxed font-normal">
                   {group.description}
                 </p>
               </div>
 
-              {/* Minimal Monochrome Tags */}
+              {/* Minimal Monochrome Tags: IBM Plex Mono */}
               <div className="flex flex-wrap gap-1.5 pt-1">
                 {group.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="text-xs font-mono px-2.5 py-1 rounded bg-white/[0.025] border border-white/[0.08] text-[#A6A6AE] hover:text-white hover:border-white/[0.2] transition-colors"
+                    className="font-mono text-xs tracking-mono-label px-2.5 py-1 rounded bg-white/[0.025] border border-white/[0.08] text-[#A6A6AE] hover:text-white hover:border-white/[0.22] transition-colors"
                   >
                     {skill}
                   </span>

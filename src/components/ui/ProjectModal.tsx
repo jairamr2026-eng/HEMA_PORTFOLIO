@@ -36,10 +36,10 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
         {/* Header */}
         <div className="flex items-start justify-between border-b border-white/[0.08] pb-5">
           <div className="space-y-1">
-            <span className="font-mono text-xs text-[#A6A6AE] uppercase tracking-widest">
+            <span className="font-mono text-xs tracking-mono-label text-[#A6A6AE] uppercase">
               {project.category}
             </span>
-            <h3 className="text-2xl sm:text-3xl font-light tracking-tight text-white">
+            <h3 className="font-heading text-2xl sm:text-3xl font-medium tracking-[-0.025em] text-white">
               {project.title}
             </h3>
           </div>
@@ -54,26 +54,26 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
 
         {/* Content */}
         <div className="py-6 space-y-5">
-          <p className="text-sm sm:text-base text-[#A6A6AE] leading-relaxed font-light">
+          <p className="font-sans text-sm sm:text-base text-[#A6A6AE] leading-[1.65] font-normal">
             {project.description}
           </p>
 
           {/* Architecture Tag */}
           {project.architecture && (
-            <div className="p-3 rounded-lg border border-white/[0.08] bg-white/[0.02] flex items-center space-x-3 text-xs font-mono">
-              <span className="text-white/40 uppercase tracking-wider">Architecture:</span>
+            <div className="p-3 rounded-lg border border-white/[0.08] bg-white/[0.02] flex items-center space-x-3 text-xs font-mono tracking-mono-label">
+              <span className="text-white/40 uppercase">Architecture:</span>
               <span className="text-white font-medium">{project.architecture}</span>
             </div>
           )}
 
           {/* Key Engineering Details */}
           <div className="space-y-2.5">
-            <span className="font-mono text-xs uppercase tracking-widest text-white/50 block">
+            <span className="font-mono text-xs uppercase tracking-mono-label text-white/50 block font-medium">
               System Details
             </span>
             <div className="space-y-2 bg-black/40 p-4 rounded-lg border border-white/[0.06]">
               {project.details.map((detail, idx) => (
-                <div key={idx} className="flex items-start space-x-2.5 text-xs sm:text-sm text-[#A6A6AE]">
+                <div key={idx} className="flex items-start space-x-2.5 font-sans text-xs sm:text-sm text-[#A6A6AE] font-normal">
                   <Check className="w-3.5 h-3.5 text-cyan-300 shrink-0 mt-0.5" />
                   <span className="leading-relaxed">{detail}</span>
                 </div>
@@ -83,14 +83,14 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
 
           {/* Technology Stack */}
           <div className="space-y-2">
-            <span className="font-mono text-xs uppercase tracking-widest text-white/40 block">
+            <span className="font-mono text-xs uppercase tracking-mono-label text-white/40 block font-medium">
               Technologies
             </span>
             <div className="flex flex-wrap gap-1.5">
               {project.technologies.map((tech) => (
                 <span
                   key={tech}
-                  className="px-2.5 py-1 text-xs font-mono rounded bg-white/[0.03] border border-white/[0.08] text-white/80"
+                  className="font-mono text-xs tracking-mono-label px-2.5 py-1 rounded bg-white/[0.03] border border-white/[0.08] text-white/80"
                 >
                   {tech}
                 </span>
@@ -107,7 +107,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-secondary px-4 py-2 text-xs font-mono flex items-center space-x-2"
+                className="btn-secondary px-4 py-2 text-xs font-mono tracking-mono-label flex items-center space-x-2"
               >
                 <GithubIcon className="w-3.5 h-3.5" />
                 <span>Repository</span>
@@ -118,7 +118,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 href={project.demo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary px-4 py-2 text-xs font-mono flex items-center space-x-1.5"
+                className="btn-primary px-4 py-2 text-xs font-mono tracking-mono-label flex items-center space-x-1.5"
               >
                 <span>Live Demo</span>
                 <ExternalLink className="w-3 h-3" />
@@ -127,7 +127,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           </div>
           <button
             onClick={onClose}
-            className="text-xs font-mono text-white/40 hover:text-white px-3 py-2 transition-colors cursor-pointer"
+            className="text-xs font-mono tracking-mono-label text-white/40 hover:text-white px-3 py-2 transition-colors cursor-pointer"
           >
             Close
           </button>

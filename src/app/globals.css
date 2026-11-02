@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+@theme {
+  --font-heading: var(--font-heading), "Space Grotesk", sans-serif;
+  --font-sans: var(--font-sans), "Inter", sans-serif;
+  --font-mono: var(--font-mono), "IBM Plex Mono", monospace;
+}
+
 @layer base {
   :root {
     --bg: #010309;
@@ -37,7 +43,7 @@
     overflow-x: hidden;
     margin: 0;
     padding: 0;
-    font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
+    font-family: var(--font-sans), "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -138,7 +144,29 @@
   box-shadow: 0 0 14px rgba(100, 160, 255, 0.15);
 }
 
-/* Editorial Monochromatic Silver-Ocean Typography */
+/* Editorial Monochromatic Silver-Ocean & Hero Typography */
+.font-heading {
+  font-family: var(--font-heading), "Space Grotesk", sans-serif;
+}
+
+.font-sans {
+  font-family: var(--font-sans), "Inter", sans-serif;
+}
+
+.font-mono {
+  font-family: var(--font-mono), "IBM Plex Mono", monospace;
+}
+
+.tracking-mono-label {
+  letter-spacing: 0.12em;
+}
+
+.text-hero-gradient {
+  background: linear-gradient(180deg, #FFFFFF 0%, #D8E7FA 55%, #9EB8DB 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .text-editorial-silver {
   background: linear-gradient(180deg, #FFFFFF 0%, #D8E5F8 60%, #9EB0CC 100%);
   -webkit-background-clip: text;

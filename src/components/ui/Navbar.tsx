@@ -110,7 +110,7 @@ export function Navbar({ activeSection }: NavbarProps) {
         >
           <div className="flex items-center space-x-2.5">
             <span className="w-1.5 h-1.5 rounded-full bg-cyan-300 shadow-[0_0_8px_rgba(100,200,255,0.7)]" />
-            <span className="text-xs tracking-[0.2em] font-medium text-white uppercase">
+            <span className="font-mono text-xs tracking-mono-label font-medium text-white uppercase">
               {PERSONAL_INFO.name}
             </span>
           </div>
@@ -133,11 +133,11 @@ export function Navbar({ activeSection }: NavbarProps) {
                 key={item.id}
                 onClick={(e) => handleNavClick(e, item.id)}
                 aria-current={isActive ? "page" : undefined}
-                className={`relative px-3.5 py-1.5 rounded-md text-xs font-mono tracking-wider transition-all duration-200 cursor-pointer overflow-hidden ${
+                className={`relative px-3.5 py-1.5 rounded-md text-xs font-mono tracking-mono-label font-medium transition-all duration-200 cursor-pointer overflow-hidden ${
                   isDistorted ? "animate-water-meniscus" : ""
                 } ${
                   isActive
-                    ? "text-black font-medium shadow-[0_0_16px_rgba(110,180,255,0.4)]"
+                    ? "text-black shadow-[0_0_16px_rgba(110,180,255,0.4)]"
                     : "text-[#A6A6AE] hover:text-white hover:bg-white/[0.05]"
                 }`}
                 style={{
@@ -203,14 +203,14 @@ export function Navbar({ activeSection }: NavbarProps) {
             href={PERSONAL_INFO.links.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs font-mono text-[#A6A6AE] hover:text-white transition-colors flex items-center space-x-1"
+            className="text-xs font-mono tracking-mono-label text-[#A6A6AE] hover:text-white transition-colors flex items-center space-x-1"
           >
             <span>GitHub</span>
             <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
           </a>
           <button
             onClick={() => scrollToSection("contact")}
-            className="btn-secondary px-3.5 py-1.5 text-xs font-mono tracking-wider uppercase cursor-pointer"
+            className="btn-secondary px-3.5 py-1.5 text-xs font-mono tracking-mono-label uppercase cursor-pointer"
           >
             Connect
           </button>
@@ -235,7 +235,7 @@ export function Navbar({ activeSection }: NavbarProps) {
               <button
                 key={item.id}
                 onClick={(e) => handleNavClick(e, item.id)}
-                className={`w-full flex items-center justify-between px-3.5 py-2 rounded-md text-xs font-mono tracking-wider uppercase transition-all ${
+                className={`w-full flex items-center justify-between px-3.5 py-2 rounded-md text-xs font-mono tracking-mono-label uppercase transition-all ${
                   isActive
                     ? "bg-white text-black font-semibold shadow-[0_0_12px_rgba(100,180,255,0.3)]"
                     : "text-[#A6A6AE] hover:text-white hover:bg-white/[0.05]"

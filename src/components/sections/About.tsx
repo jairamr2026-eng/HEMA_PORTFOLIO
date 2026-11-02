@@ -15,13 +15,13 @@ export function About() {
 
         {/* Text-led editorial content */}
         <div className="lg:col-span-7 space-y-9 pointer-events-auto">
-          {/* Section Heading */}
+          {/* Section Heading: Space Grotesk, Weight 500 */}
           <div className="space-y-4">
-            <h2 className="text-4xl sm:text-6xl font-light tracking-tight text-white leading-[1.08]">
+            <h2 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.03em] text-white leading-[1.06]">
               Architecting Intelligence. <br />
-              <span className="text-editorial-silver font-normal">Engineering Clarity.</span>
+              <span className="text-hero-gradient font-medium">Engineering Clarity.</span>
             </h2>
-            <p className="text-base sm:text-lg text-[#A6A6AE] leading-relaxed max-w-2xl font-light">
+            <p className="font-sans text-base sm:text-lg text-[#A6A6AE] leading-[1.65] max-w-2xl font-normal">
               {PERSONAL_INFO.bio}
             </p>
           </div>
@@ -31,36 +31,36 @@ export function About() {
           {/* Academic Background & Focus Areas */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-1">
             <div className="space-y-2">
-              <span className="font-mono text-xs uppercase tracking-widest text-white/50 block">
+              <span className="font-mono text-xs uppercase tracking-mono-label text-white/50 block font-medium">
                 Education
               </span>
-              <h3 className="text-base font-normal text-white">
+              <h3 className="font-heading text-base sm:text-lg font-medium text-white">
                 {PERSONAL_INFO.degree}
               </h3>
-              <p className="text-xs text-[#A6A6AE] leading-relaxed">
+              <p className="font-sans text-xs sm:text-sm text-[#A6A6AE] leading-relaxed font-normal">
                 Vellore Institute of Technology (VIT), Vellore
               </p>
             </div>
 
             <div className="space-y-2.5">
-              <span className="font-mono text-xs uppercase tracking-widest text-white/50 block">
+              <span className="font-mono text-xs uppercase tracking-mono-label text-white/50 block font-medium">
                 Core Focus
               </span>
-              <ul className="space-y-2 text-xs text-[#A6A6AE]">
+              <ul className="space-y-2 font-sans text-xs sm:text-sm text-[#A6A6AE] font-normal">
                 <li className="flex items-start space-x-2">
-                  <ArrowDownRight className="w-3.5 h-3.5 text-white/60 shrink-0 mt-0.5" />
+                  <ArrowDownRight className="w-3.5 h-3.5 text-cyan-300/70 shrink-0 mt-0.5" />
                   <span>Computer Vision &amp; Vision Transformers</span>
                 </li>
                 <li className="flex items-start space-x-2">
-                  <ArrowDownRight className="w-3.5 h-3.5 text-white/60 shrink-0 mt-0.5" />
+                  <ArrowDownRight className="w-3.5 h-3.5 text-cyan-300/70 shrink-0 mt-0.5" />
                   <span>Deep Neural Network Architectures</span>
                 </li>
                 <li className="flex items-start space-x-2">
-                  <ArrowDownRight className="w-3.5 h-3.5 text-white/60 shrink-0 mt-0.5" />
+                  <ArrowDownRight className="w-3.5 h-3.5 text-cyan-300/70 shrink-0 mt-0.5" />
                   <span>Decentralized Verification &amp; Web3</span>
                 </li>
                 <li className="flex items-start space-x-2">
-                  <ArrowDownRight className="w-3.5 h-3.5 text-white/60 shrink-0 mt-0.5" />
+                  <ArrowDownRight className="w-3.5 h-3.5 text-cyan-300/70 shrink-0 mt-0.5" />
                   <span>Edge Inference &amp; Sensor Telemetry</span>
                 </li>
               </ul>

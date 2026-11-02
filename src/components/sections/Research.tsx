@@ -11,11 +11,11 @@ export function Research() {
       <div className="max-w-7xl mx-auto w-full space-y-14">
         {/* Header */}
         <div className="max-w-xl space-y-3 pointer-events-auto">
-          <h2 className="text-4xl sm:text-6xl font-light tracking-tight text-white leading-tight">
+          <h2 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.03em] text-white leading-[1.06]">
             Research <br />
-            <span className="text-editorial-silver font-normal">Directions.</span>
+            <span className="text-hero-gradient font-medium">Directions.</span>
           </h2>
-          <p className="text-sm sm:text-base text-[#A6A6AE] font-light leading-relaxed">
+          <p className="font-sans text-sm sm:text-base text-[#A6A6AE] font-normal leading-[1.65]">
             Inquiries in computer vision, deep feature extraction, and verifiable decentralized ledgers.
           </p>
         </div>
@@ -27,23 +27,23 @@ export function Research() {
               key={item.id}
               className="py-7 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start group"
             >
-              {/* Discipline Area */}
+              {/* Discipline Area: IBM Plex Mono */}
               <div className="lg:col-span-3">
-                <span className="font-mono text-xs text-[#A6A6AE] uppercase tracking-wider block">
+                <span className="font-mono text-xs tracking-mono-label text-[#A6A6AE] uppercase block">
                   {item.area}
                 </span>
               </div>
 
-              {/* Title & Summary */}
+              {/* Title & Summary: Space Grotesk Title, Inter Body */}
               <div className="lg:col-span-9 space-y-2">
-                <h3 className="text-xl sm:text-2xl font-light text-white group-hover:text-white transition-colors">
+                <h3 className="font-heading text-xl sm:text-2xl font-medium text-white group-hover:text-white transition-colors">
                   {item.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-[#A6A6AE] font-light leading-relaxed max-w-3xl">
+                <p className="font-sans text-xs sm:text-sm text-[#A6A6AE] font-normal leading-[1.65] max-w-3xl">
                   {item.summary}
                 </p>
-                <div className="text-xs font-mono text-white/60 pt-1">
-                  <span className="text-white/40 uppercase tracking-wider mr-2">Focus:</span>
+                <div className="font-mono text-xs tracking-mono-label text-white/60 pt-1">
+                  <span className="text-white/40 uppercase mr-2">Focus:</span>
                   {item.focus}
                 </div>
               </div>
