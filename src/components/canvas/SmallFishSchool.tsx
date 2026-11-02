@@ -4,153 +4,92 @@ import { useRef, useMemo } from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 
-interface FishConfig {
+interface SlowFishConfig {
   id: number;
-  initialPos: [number, number, number];
-  direction: 1 | -1; // 1 = swimming right, -1 = swimming left
-  speed: number;
+  direction: 1 | -1; // 1 = left-to-right, -1 = right-to-left
+  baseY: number;
+  depthZ: number;
   scale: number;
   verticalAmp: number;
   verticalFreq: number;
   tailFreq: number;
-  phase: number;
-  depthZ: number;
+  timeOffset: number; // Staggered entry across the 40-second periodic cycle
 }
 
-// Small count (8 fish) in a loose deep-sea pod cruising organically across varying ocean depths
-const FISH_CONFIGS: FishConfig[] = [
+// Exactly 3 solitary/paired deep-sea fish on a slow ~40s transit cycle
+const SLOW_FISH_CONFIGS: SlowFishConfig[] = [
   {
     id: 1,
-    initialPos: [-4.2, -1.2, -2.0],
     direction: 1,
-    speed: 0.65,
-    scale: 0.28,
-    verticalAmp: 0.22,
-    verticalFreq: 0.6,
-    tailFreq: 9.5,
-    phase: 0.2,
-    depthZ: -2.0,
+    baseY: -1.2,
+    depthZ: -2.2,
+    scale: 0.25,
+    verticalAmp: 0.2,
+    verticalFreq: 0.25,
+    tailFreq: 3.6,
+    timeOffset: 6.0, // Visible early on first load, then repeats every 40s
   },
   {
     id: 2,
-    initialPos: [-3.0, -1.5, -2.4],
     direction: 1,
-    speed: 0.72,
-    scale: 0.24,
-    verticalAmp: 0.18,
-    verticalFreq: 0.75,
-    tailFreq: 10.5,
-    phase: 1.1,
-    depthZ: -2.4,
+    baseY: -0.7,
+    depthZ: -2.6,
+    scale: 0.21,
+    verticalAmp: 0.16,
+    verticalFreq: 0.28,
+    tailFreq: 4.0,
+    timeOffset: 3.5, // Accompanies fish 1 in a loose gentle pair
   },
   {
     id: 3,
-    initialPos: [-2.1, -0.9, -1.8],
-    direction: 1,
-    speed: 0.68,
-    scale: 0.26,
-    verticalAmp: 0.2,
-    verticalFreq: 0.65,
-    tailFreq: 10.0,
-    phase: 2.3,
-    depthZ: -1.8,
-  },
-  {
-    id: 4,
-    initialPos: [3.8, 1.8, -2.8],
     direction: -1,
-    speed: 0.58,
-    scale: 0.22,
-    verticalAmp: 0.16,
-    verticalFreq: 0.55,
-    tailFreq: 9.0,
-    phase: 3.5,
-    depthZ: -2.8,
-  },
-  {
-    id: 5,
-    initialPos: [4.9, 1.4, -3.2],
-    direction: -1,
-    speed: 0.62,
-    scale: 0.2,
-    verticalAmp: 0.24,
-    verticalFreq: 0.6,
-    tailFreq: 9.8,
-    phase: 4.2,
-    depthZ: -3.2,
-  },
-  {
-    id: 6,
-    initialPos: [-1.2, 2.5, -2.2],
-    direction: 1,
-    speed: 0.6,
-    scale: 0.25,
-    verticalAmp: 0.25,
-    verticalFreq: 0.7,
-    tailFreq: 9.2,
-    phase: 5.1,
-    depthZ: -2.2,
-  },
-  {
-    id: 7,
-    initialPos: [2.5, -2.8, -2.6],
-    direction: -1,
-    speed: 0.54,
-    scale: 0.23,
-    verticalAmp: 0.18,
-    verticalFreq: 0.5,
-    tailFreq: 8.8,
-    phase: 0.8,
-    depthZ: -2.6,
-  },
-  {
-    id: 8,
-    initialPos: [1.2, -3.2, -3.0],
-    direction: -1,
-    speed: 0.56,
-    scale: 0.19,
-    verticalAmp: 0.2,
-    verticalFreq: 0.58,
-    tailFreq: 9.4,
-    phase: 2.7,
+    baseY: 1.5,
     depthZ: -3.0,
+    scale: 0.22,
+    verticalAmp: 0.22,
+    verticalFreq: 0.22,
+    tailFreq: 3.2,
+    timeOffset: 24.0, // Swims in the opposite direction on the alternate half of the 40s cycle
   },
 ];
 
-function SingleSmallFish({ config }: { config: FishConfig }) {
+// 40-second transit cycle parameters
+const CYCLE_DURATION = 40.0; // Repeat every 40 seconds
+const TRANSIT_DURATION = 32.0; // Takes 32 seconds to slowly cross the screen
+const ENTRY_X = 7.6; // Edge of active viewport
+const EXIT_X = -7.6;
+
+function SingleSlowFish({ config }: { config: SlowFishConfig }) {
   const groupRef = useRef<THREE.Group>(null);
   const tailRef = useRef<THREE.Group>(null);
   const pecLeftRef = useRef<THREE.Mesh>(null);
   const pecRightRef = useRef<THREE.Mesh>(null);
 
-  const posX = useRef(config.initialPos[0]);
-  const basePosY = useRef(config.initialPos[1]);
-
-  // Create shared procedural geometries for this fish
+  // Procedural hydrodynamic fish geometries
   const { bodyGeom, tailGeom, dorsalGeom, pecGeom, eyeGeom } = useMemo(() => {
-    // 1. Hydrodynamic streamlined fish fuselage: elongated tapered sphere
+    // 1. Sleek, hydrodynamic fuselage
     const body = new THREE.SphereGeometry(0.5, 16, 12);
-    body.scale(1.8, 0.48, 0.22);
+    body.scale(1.8, 0.46, 0.22);
 
     // 2. Crescent caudal tail fin
     const tail = new THREE.BufferGeometry();
     const tailVertices = new Float32Array([
       0, 0, 0,
-      -0.45, 0.38, 0,
+      -0.45, 0.36, 0,
       -0.34, 0, 0,
 
       0, 0, 0,
       -0.34, 0, 0,
-      -0.45, -0.38, 0,
+      -0.45, -0.36, 0,
     ]);
     tail.setAttribute("position", new THREE.BufferAttribute(tailVertices, 3));
     tail.computeVertexNormals();
 
-    // 3. Small translucent dorsal fin along the back
+    // 3. Small translucent dorsal fin
     const dorsal = new THREE.BufferGeometry();
     const dorsalVertices = new Float32Array([
       -0.1, 0.22, 0,
-      -0.32, 0.48, 0,
+      -0.32, 0.46, 0,
       -0.42, 0.22, 0,
     ]);
     dorsal.setAttribute("position", new THREE.BufferAttribute(dorsalVertices, 3));
@@ -172,16 +111,16 @@ function SingleSmallFish({ config }: { config: FishConfig }) {
     return { bodyGeom: body, tailGeom: tail, dorsalGeom: dorsal, pecGeom: pec, eyeGeom: eye };
   }, []);
 
-  // Fish materials: translucent silvery deep-sea skin with delicate bioluminescent shimmer
-  const { fishSkinMat, finMat, eyeMat } = useMemo(() => {
+  // Translucent silvery deep-sea materials with soft bioluminescent glow
+  const { skinMat, finMat, eyeMat } = useMemo(() => {
     const skin = new THREE.MeshStandardMaterial({
       color: new THREE.Color("#A8C8ED"),
       roughness: 0.16,
-      metalness: 0.28,
+      metalness: 0.26,
       transparent: true,
       opacity: 0.82,
       emissive: new THREE.Color("#2C486C"),
-      emissiveIntensity: 0.38,
+      emissiveIntensity: 0.35,
       side: THREE.DoubleSide,
       depthWrite: false,
     });
@@ -191,9 +130,9 @@ function SingleSmallFish({ config }: { config: FishConfig }) {
       roughness: 0.25,
       metalness: 0.15,
       transparent: true,
-      opacity: 0.58,
+      opacity: 0.56,
       emissive: new THREE.Color("#243D5C"),
-      emissiveIntensity: 0.25,
+      emissiveIntensity: 0.22,
       side: THREE.DoubleSide,
       depthWrite: false,
     });
@@ -204,62 +143,82 @@ function SingleSmallFish({ config }: { config: FishConfig }) {
       opacity: 0.95,
     });
 
-    return { fishSkinMat: skin, finMat: fin, eyeMat: eye };
+    return { skinMat: skin, finMat: fin, eyeMat: eye };
   }, []);
 
-  // Autonomous cruising animation - strictly independent of cursor movement
-  useFrame((state, delta) => {
+  // Slow 40-second autonomous passage — completely independent of cursor
+  useFrame((state) => {
     if (!groupRef.current) return;
 
     const t = state.clock.getElapsedTime();
-    const clampedDelta = Math.min(delta, 0.05);
 
-    // 1. Horizontal cruising
-    posX.current += config.direction * config.speed * clampedDelta;
+    // Calculate progression along the 40-second cycle
+    const cycleTime = (t + config.timeOffset) % CYCLE_DURATION;
 
-    // Boundary wrapping: seamless ocean migration
-    const HORIZONTAL_BOUND = 7.2;
-    if (config.direction === 1 && posX.current > HORIZONTAL_BOUND) {
-      posX.current = -HORIZONTAL_BOUND;
-    } else if (config.direction === -1 && posX.current < -HORIZONTAL_BOUND) {
-      posX.current = HORIZONTAL_BOUND;
+    // Start and end coordinates based on swimming direction
+    const startX = config.direction === 1 ? -ENTRY_X : ENTRY_X;
+    const endX = config.direction === 1 ? ENTRY_X : -ENTRY_X;
+
+    let posX: number;
+    let isVisible = true;
+
+    if (cycleTime < TRANSIT_DURATION) {
+      // Very slow, peaceful crossing over 32 seconds
+      const progress = cycleTime / TRANSIT_DURATION;
+      posX = startX + (endX - startX) * progress;
+    } else {
+      // 8-second calm pause between transits (parked off-screen)
+      posX = startX;
+      isVisible = false;
     }
 
-    // 2. Gentle sinusoidal vertical glide
+    groupRef.current.visible = isVisible;
+    if (!isVisible) return;
+
+    // Gentle vertical glide (calm sinusoidal oscillation)
     const currentY =
-      basePosY.current +
-      Math.sin(t * config.verticalFreq + config.phase) * config.verticalAmp;
+      config.baseY +
+      Math.sin(t * config.verticalFreq + config.id) * config.verticalAmp;
 
-    // 3. Subtle depth drift
-    const currentZ = config.depthZ + Math.cos(t * 0.4 + config.phase) * 0.15;
+    // Depth placement
+    const currentZ = config.depthZ + Math.cos(t * 0.2 + config.id) * 0.12;
 
-    // 4. Undulating fish tail stroke
-    const tailAngle = Math.sin(t * config.tailFreq + config.phase) * 0.42;
+    // Very slow, serene tail beat (0.5 to 0.6 beats per sec)
+    const tailAngle = Math.sin(t * config.tailFreq + config.id) * 0.38;
     if (tailRef.current) {
       tailRef.current.rotation.y = tailAngle;
     }
 
-    // 5. Pectoral fin gentle fluttering
+    // Gentle pectoral fin flutter
     if (pecLeftRef.current && pecRightRef.current) {
-      const flutter = Math.sin(t * 5.0 + config.phase) * 0.18;
-      pecLeftRef.current.rotation.z = 0.2 + flutter;
-      pecRightRef.current.rotation.z = -0.2 - flutter;
+      const flutter = Math.sin(t * 2.2 + config.id) * 0.14;
+      pecLeftRef.current.rotation.z = 0.18 + flutter;
+      pecRightRef.current.rotation.z = -0.18 - flutter;
     }
 
-    // Set position
-    groupRef.current.position.set(posX.current, currentY, currentZ);
+    groupRef.current.position.set(posX, currentY, currentZ);
 
-    // Dynamic rotation: face swimming direction with subtle pitch & body yaw
+    // Orientation: face swim direction with subtle body pitch and yaw
     const facingYaw = config.direction === 1 ? 0 : Math.PI;
-    const bodyPitch = Math.cos(t * config.verticalFreq + config.phase) * 0.08 * config.direction;
-    const bodyYaw = -tailAngle * 0.15; // Realistic reaction to tail beat
+    const bodyPitch = Math.cos(t * config.verticalFreq + config.id) * 0.05 * config.direction;
+    const bodyYaw = -tailAngle * 0.12; // Natural body reaction to slow tail stroke
     groupRef.current.rotation.set(bodyPitch, facingYaw + bodyYaw, 0);
+
+    // Soft opacity fade near boundaries for seamless emergence
+    const edgeDist = Math.abs(posX);
+    let edgeFade = 1.0;
+    if (edgeDist > 6.0) {
+      edgeFade = Math.max(0, 1.0 - (edgeDist - 6.0) / 1.6);
+    }
+    skinMat.opacity = 0.82 * edgeFade;
+    finMat.opacity = 0.56 * edgeFade;
+    eyeMat.opacity = 0.95 * edgeFade;
   });
 
   return (
     <group ref={groupRef} scale={config.scale}>
       {/* Main Fish Body */}
-      <mesh geometry={bodyGeom} material={fishSkinMat} />
+      <mesh geometry={bodyGeom} material={skinMat} />
 
       {/* Bioluminescent Eyes (Left & Right) */}
       <mesh geometry={eyeGeom} material={eyeMat} position={[0.55, 0.08, 0.12]} />
@@ -282,9 +241,9 @@ function SingleSmallFish({ config }: { config: FishConfig }) {
 
 export function SmallFishSchool() {
   return (
-    <group name="small-fish-school">
-      {FISH_CONFIGS.map((cfg) => (
-        <SingleSmallFish key={cfg.id} config={cfg} />
+    <group name="slow-small-fish-pod">
+      {SLOW_FISH_CONFIGS.map((cfg) => (
+        <SingleSlowFish key={cfg.id} config={cfg} />
       ))}
     </group>
   );

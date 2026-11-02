@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils";
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-heading",
-  weight: ["500", "600"],
   display: "swap",
 });
 
@@ -19,7 +18,7 @@ const inter = Inter({
 const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
-  weight: ["400", "500"],
+  weight: "400",
   display: "swap",
 });
 
