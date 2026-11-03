@@ -6,7 +6,7 @@ async function run() {
   const chromePath = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
   const chromeProc = spawn(chromePath, [
     '--headless=new',
-    '--remote-debugging-port=9239',
+    '--remote-debugging-port=9240',
     '--window-size=1440,900',
     '--enable-webgl',
     '--use-gl=angle',
@@ -17,7 +17,7 @@ async function run() {
 
   await new Promise(r => setTimeout(r, 2500));
 
-  http.get('http://127.0.0.1:9239/json', (res) => {
+  http.get('http://127.0.0.1:9240/json', (res) => {
     let data = '';
     res.on('data', chunk => data += chunk);
     res.on('end', async () => {
@@ -50,85 +50,58 @@ async function run() {
           await send('Runtime.enable');
           await new Promise(r => setTimeout(r, 4000));
 
-          // 1. Hero before click
-          const heroInitial = await send('Page.captureScreenshot', { format: 'png' });
-          fs.writeFileSync('hero_before_click.png', Buffer.from(heroInitial.data, 'base64'));
-          console.log('Saved hero_before_click.png');
-
-          // 2. Click the jellyfish bell (x=935, y=380)
-          await send('Input.dispatchMouseEvent', {
-            type: 'mousePressed',
-            x: 935,
-            y: 380,
-            button: 'left',
-            clickCount: 1
-          });
-          await send('Input.dispatchMouseEvent', {
-            type: 'mouseReleased',
-            x: 935,
-            y: 380,
-            button: 'left',
-            clickCount: 1
-          });
-
-          // Wait 250ms into the dive reaction (peak compression & downward acceleration)
-          await new Promise(r => setTimeout(r, 260));
-          const heroClickReaction = await send('Page.captureScreenshot', { format: 'png' });
-          fs.writeFileSync('jellyfish_click_reaction.png', Buffer.from(heroClickReaction.data, 'base64'));
-          console.log('Saved jellyfish_click_reaction.png');
-
-          // 3. Contact Encounter: Clouds meeting in center
+          // 1. Contact Page: Should be completely open and clean, no clouds
           await send('Runtime.evaluate', {
             expression: `(() => {
               const el = document.getElementById("contact");
               if (el) {
-                const targetY = el.offsetTop - window.innerHeight * 0.75;
+                window.scrollTo({ top: el.offsetTop, behavior: 'instant' });
+              }
+            })()`
+          });
+          await new Promise(r => setTimeout(r, 1200));
+          const contactPage = await send('Page.captureScreenshot', { format: 'png' });
+          fs.writeFileSync('contact_clean_no_clouds.png', Buffer.from(contactPage.data, 'base64'));
+          console.log('Saved contact_clean_no_clouds.png');
+
+          // 2. Footer Page - Initial Cloud Concealment
+          await send('Runtime.evaluate', {
+            expression: `(() => {
+              const el = document.getElementById("closing-statement");
+              if (el) {
+                const targetY = el.offsetTop - window.innerHeight * 0.70;
                 window.scrollTo({ top: targetY, behavior: 'instant' });
               }
             })()`
           });
           await new Promise(r => setTimeout(r, 1200));
-          const cloudClosed = await send('Page.captureScreenshot', { format: 'png' });
-          fs.writeFileSync('contact_cloud_closed.png', Buffer.from(cloudClosed.data, 'base64'));
-          console.log('Saved contact_cloud_closed.png');
+          const footerCloudClosed = await send('Page.captureScreenshot', { format: 'png' });
+          fs.writeFileSync('footer_cloud_closed.png', Buffer.from(footerCloudClosed.data, 'base64'));
+          console.log('Saved footer_cloud_closed.png');
 
-          // 4. Contact Parting: Clouds opening outward to the left & right
+          // 3. Footer Page - Clouds Parting Outward on Scroll
           await send('Runtime.evaluate', {
             expression: `(() => {
-              const el = document.getElementById("contact");
+              const el = document.getElementById("closing-statement");
               if (el) {
-                const targetY = el.offsetTop - window.innerHeight * 0.40;
+                const targetY = el.offsetTop - window.innerHeight * 0.35;
                 window.scrollTo({ top: targetY, behavior: 'instant' });
               }
             })()`
           });
           await new Promise(r => setTimeout(r, 1200));
-          const cloudParting = await send('Page.captureScreenshot', { format: 'png' });
-          fs.writeFileSync('contact_cloud_parting.png', Buffer.from(cloudParting.data, 'base64'));
-          console.log('Saved contact_cloud_parting.png');
+          const footerCloudParting = await send('Page.captureScreenshot', { format: 'png' });
+          fs.writeFileSync('footer_cloud_parting.png', Buffer.from(footerCloudParting.data, 'base64'));
+          console.log('Saved footer_cloud_parting.png');
 
-          // 5. Contact Settled: Clouds open, contact form and links revealed
-          await send('Runtime.evaluate', {
-            expression: `(() => {
-              const el = document.getElementById("contact");
-              if (el) {
-                window.scrollTo({ top: el.offsetTop - 50, behavior: 'instant' });
-              }
-            })()`
-          });
-          await new Promise(r => setTimeout(r, 1200));
-          const contactOpen = await send('Page.captureScreenshot', { format: 'png' });
-          fs.writeFileSync('contact_cloud_open.png', Buffer.from(contactOpen.data, 'base64'));
-          console.log('Saved contact_cloud_open.png');
-
-          // 6. Bottom Closing Statement: Scrolled all the way to bottom
+          // 4. Footer Page - Settled and fully revealed
           await send('Runtime.evaluate', {
             expression: `window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' });`
           });
           await new Promise(r => setTimeout(r, 1400));
-          const statementBottom = await send('Page.captureScreenshot', { format: 'png' });
-          fs.writeFileSync('contact_statement_bottom.png', Buffer.from(statementBottom.data, 'base64'));
-          console.log('Saved contact_statement_bottom.png');
+          const footerRevealed = await send('Page.captureScreenshot', { format: 'png' });
+          fs.writeFileSync('footer_cloud_revealed.png', Buffer.from(footerRevealed.data, 'base64'));
+          console.log('Saved footer_cloud_revealed.png');
 
           ws.close();
           chromeProc.kill();
