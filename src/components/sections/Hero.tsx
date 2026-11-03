@@ -24,10 +24,10 @@ export function Hero() {
             </span>
           </div>
 
-          {/* Hero Heading: Hi! I am Hema. Inspired by Minimalist Editorial Style */}
+          {/* Hero Heading: Hi! I am Hemanathan. Inspired by Minimalist Editorial Style */}
           <h1
-            aria-label="Hi! I am Hema."
-            className="font-heading text-6xl sm:text-7xl md:text-8xl lg:text-[7.25rem] xl:text-[8rem] font-bold tracking-[-0.035em] text-white leading-[0.93] select-none"
+            aria-label="Hi! I am Hemanathan."
+            className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] xl:text-[6.25rem] font-bold tracking-[-0.035em] text-white leading-[0.93] select-none"
           >
             <div className="flex items-baseline">
               <span>H</span>
@@ -47,8 +47,8 @@ export function Hero() {
               </span>
             </div>
             <div>I am</div>
-            <div className="flex items-baseline">
-              <span className="text-hero-gradient font-bold">Hema</span>
+            <div className="flex items-baseline whitespace-nowrap">
+              <span className="text-hero-gradient font-bold">Hemanathan</span>
               <span
                 className="inline-block w-[0.16em] h-[0.16em] rounded-full bg-cyan-400 shadow-[0_0_16px_rgba(34,211,238,0.95)] ml-[0.04em]"
                 aria-hidden="true"
