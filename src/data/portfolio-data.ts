@@ -33,7 +33,7 @@ export const PERSONAL_INFO = {
   location: "Vellore, Tamil Nadu, India",
   headline: "Exploring the Unknown.",
   subheadline: "Building intelligent systems and digital experiences at the intersection of machine learning and interaction design.",
-  bio: "Integrated M.Tech Computer Science student at VIT Vellore. Exploring deep neural networks, computer vision architectures, and distributed systems through rigorous engineering and interaction design.",
+  bio: "Exploring deep neural networks, computer vision architectures, and distributed systems through rigorous engineering and interaction design.",
   quote: "Every great idea begins somewhere in the unknown.",
   links: {
     github: "https://github.com/hemanathan-r",

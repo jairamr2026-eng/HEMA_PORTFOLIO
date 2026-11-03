@@ -4,6 +4,7 @@
   --font-heading: var(--font-heading), "Space Grotesk", sans-serif;
   --font-sans: var(--font-sans), "Inter", sans-serif;
   --font-mono: var(--font-mono), "IBM Plex Mono", monospace;
+  --font-serif: var(--font-serif), "Bodoni Moda", "Didot", "Bodoni MT", serif;
 }
 
 @layer base {
@@ -374,6 +375,76 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 
 .animate-ocean-shimmer {
   animation: oceanShimmer 8s ease-in-out infinite;
+}
+
+/* Didone Serif Typography */
+.font-serif {
+  font-family: var(--font-serif), "Bodoni Moda", "Didot", "Bodoni MT", serif;
+}
+
+/* Subtle wave animation across the statement */
+@keyframes statementWave {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.animate-statement-wave {
+  animation: statementWave 6.5s ease-in-out infinite;
+}
+
+/* Ethereal silver-to-lavender gradient shimmer with radiant deep-sea glow */
+@keyframes etherealShimmer {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.text-ethereal-statement {
+  background: linear-gradient(180deg, #FFFFFF 0%, #F5F9FF 35%, #D4E5FD 70%, #E8DCFD 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 16px rgba(175, 215, 255, 0.4)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9));
+  animation: etherealShimmer 8s ease-in-out infinite;
+}
+
+/* Water Ripple on Click */
+@keyframes statementRipple {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0.75;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+}
+
+.animate-statement-ripple {
+  animation: statementRipple 1.4s cubic-bezier(0.1, 0.8, 0.2, 1) forwards;
+}
+
+/* Ambient floating particles around statement */
+@keyframes particleAmbient {
+  0%, 100% {
+    transform: translate(0, 0);
+    opacity: 0.25;
+  }
+  50% {
+    transform: translate(5px, -10px);
+    opacity: 0.75;
+  }
+}
+
+.animate-particle-ambient {
+  animation: particleAmbient 7s ease-in-out infinite;
 }
 
 /* Prefers-reduced-motion support */

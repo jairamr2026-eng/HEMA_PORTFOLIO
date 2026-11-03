@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { Space_Grotesk, Inter, IBM_Plex_Mono } from "next/font/google";
+import { Space_Grotesk, Inter, IBM_Plex_Mono, Bodoni_Moda } from "next/font/google";
 import { cn } from "@/lib/utils";
 
 const spaceGrotesk = Space_Grotesk({
@@ -19,6 +19,12 @@ const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
   weight: "400",
+  display: "swap",
+});
+
+const bodoniModa = Bodoni_Moda({
+  subsets: ["latin"],
+  variable: "--font-serif",
   display: "swap",
 });
 
@@ -66,6 +72,7 @@ export default function RootLayout({
         spaceGrotesk.variable,
         inter.variable,
         ibmPlexMono.variable,
+        bodoniModa.variable,
         "font-sans"
       )}
     >

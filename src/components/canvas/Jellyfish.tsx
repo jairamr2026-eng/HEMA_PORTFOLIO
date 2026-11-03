@@ -156,10 +156,28 @@ export function Jellyfish({ onSelectProject, activeProjectId }: JellyfishProps) 
     let targetX = targetConfig.x;
     let targetY = targetConfig.y;
     const targetZ = targetConfig.z;
-    const targetRotX = targetConfig.rotX;
+    let targetRotX = targetConfig.rotX;
     const targetRotY = targetConfig.rotY;
     const targetRotZ = targetConfig.rotZ;
     let targetBaseScale = targetConfig.scale;
+
+    // Check if user is scrolling into the closing statement (last slide)
+    // The big jellyfish swims upward toward the surface and is disabled (fades out)
+    const lastSlideProgress = THREE.MathUtils.clamp(
+      (scrollProgressRef.currentProgress - 0.82) / 0.12,
+      0,
+      1
+    );
+
+    if (lastSlideProgress > 0) {
+      // Upward departure: swim straight upwards far above the viewport so no tentacles are visible
+      targetY = THREE.MathUtils.lerp(targetY, 18.0, lastSlideProgress);
+      // Bell pitches upwards to propel towards the surface
+      targetRotX = THREE.MathUtils.lerp(targetRotX, -0.65, lastSlideProgress);
+    }
+
+    // Disable factor: rapidly drops to 0 so the creature is completely faded and disabled
+    const activeVisibilityFactor = Math.max(0, 1.0 - lastSlideProgress * 1.5);
 
     // Responsive scaling and positioning on mobile viewports
     if (isMobile) {
@@ -207,8 +225,14 @@ export function Jellyfish({ onSelectProject, activeProjectId }: JellyfishProps) 
     currentRot.current.y = THREE.MathUtils.lerp(currentRot.current.y, finalRotY, clampedDelta * 2.6);
     currentRot.current.z = THREE.MathUtils.lerp(currentRot.current.z, finalRotZ, clampedDelta * 2.6);
 
-    const finalScale = targetBaseScale * emergenceRef.current;
-    currentScale.current = THREE.MathUtils.lerp(currentScale.current, finalScale, clampedDelta * 2.8);
+    const finalScale = targetBaseScale * emergenceRef.current * activeVisibilityFactor;
+    currentScale.current = THREE.MathUtils.lerp(currentScale.current, finalScale, clampedDelta * 3.8);
+
+    if (activeVisibilityFactor <= 0.02 || currentScale.current < 0.03) {
+      groupRef.current.visible = false;
+    } else {
+      groupRef.current.visible = true;
+    }
 
     groupRef.current.position.set(currentPos.current.x, currentPos.current.y, currentPos.current.z);
     groupRef.current.rotation.set(currentRot.current.x, currentRot.current.y, currentRot.current.z);
@@ -220,10 +244,12 @@ export function Jellyfish({ onSelectProject, activeProjectId }: JellyfishProps) 
 
     // 7. Modulate bioluminescent internal heart light & ambient water aura
     if (internalLightRef.current) {
-      internalLightRef.current.intensity = 0.35 + Math.sin(time * 1.6) * 0.18;
+      internalLightRef.current.intensity =
+        (0.35 + Math.sin(time * 1.6) * 0.18) * activeVisibilityFactor;
     }
     if (auraLightRef.current) {
-      auraLightRef.current.intensity = 0.25 + Math.sin(time * 1.6 + 0.5) * 0.12;
+      auraLightRef.current.intensity =
+        (0.25 + Math.sin(time * 1.6 + 0.5) * 0.12) * activeVisibilityFactor;
     }
   });
 

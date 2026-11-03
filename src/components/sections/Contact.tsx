@@ -188,23 +188,6 @@ export function Contact() {
           </div>
         </div>
       </div>
-
-      {/* Clean Minimal Footer: Modern Sans */}
-      <footer className="mt-14 pt-6 border-t border-white/[0.08] max-w-7xl mx-auto w-full flex items-center justify-between text-sm font-sans font-medium text-[#A6A6AE] pointer-events-auto">
-        <div className="flex items-center space-x-2">
-          <span className="text-white font-medium">{PERSONAL_INFO.name}</span>
-          <span className="text-white/20">·</span>
-          <span>{PERSONAL_INFO.institution}</span>
-        </div>
-
-        <button
-          onClick={scrollToTop}
-          className="flex items-center space-x-1 text-white/50 hover:text-white transition-colors cursor-pointer"
-        >
-          <span>Top</span>
-          <ArrowUp className="w-3.5 h-3.5" />
-        </button>
-      </footer>
     </section>
   );
 }
