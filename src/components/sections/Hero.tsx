@@ -15,11 +15,45 @@ export function Hero() {
     >
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         {/* Left Editorial Content Area */}
-        <div className="lg:col-span-7 space-y-8 pointer-events-auto">
-          {/* Hero Heading: Space Grotesk, Weight 500-600, Tight Letter Spacing, Subtle White-to-Cool-Blue Gradient */}
-          <h1 className="font-heading text-5xl sm:text-7xl lg:text-8xl font-medium sm:font-semibold tracking-[-0.035em] text-white leading-[0.94]">
-            Exploring <br />
-            <span className="text-hero-gradient font-semibold">the Unknown.</span>
+        <div className="lg:col-span-7 space-y-7 pointer-events-auto">
+          {/* Subtle Status / Topic Pill */}
+          <div className="inline-flex items-center space-x-2.5 px-4 py-1.5 rounded-full bg-white/[0.035] border border-white/[0.10] backdrop-blur-md">
+            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_rgba(34,211,238,0.9)]" />
+            <span className="font-sans text-xs sm:text-sm font-medium text-white/75 tracking-wide">
+              Exploring the Unknown
+            </span>
+          </div>
+
+          {/* Hero Heading: Hi! I am Hema. Inspired by Minimalist Editorial Style */}
+          <h1
+            aria-label="Hi! I am Hema."
+            className="font-heading text-6xl sm:text-7xl md:text-8xl lg:text-[7.25rem] xl:text-[8rem] font-bold tracking-[-0.035em] text-white leading-[0.93] select-none"
+          >
+            <div className="flex items-baseline">
+              <span>H</span>
+              <span className="relative inline-block mx-[0.01em]">
+                ı
+                <span
+                  className="absolute top-[0.06em] left-1/2 -translate-x-1/2 w-[0.16em] h-[0.16em] rounded-full bg-cyan-400 shadow-[0_0_16px_rgba(34,211,238,0.95)]"
+                  aria-hidden="true"
+                />
+              </span>
+              <span
+                className="relative inline-block w-[0.20em] h-[0.72em] ml-[0.04em]"
+                aria-hidden="true"
+              >
+                <span className="absolute top-0 left-1/2 -translate-x-1/2 w-[0.16em] h-[0.48em] bg-white rounded-[0.06em]" />
+                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[0.16em] h-[0.16em] rounded-full bg-cyan-400 shadow-[0_0_16px_rgba(34,211,238,0.95)]" />
+              </span>
+            </div>
+            <div>I am</div>
+            <div className="flex items-baseline">
+              <span className="text-hero-gradient font-bold">Hema</span>
+              <span
+                className="inline-block w-[0.16em] h-[0.16em] rounded-full bg-cyan-400 shadow-[0_0_16px_rgba(34,211,238,0.95)] ml-[0.04em]"
+                aria-hidden="true"
+              />
+            </div>
           </h1>
 
           {/* Body Text: Inter, Weight 400, Soft Silver-Grey with Refined Line Height */}
