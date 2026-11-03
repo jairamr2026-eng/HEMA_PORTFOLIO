@@ -38,6 +38,39 @@ export function Jellyfish({ onSelectProject, activeProjectId }: JellyfishProps) 
   const cursorOffset = useRef(new THREE.Vector2(0, 0));
   const creatureVelocity = useRef(new THREE.Vector2(0, 0));
 
+  // Interactive Bell Click Reaction State
+  const reactionRef = useRef({
+    active: false,
+    time: 0,
+    cooldownUntil: 0,
+    rippleActive: false,
+    rippleTime: 0,
+  });
+
+  const rippleMeshRef = useRef<THREE.Mesh>(null);
+  const rippleMatRef = useRef<THREE.MeshBasicMaterial>(null);
+
+  const handleBellClick = (e: any) => {
+    e.stopPropagation();
+    const now = performance.now() / 1000;
+    if (now < reactionRef.current.cooldownUntil) return;
+
+    reactionRef.current.active = true;
+    reactionRef.current.time = 0;
+    reactionRef.current.cooldownUntil = now + 1.35; // 1.35s cooldown
+    reactionRef.current.rippleActive = true;
+    reactionRef.current.rippleTime = 0;
+  };
+
+  const handleBellPointerOver = (e: any) => {
+    e.stopPropagation();
+    document.body.style.cursor = "pointer";
+  };
+
+  const handleBellPointerOut = () => {
+    document.body.style.cursor = "auto";
+  };
+
   // Initialize and play the swim loop animation
   useEffect(() => {
     const swimActionName = names.find((name) =>
@@ -206,15 +239,75 @@ export function Jellyfish({ onSelectProject, activeProjectId }: JellyfishProps) 
     const idleRotX = Math.cos(time * 0.5) * 0.025;
     const idleRotZ = Math.sin(time * 0.58) * 0.03;
 
+    // 4b. Interactive Bell Click Reaction Dynamics
+    let diveY = 0;
+    let diveRotX = 0;
+    let wobbleRotZ = 0;
+    let squashY = 1.0;
+    let squashXZ = 1.0;
+
+    if (reactionRef.current.active) {
+      reactionRef.current.time += clampedDelta;
+      const t = reactionRef.current.time;
+
+      // Quick downward dive with natural acceleration and spring-like rebound
+      const diveOmega = 4.2;
+      const diveDecay = 2.4;
+      diveY = -0.68 * Math.sin(diveOmega * t) * Math.exp(-diveDecay * t);
+
+      // Downward velocity drives delayed inertial pitch for trailing tentacles
+      const diveVelY =
+        -0.68 *
+        (diveOmega * Math.cos(diveOmega * t) - diveDecay * Math.sin(diveOmega * t)) *
+        Math.exp(-diveDecay * t);
+      diveRotX = -diveVelY * 0.28;
+
+      // Bell squash & stretch: brief compression followed by gelatinous wobble
+      const compression = Math.max(0, Math.sin((t * Math.PI) / 0.42) * Math.exp(-t * 4.4));
+      const wobble = Math.sin(t * 18.0) * Math.exp(-t * 3.6);
+
+      squashY = 1.0 - compression * 0.22 + wobble * 0.055;
+      squashXZ = 1.0 + compression * 0.14 - wobble * 0.035;
+      wobbleRotZ = Math.cos(t * 14.0) * Math.exp(-t * 3.2) * 0.06;
+
+      if (t >= 2.2) {
+        reactionRef.current.active = false;
+      }
+    }
+
+    // 4c. 3D Aquatic Ripple Ring Animation
+    if (reactionRef.current.rippleActive) {
+      reactionRef.current.rippleTime += clampedDelta;
+      const rt = reactionRef.current.rippleTime;
+      const rippleDuration = 1.35;
+      const progress = Math.min(1, rt / rippleDuration);
+
+      const scale = 0.4 + progress * 2.3;
+      const opacity = Math.max(0, (1 - progress) * 0.65);
+
+      if (rippleMeshRef.current) {
+        rippleMeshRef.current.scale.set(scale, scale, scale);
+        rippleMeshRef.current.visible = true;
+      }
+      if (rippleMatRef.current) {
+        rippleMatRef.current.opacity = opacity;
+      }
+
+      if (progress >= 1) {
+        reactionRef.current.rippleActive = false;
+        if (rippleMeshRef.current) rippleMeshRef.current.visible = false;
+      }
+    }
+
     // 5. Compute blended final coordinates
     const finalTargetX = targetX + cursorOffset.current.x + currentDriftX;
-    const finalTargetY = targetY + cursorOffset.current.y + currentDriftY;
+    const finalTargetY = targetY + cursorOffset.current.y + currentDriftY + diveY;
     const finalTargetZ = targetZ - (1 - emergenceRef.current) * 2.8;
 
-    // Creature leans gently into motion & tilts bell toward pointer
-    const finalRotX = targetRotX - cursorOffset.current.y * 0.22 + idleRotX;
+    // Creature leans gently into motion & tilts bell toward pointer + reaction offsets
+    const finalRotX = targetRotX - cursorOffset.current.y * 0.22 + idleRotX + diveRotX;
     const finalRotY = targetRotY + cursorOffset.current.x * 0.42;
-    const finalRotZ = targetRotZ - creatureVelocity.current.x * 0.5 + idleRotZ;
+    const finalRotZ = targetRotZ - creatureVelocity.current.x * 0.5 + idleRotZ + wobbleRotZ;
 
     // Smooth position and rotation interpolation
     currentPos.current.x = THREE.MathUtils.lerp(currentPos.current.x, finalTargetX, clampedDelta * 2.8);
@@ -238,9 +331,13 @@ export function Jellyfish({ onSelectProject, activeProjectId }: JellyfishProps) 
     groupRef.current.rotation.set(currentRot.current.x, currentRot.current.y, currentRot.current.z);
     groupRef.current.scale.setScalar(currentScale.current);
 
-    // 6. Subtle procedural breathing rhythm synced with the swim pulse
+    // 6. Subtle procedural breathing rhythm synced with the swim pulse + interactive squash & stretch
     const pulseFactor = Math.sin(time * 1.6) * 0.025;
-    creatureInnerRef.current.scale.set(1 + pulseFactor, 1 + pulseFactor * 1.5, 1 + pulseFactor);
+    creatureInnerRef.current.scale.set(
+      (1 + pulseFactor) * squashXZ,
+      (1 + pulseFactor * 1.5) * squashY,
+      (1 + pulseFactor) * squashXZ
+    );
 
     // 7. Modulate bioluminescent internal heart light & ambient water aura
     if (internalLightRef.current) {
@@ -277,6 +374,36 @@ export function Jellyfish({ onSelectProject, activeProjectId }: JellyfishProps) 
           decay={2}
           position={[0, -0.4, 0.5]}
         />
+
+        {/* Interactive Click Collider covering the Bell Dome */}
+        <mesh
+          position={[0, 0.42, 0.08]}
+          onClick={handleBellClick}
+          onPointerOver={handleBellPointerOver}
+          onPointerOut={handleBellPointerOut}
+        >
+          <sphereGeometry args={[0.95, 20, 20]} />
+          <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+        </mesh>
+
+        {/* 3D Underwater Shockwave Ripple Ring around the Bell */}
+        <mesh
+          ref={rippleMeshRef}
+          position={[0, 0.26, 0.08]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          visible={false}
+        >
+          <ringGeometry args={[0.35, 0.42, 64]} />
+          <meshBasicMaterial
+            ref={rippleMatRef}
+            color="#8FD4FF"
+            transparent
+            opacity={0}
+            depthWrite={false}
+            side={THREE.DoubleSide}
+            blending={THREE.AdditiveBlending}
+          />
+        </mesh>
 
         <primitive object={gltf.scene} />
       </group>

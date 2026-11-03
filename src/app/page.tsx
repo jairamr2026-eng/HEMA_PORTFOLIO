@@ -11,7 +11,6 @@ import { Skills } from "@/components/sections/Skills";
 import { Projects } from "@/components/sections/Projects";
 import { Research } from "@/components/sections/Research";
 import { Contact } from "@/components/sections/Contact";
-import { FooterStatement } from "@/components/ui/FooterStatement";
 import { ProjectModal } from "@/components/ui/ProjectModal";
 import { useScrollStory } from "@/hooks/useScrollStory";
 import { usePointerTracking } from "@/hooks/usePointerTracking";
@@ -64,7 +63,6 @@ export default function Home() {
         />
         <Research />
         <Contact />
-        <FooterStatement />
       </div>
 
       {/* Detailed Project Inspection Modal */}
